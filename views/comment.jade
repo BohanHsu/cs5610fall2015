@@ -1,0 +1,14 @@
+extends _layout
+
+block content
+  h1!= message
+
+  hr
+
+  form(method='post')
+    input(type='text', name='content')
+    input(type='submit', name='add')
+
+  ul
+    each comment in comments
+      li= comment.content
