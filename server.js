@@ -2,6 +2,12 @@
 var express = require('express');
 var app = express();
 
+var session = require('express-session')
+var passport = require('passport')
+var flash = require('connect-flash')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+
 // set static resource path
 app.use(express.static(__dirname + '/public'));
 
@@ -37,6 +43,16 @@ mongoose.connection.on('error', function (err) {
   console.log(err)
 })
 
-app.use(require('./controllers'))
+// login control
+app.use(session({ secret: 'neucs5610fall2015bohanxu' }))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
+
+// using controller
+require('./config/passport')(passport)
+
+require('./controllers')(app, passport)
+
 
 app.listen(port, ipaddress);

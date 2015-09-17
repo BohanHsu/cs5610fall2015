@@ -1,0 +1,10 @@
+extends _layout
+
+block header
+  h1!= title
+
+block content
+  h1!= message
+  p
+    | hello 
+    = user.local.username

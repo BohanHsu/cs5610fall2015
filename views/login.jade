@@ -1,0 +1,13 @@
+extends _layout
+
+block header
+  h1!= title
+
+block content
+  h1!= message
+
+  div
+    form(action='/login', method='post')
+      input(type='text', name='username')
+      input(type='password', name='password')
+      input(type='submit')

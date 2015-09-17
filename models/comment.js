@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
-var CommentSchema = new mongoose.Schema({
+var commentSchema = new mongoose.Schema({
   content: 'string'
 })
 
-module.exports = mongoose.model('Comment', CommentSchema)
+module.exports = mongoose.model('Comment', commentSchema)
