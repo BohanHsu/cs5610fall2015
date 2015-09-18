@@ -52,6 +52,7 @@ app.post('/image', function (req, res) {
             console.log(err)
           fs.unlink(req.file.path, function (err) {
             var comment = new models.Comment({
+              user: (req.user ? req.user : null),
               content: req.body.content,
               imageUrl: path.join('uploads', userName, req.file.filename)
             })
