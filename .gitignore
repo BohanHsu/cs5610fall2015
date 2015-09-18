@@ -3,3 +3,6 @@ npm-debug.log
 
 *.swp
 *.swo
+
+tmp/*
+public/uploads/*
