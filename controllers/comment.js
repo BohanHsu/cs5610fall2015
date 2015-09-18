@@ -70,4 +70,25 @@ app.post('/image', function (req, res) {
   })
 })
 
+app.get('/delete/:comment_id', function (req, res) {
+  console.log(req.param('comment_id'))
+  var comment_id = req.param('comment_id')
+
+  models.Comment.findOne({ _id: comment_id }, function (err, comment) {
+    console.log(comment)
+    var filePath = path.join(__dirname, '../public', comment.imageUrl)
+    fs.unlink(filePath, function (err) {
+      if (err)
+        console.log(err)
+
+      models.Comment.remove({ _id: comment_id }, function (err) {
+        if (err)
+          console.log(err)
+
+        res.redirect('/comments')
+      })
+    })
+  })
+})
+
 module.exports = app
