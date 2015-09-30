@@ -1,0 +1,57 @@
+extends _layout
+
+block vars
+  -
+    pagePath = '/assignment/admin.html'
+
+block content
+  h1 Admin
+  h2 User
+  hr
+
+  table.table.table-striped(border='2')
+    tr
+      th 
+        span.glyphicon.glyphicon-triangle-bottom
+        |  Username
+      th 
+        span.glyphicon.glyphicon-triangle-bottom
+        |  Password
+      th 
+        span.glyphicon.glyphicon-triangle-bottom
+        |  Role
+      th 
+        span.glyphicon.glyphicon-triangle-bottom
+        |  Action
+    tr
+      td
+        input.form-control(type='text' placeholder='username')
+      td
+        input.form-control(type='password' placeholder='password')
+      td
+        input.form-control(type='text' placeholder='role1, role2')
+      td
+        i.glyphicon.glyphicon-plus
+        i.glyphicon.glyphicon-ok.pull-right
+    tr
+      td alice
+      td
+      td student
+      td
+        i.glyphicon.glyphicon-remove
+        i.glyphicon.glyphicon-pencil.pull-right
+    tr
+      td bob
+      td
+      td faculty | admin
+      td
+        i.glyphicon.glyphicon-remove
+        i.glyphicon.glyphicon-pencil.pull-right
+    tr
+      td charlie
+      td
+      td
+      td
+        i.glyphicon.glyphicon-remove
+        i.glyphicon.glyphicon-pencil.pull-right
+
