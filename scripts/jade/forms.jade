@@ -4,6 +4,9 @@ block vars
   -
     pagePath = '/assignment/forms.html'
 
+block styles
+  link(href='css/datepicker.css', rel='stylesheet')
+
 block content
   h1 Forms
   hr
@@ -75,10 +78,10 @@ block content
           div.row
             div.col-sm-8
               label(for='dateOfBirthSelect') Date of Birth
-              - var n = 1
-              select#dateOfBirthSelect.form-control
-                while n < 32
-                  option(value='#{n}')= n++
+              div.input-append.date(data-date='3-10-2015' data-date-format="dd-mm-yyyy")
+                input.form-control.datepicker(type='text' value='3-10-2015' data-provider='datepicker')
+                span.add-on
+                  i.icon-th
             div.col-sm-1
               i.glyphicon.glyphicon-align-justify
             div.col-sm-1
@@ -148,3 +151,7 @@ block content
                   option(value='#{option}')= option
             div.col-sm-1.col-sm-offset-1
               i.glyphicon.glyphicon-plus
+
+block scripts
+  script(src='/assignment/js/bootstrap-datepicker.js')
+  script(src='/assignment/js/forms.js')
