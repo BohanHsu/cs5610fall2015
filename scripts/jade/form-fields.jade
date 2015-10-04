@@ -15,12 +15,12 @@ block content
     //  a(data-toggle='tab' href='#forms') Forms
     //li.active
     //  a(data-toggle='tab' href='#fields') Fields
-    li.active
-      a(href='/assignment/forms.html') Forms
     li
+      a(href='/assignment/forms.html') Forms
+    li.active
       a(href='/assignment/form-fields.html') Fields
   div.tab-content
-    div#forms.tab-pane.fade.in.active
+    div#forms.tab-pane.fade
       table.table.table-striped(border='2')
         tr
           th 
@@ -50,7 +50,7 @@ block content
           td
             i.glyphicon.glyphicon-remove
             i.glyphicon.glyphicon-pencil.pull-right
-    div#fields.tab-pane.fade
+    div#fields.tab-pane.fade.in.active
       form
         div.form-group
           div.row

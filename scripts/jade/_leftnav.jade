@@ -4,11 +4,24 @@
     ['Profile', '/assignment/profile.html'],
     ['Admin', '/assignment/admin.html'],
     ['Forms', '/assignment/forms.html']]
-.list-group
+//.list-group
+//  each menuItem in leftMemuList
+//    - if (menuItem[1] === pagePath)
+//        a.current-left-nav-link.list-group-item(href='#{menuItem[1]}')
+//          | #{menuItem[0]}
+//    - else
+//      a.list-group-item(href='#{menuItem[1]}')
+//          | #{menuItem[0]}
+
+ul.nav.nav-sidebar
   each menuItem in leftMemuList
     - if (menuItem[1] === pagePath)
-        a.current-left-nav-link.list-group-item(href='#{menuItem[1]}')
-          | #{menuItem[0]}
+        li.active
+          a(href='#{menuItem[1]}')
+            | #{menuItem[0]}
+          span.sr-only
+            | (current)
     - else
-      a.list-group-item(href='#{menuItem[1]}')
-          | #{menuItem[0]}
+        li
+          a.list-group-item(href='#{menuItem[1]}')
+            | #{menuItem[0]}
