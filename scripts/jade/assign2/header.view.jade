@@ -1,0 +1,20 @@
+-
+  var listMenu = [['Home', '/assignment/home.html'], ['Register', '/assignment/register.html'], ['Login', '/assignment/login.html'], ['Username', '#'], ['Logout', '#']]
+.navbar-header
+  button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+    span.sr-only Toggle navigation
+    span.icon-bar
+    span.icon-bar
+    span.icon-bar
+  a.navbar-brand(href='/assignment/home.html') Form Maker
+#bs-example-navbar-collapse-1.collapse.navbar-collapse
+  ul.nav.navbar-nav.navbar-right
+    each menuItem in listMenu
+      li
+        a(href='#{menuItem[1]}')
+          - if (pagePath === menuItem[1])
+            span.current-page-header-link
+              | #{menuItem[0]}
+          - else
+            span
+              | #{menuItem[0]}
