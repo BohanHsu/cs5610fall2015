@@ -1,0 +1,15 @@
+h1 Login
+hr
+
+form.form-horizontal(ng-controller='LoginController')
+  div.form-group
+    label.col-sm-2.control-label(for='inputUsername') Username
+    div.col-sm-7
+      input#inputUsername.form-control(type="text" placeholder='User Name' ng-model='username')
+  div.form-group
+    label.col-sm-2.control-label(for='inputPassword') Password
+    div.col-sm-7
+      input#inputPassword.form-control(type="password" placeholder='Password' ng-model='password')
+  div.form-group
+    div.col-sm-offset-2.col-sm-7
+      a.btn.btn-default(ng-click='login()') Log in

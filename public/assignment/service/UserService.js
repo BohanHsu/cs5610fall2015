@@ -6,6 +6,15 @@
     function UserService() {
       var currentUsers = []
 
+      var service = {
+        findUserByUsernameAndPassword: findUserByUsernameAndPassword,
+        findAllUsers: findAllUsers,
+        createUser: createUser,
+        deleteUserById: deleteUserById,
+        updateUser: updateUser
+      }
+      return service
+
       function findUserByUsernameAndPassword(username, password, callback) {
         currentUsers.forEach(function (user, index, arr) {
           if (user.username === username && user.password === password) {
@@ -46,4 +55,5 @@
         return callback(null)
       }
     }
+
 })()
