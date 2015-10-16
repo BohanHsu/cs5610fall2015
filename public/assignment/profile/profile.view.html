@@ -1,0 +1,38 @@
+
+<h1>Profile</h1>
+<hr/>
+<form ng-controller="ProfileController" class="form-horizontal">
+  <div class="form-group">
+    <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+    <div class="col-sm-7">
+      <input id="inputUsername" type="text" placeholder="User Name" ng-model="username" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-7">
+      <input id="inputPassword" type="password" placeholder="Password" ng-model="password" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+    <div class="col-sm-7">
+      <input id="inputFirstName" type="text" placeholder="First Name" ng-model="firstName" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+    <div class="col-sm-7">
+      <input id="inputLastName" type="text" placeholder="Last Name" ng-model="lastName" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-7">
+      <input id="inputEmail" type="email" placeholder="Email" ng-model="email" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-7"><a ng-click="update()" class="btn btn-default">Update</a></div>
+  </div>
+</form>

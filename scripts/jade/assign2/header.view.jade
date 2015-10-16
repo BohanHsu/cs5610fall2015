@@ -11,12 +11,7 @@
 #bs-example-navbar-collapse-1.collapse.navbar-collapse
   ul.nav.navbar-nav.navbar-right(ng-controller='HeaderController')
     each menuItem in listMenu
-      //- li(ng-class="{'active' : $location.path().indexOf('#{menuItem[1]}'.substring(1, '#{menuItem[1]}'.length)) != -1}")
       li(ng-class="{'active' : '#{menuItem[1]}'.indexOf($location.path()) != -1}")
         a(href='#{menuItem[1]}')
-          - if (pagePath === menuItem[1])
-            span.current-page-header-link
-              | #{menuItem[0]}
-          - else
-            span
-              | #{menuItem[0]}
+          span
+            | #{menuItem[0]}

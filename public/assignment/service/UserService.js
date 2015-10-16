@@ -30,7 +30,8 @@
 
       function createUser(user, callback) {
         user.id = Guid.create(user).value
-        return callback(currentUsers.push(user))
+        currentUsers.push(user)
+        return callback(user)
       }
 
       function deleteUserById(id, callback) {

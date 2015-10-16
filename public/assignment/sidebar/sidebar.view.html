@@ -1,7 +1,7 @@
 
-<ul class="nav nav-sidebar">
-  <li><a href="/assignment/home.html" class="list-group-item">Home</a></li>
-  <li><a href="/assignment/profile.html" class="list-group-item">Profile</a></li>
-  <li><a href="/assignment/admin.html" class="list-group-item">Admin</a></li>
-  <li><a href="/assignment/forms.html" class="list-group-item">Forms</a></li>
+<ul ng-controller="SidebarController" class="nav nav-sidebar">
+  <li ng-class="{'active' : '#/home'.indexOf($location.path()) != -1}"><a href="#/home">Home</a></li>
+  <li ng-class="{'active' : '#/profile'.indexOf($location.path()) != -1}"><a href="#/profile">Profile</a></li>
+  <li ng-class="{'active' : '#/admin'.indexOf($location.path()) != -1}"><a href="#/admin">Admin</a></li>
+  <li ng-class="{'active' : '#/forms'.indexOf($location.path()) != -1}"><a href="#/forms">Forms</a></li>
 </ul>

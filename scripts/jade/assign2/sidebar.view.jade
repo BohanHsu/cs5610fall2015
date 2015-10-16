@@ -1,19 +1,12 @@
 -
   var leftMemuList = [
-    ['Home', '/assignment/home.html'],
-    ['Profile', '/assignment/profile.html'],
-    ['Admin', '/assignment/admin.html'],
-    ['Forms', '/assignment/forms.html']]
+    ['Home', '#/home'],
+    ['Profile', '#/profile'],
+    ['Admin', '#/admin'],
+    ['Forms', '#/forms']]
 
-ul.nav.nav-sidebar
+ul.nav.nav-sidebar(ng-controller='SidebarController')
   each menuItem in leftMemuList
-    - if (menuItem[1] === pagePath)
-        li.active
-          a(href='#{menuItem[1]}')
-            | #{menuItem[0]}
-          span.sr-only
-            | (current)
-    - else
-        li
-          a.list-group-item(href='#{menuItem[1]}')
-            | #{menuItem[0]}
+    li(ng-class="{'active' : '#{menuItem[1]}'.indexOf($location.path()) != -1}")
+      a(href='#{menuItem[1]}')
+        | #{menuItem[0]}
