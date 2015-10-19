@@ -16,8 +16,8 @@
       return service
 
       function findUserByUsernameAndPassword(username, password, callback) {
+        var matchUser = null
         currentUsers.forEach(function (user, index, arr) {
-          var matchUser = null
           if (user.username === username && user.password === password) {
             matchUser = user
           }
