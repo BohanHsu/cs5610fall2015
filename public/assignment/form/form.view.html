@@ -1,0 +1,27 @@
+
+<h1>Forms</h1>
+<hr/>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="/assignment/forms.html">Forms</a></li>
+  <li><a href="/assignment/form-fields.html">Fields</a></li>
+</ul>
+<div ng-controller="FormController" class="tab-content">
+  <div id="forms" class="tab-pane fade in active">
+    <table border="2" class="table table-striped">
+      <tr>
+        <th> <span class="glyphicon glyphicon-triangle-bottom"></span> Form Name</th>
+        <th> <span class="glyphicon glyphicon-triangle-bottom"></span> Action</th>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" placeholder="name" ng-model="name" class="form-control"/>
+        </td>
+        <td><i ng-click="addForm()" class="glyphicon glyphicon-plus"></i><i ng-click="updateForm()" class="glyphicon glyphicon-ok pull-right"></i></td>
+      </tr>
+      <tr ng-repeat="form in forms">
+        <td>{{form.name}}</td>
+        <td><i ng-click="deleteForm($index)" class="glyphicon glyphicon-remove"></i><i ng-click="selectForm($index)" class="glyphicon glyphicon-pencil pull-right"></i></td>
+      </tr>
+    </table>
+  </div>
+</div>

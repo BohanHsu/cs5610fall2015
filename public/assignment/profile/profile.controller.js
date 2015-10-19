@@ -25,6 +25,7 @@
       }
 
       function update() {
+        console.log('call update')
         var newUser = {
           username: $scope.username,
           password: $scope.password,
@@ -34,9 +35,12 @@
         }
 
         UserService.updateUser(user.id, newUser, function(user) {
+          console.log(user)
           $rootScope.user = user
-          $location.path('/profile')
+          //$location.path('/profile')
         })
       }
+
+      $scope.update = update
     }
 })()

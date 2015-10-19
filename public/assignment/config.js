@@ -22,6 +22,11 @@
                 templateUrl: './profile/profile.view.html',
                 controller: 'ProfileController'
               })
+        .when('/form', 
+              {
+                templateUrl: './form/form.view.html',
+                controller: 'FormController'
+              })
         .otherwise({
           redirectTo: 'home'
         })

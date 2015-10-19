@@ -17,11 +17,12 @@
 
       function findUserByUsernameAndPassword(username, password, callback) {
         currentUsers.forEach(function (user, index, arr) {
+          var matchUser = null
           if (user.username === username && user.password === password) {
-            return callback(user)
+            matchUser = user
           }
         })
-        return callback(null)
+        return callback(matchUser)
       }
 
       function findAllUsers(callback) {
@@ -38,23 +39,23 @@
         currentUsers.forEach(function (user, i, arr) {
           if (user.id === id) {
             currentUsers.slice(i, 1)
-            return callback(currentUsers)
           }
         })
         return callback(currentUsers)
       }
 
       function updateUser(id, newUser, callback) {
+        var updatedUser = null
         currentUsers.forEach(function (user, i, arr) {
           if (user.id === id) {
             for (var key in newUser) {
               user[key] = newUser[key]
             }
-            return callback(user)
+            updatedUser = user
           }
         })
-        return callback(null)
+        console.log('not found')
+        return callback(updatedUser)
       }
     }
-
 })()

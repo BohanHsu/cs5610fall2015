@@ -5,3 +5,4 @@ jade home.view.jade --out ./../../../public/assignment/home --pretty
 jade login.view.jade --out ./../../../public/assignment/login --pretty
 jade register.view.jade --out ./../../../public/assignment/register --pretty
 jade profile.view.jade --out ./../../../public/assignment/profile --pretty
+jade form.view.jade --out ./../../../public/assignment/form --pretty
