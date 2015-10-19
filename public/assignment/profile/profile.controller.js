@@ -5,7 +5,6 @@
 
     function ProfileController($scope, $rootScope, $location, UserService) {
       var user = $rootScope.user
-      console.log(user)
       if (user) {
         if (user.username) {
           $scope.username = user.username
@@ -25,7 +24,6 @@
       }
 
       function update() {
-        console.log('call update')
         var newUser = {
           username: $scope.username,
           password: $scope.password,
@@ -35,9 +33,7 @@
         }
 
         UserService.updateUser(user.id, newUser, function(user) {
-          console.log(user)
           $rootScope.user = user
-          //$location.path('/profile')
         })
       }
 

@@ -8,10 +8,8 @@
         UserService.findUserByUsernameAndPassword($scope.username, $scope.password, function (user) {
           if (user) {
             $rootScope.user = user
-            console.log(user)
             $location.path('/profile')
           } else {
-            console.log(user)
           }
         })
       }

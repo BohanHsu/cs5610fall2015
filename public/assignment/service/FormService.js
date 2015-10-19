@@ -16,10 +16,14 @@
       return service
 
       function createFormForUser(userId, form, callback) {
+        newForm = {}
         form.formId = Guid.create(form).value
-        form.userId = userId
-        forms.push(form)
-        return callback(form)
+        for (var key in form) {
+          newForm[key] = form[key]
+        }
+        newForm.userId = userId
+        forms.push(newForm)
+        return callback(newForm)
       }
 
       function findAllFormsForUser(userId, callback) {
@@ -33,12 +37,13 @@
       }
 
       function deleteFormById(formId, callback) {
+        var index = -1
         forms.forEach(function (form, i, arr) {
           if (form.formId === formId) {
-            forms.slice(i, 1)
-            return callback(forms)
+            index = i
           }
         })
+        forms.splice(index, 1)
         return callback(forms)
       }
 

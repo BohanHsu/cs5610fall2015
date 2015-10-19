@@ -54,7 +54,6 @@
             updatedUser = user
           }
         })
-        console.log('not found')
         return callback(updatedUser)
       }
     }

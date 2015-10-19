@@ -10,7 +10,6 @@
           password: $scope.password,
           email: $scope.email
         }
-        console.log(user)
         UserService.createUser(user, function (user) {
           if (user) {
             $rootScope.user = user
