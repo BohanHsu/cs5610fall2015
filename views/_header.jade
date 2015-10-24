@@ -12,7 +12,7 @@ div.navbar.navbar-default.navbar-fixed-top
       ]
     div.navbar-header
       a.navbar-brand(href='/')
-        | XBH
+        | TasteOf
       button.navbar-toggle(type='button' data-toggle='collapse' data-target='#navbar-main')
         span.icon-bar
         span.icon-bar
@@ -36,3 +36,37 @@ div.navbar.navbar-default.navbar-fixed-top
                       | #{subMenuItem[0]}
 
       ul.nav.navbar-nav.navbar-right
+        li
+          a
+            | Signup
+        li
+          if user
+            a
+              - console.log(user)
+              | Hello #{user.local.username}
+          else
+            a(data-toggle='modal' data-target='#loginModal')
+              | Login 
+
+  div#loginModal.modal.fade(role='dialog' ng-controller='LoginController')
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button.close(type="button" data-dismiss="modal")
+           | &times;
+          div.modal-title
+            h2 Login
+        div.modal-body
+          form.form-horizontal
+            div.form-group
+              label.control-label(for='inputUsername') Username:
+              div
+                input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
+          form.form-horizontal
+            div.form-group
+              label.control-label(for='inputUsername') Password:
+              div
+                input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+
+        div.modal-footer
+          button.btn.btn-default(type="button" ng-click='login()') Login

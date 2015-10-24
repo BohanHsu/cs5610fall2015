@@ -1,5 +1,6 @@
 var express = require('express')
 var app = express()
+var authenticate = require('../middleware/authenticate')
 
 module.exports = function (passport) {
 
@@ -7,11 +8,18 @@ module.exports = function (passport) {
     res.render('login', {title: 'login', message: 'login'})
   })
   
-  app.post('/', passport.authenticate('local-login', {
-    successRedirect: '/login/profile',
-    failureRedirect: '/login',
-    failureFlash: true
-  }))
+  app.post('/', function (req, res) {
+    passport.authenticate('local-login', function (err, user) {
+      if (err) {
+        res.json({success: false, err: err})
+      } else {
+        req.session['user'] = user
+        console.log('session', req.session)
+        console.log(req.session.user)
+        res.json({success: true, user: user})
+      }
+    })(req, res, null)
+  })
   
   app.get('/signup', function (req, res) {
     res.render('signup', {title: 'sign up', message: 'sign up'})
@@ -23,8 +31,8 @@ module.exports = function (passport) {
     faliureFlash: true
   }))
   
-  app.get('/profile', isLoggedIn, function (req, res) {
-    res.render('profile', {title: 'profile', message: 'profile', user: req.user})
+  app.get('/profile', authenticate, function (req, res) {
+    res.render('profile', {title: 'profile', message: 'profile', user: req.session.user})
   })
   
   app.get('/logout', function (req, res) {
@@ -32,12 +40,12 @@ module.exports = function (passport) {
     res.redirect('/')
   })
   
-  function isLoggedIn (req, res, next) {
-    if (req.isAuthenticated())
-      return next()
-  
-    res.redirect('/')
-  }
+  //function isLoggedIn (req, res, next) {
+  //  if (req.isAuthenticated())
+  //    return next()
+  //
+  //  res.redirect('/')
+  //}
 
   return app
 }

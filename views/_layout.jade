@@ -1,10 +1,8 @@
-html(lang='en')
+html(lang='en' ng-app='TasteOfApp')
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
-    //-link(href='/vendor/bootstrap/dist/css/bootstrap.min.css')
-    //-link(href='/css/flatly.min.css')
-    link(href='/css/flatly.min.css' rel='stylesheet')
+    link(href='/css/flatly.css' rel='stylesheet')
     link(href='/css/custom.min.css' rel='stylesheet')
     title!= title
 
@@ -20,4 +18,8 @@ html(lang='en')
 
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/vendor/angular/angular.min.js')
+    script(src='/vendor/angular-route/angular-route.min.js')
     script(src='/js/custom.js')
+
+    block scripts
