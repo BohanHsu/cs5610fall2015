@@ -5,17 +5,20 @@ var authenticate = require('../middleware/authenticate')
 module.exports = function (passport) {
 
   app.get('/', function (req, res) {
+    if (req.session.user)
+      res.set(user, req.session.user)
+    else
+      res.set(user, null)
+
     res.render('login', {title: 'login', message: 'login'})
   })
-  
+
   app.post('/', function (req, res) {
     passport.authenticate('local-login', function (err, user) {
       if (err) {
         res.json({success: false, err: err})
       } else {
         req.session['user'] = user
-        console.log('session', req.session)
-        console.log(req.session.user)
         res.json({success: true, user: user})
       }
     })(req, res, null)
@@ -37,15 +40,9 @@ module.exports = function (passport) {
   
   app.get('/logout', function (req, res) {
     req.logout()
+    req.session['user'] = null
     res.redirect('/')
   })
-  
-  //function isLoggedIn (req, res, next) {
-  //  if (req.isAuthenticated())
-  //    return next()
-  //
-  //  res.redirect('/')
-  //}
 
   return app
 }
