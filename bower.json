@@ -13,6 +13,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "angular-ui": "~0.4.0",
+    "angular-bootstrap": "~0.14.3",
+    "cropper": "~1.0.0",
+    "angular-file-upload": "~2.1.4"
   }
 }

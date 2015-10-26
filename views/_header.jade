@@ -12,7 +12,7 @@ div.navbar.navbar-default.navbar-fixed-top
       ]
     div.navbar-header
       a.navbar-brand(href='/')
-        | XBH
+        | TasteOf
       button.navbar-toggle(type='button' data-toggle='collapse' data-target='#navbar-main')
         span.icon-bar
         span.icon-bar
@@ -35,4 +35,65 @@ div.navbar.navbar-default.navbar-fixed-top
                     a(href='#{subMenuItem[1]}')
                       | #{subMenuItem[0]}
 
-      ul.nav.navbar-nav.navbar-right
+      if user
+        ul.nav.navbar-nav.navbar-right
+          li.dropdown
+            a.dropdown-toggle#loggedInMenu(data-toggle='dropdown')
+              | Welcome, #{user.local.username}!
+              span.caret
+            ul.dropdown-menu(aria-labelledby='loggedInMenu')
+              li
+                a(href='/login/profile')
+                  | My Profile
+              li
+                a(href='/login/logout')
+                  | Logout
+
+      else
+        ul.nav.navbar-nav.navbar-right(ng-if='user != null')
+          li.dropdown
+            a.dropdown-toggle#loggedInMenu(data-toggle='dropdown')
+              | Welcome, {{user.local.username}}!
+              span.caret
+            ul.dropdown-menu(aria-labelledby='loggedInMenu')
+              li
+                a(href='/login/profile')
+                  | My Profile
+              li
+                a(href='/login/logout')
+                  | Logout
+        
+        ul.nav.navbar-nav.navbar-right(ng-if='user == null')
+          li
+            a(href='/login/signup')
+              | Signup
+          li
+            a(data-toggle='modal' data-target='#loginModal')
+              | Login 
+
+  if !user
+    div.container#loginModal.modal.fade(login-model role='dialog' ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal")
+             | &times;
+            div.modal-title
+              h2 Login
+          div.modal-body
+            div.central
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputUsername') Username:
+                  div
+                    input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputUsername') Password:
+                  div
+                    input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+              div.alert.alert-danger(ng-if='err != null')
+                {{err}}
+
+          div.modal-footer
+            button.btn.btn-default(type="button" ng-click='login()') Login

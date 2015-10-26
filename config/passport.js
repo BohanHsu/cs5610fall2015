@@ -25,15 +25,20 @@ module.exports = function (passport) {
           return done(err)
 
         if (user) {
-          return done(null, false, req.flash('signupMessage', 'That email is aleady taken!')) 
+          return done('That username is aleady taken!', null) 
         } else {
           var newUser = new User()
           newUser.local.username = username
           newUser.local.password = newUser.generateHash(password)
+          newUser.local.email = req.body['email']
+          newUser.local.firstname = req.body['firstname']
+          newUser.local.lastname = req.body['lastname']
+          newUser.local.imageUrl = req.body['imageUrl']
 
           newUser.save(function (err) {
-            if (err)
-              throw err
+            if (err) {
+              return done('Something wrong happened when store user!', null) 
+            }
 
             return done(null, newUser)
           })
@@ -52,11 +57,13 @@ module.exports = function (passport) {
       if (err)
         return done(err)
 
-      if (!user)
-        return done(null, false, req.flash('loginMessage', 'No user found.'))
+      if (!user) {
+        return done('User not exist', null)
+      }
 
-      if (!user.validPassword(password))
-        return done(null, false, req.flash('loginMessage', 'Wrong password.'))
+      if (!user.validPassword(password)) {
+        return done('Wrong password', null)
+      }
 
       return done(null, user)
     })

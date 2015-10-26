@@ -7,4 +7,5 @@ module.exports = function (app, passport) {
   app.use('/', require('./home'))
   app.use('/comments', require('./comment'))
   app.use('/login', require('./login')(passport))
+  app.use('/api/image', require('./image'))
 }

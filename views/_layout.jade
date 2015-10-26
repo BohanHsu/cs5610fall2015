@@ -1,23 +1,27 @@
-html(lang='en')
-  head
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible" content="IE=edge")
-    //-link(href='/vendor/bootstrap/dist/css/bootstrap.min.css')
-    //-link(href='/css/flatly.min.css')
-    link(href='/css/flatly.min.css' rel='stylesheet')
-    link(href='/css/custom.min.css' rel='stylesheet')
-    title!= title
+block vars
 
-  body
-    include ./_header.jade
+html(lang='en' ng-app='#{appName}')
+head
+  meta(charset="utf-8")
+  meta(http-equiv="X-UA-Compatible" content="IE=edge")
+  link(href='/vendor/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet')
+  link(href='/css/flatly.css' rel='stylesheet')
+  link(href='/css/custom.min.css' rel='stylesheet')
+  link(href='/css/style.css' rel='stylesheet')
 
-    div.container
-      block content
+  block style
 
+  title!= title
 
-    a(href='/login/logout')
-      |logout
+body
+  include ./_header.jade
 
-    script(src='/vendor/jquery/dist/jquery.min.js')
-    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
-    script(src='/js/custom.js')
+  div.container
+    block content
+
+  script(src='/vendor/jquery/dist/jquery.min.js')
+  script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+  script(src='/vendor/angular/angular.min.js')
+  script(src='/js/custom.js')
+
+  block scripts
