@@ -20,7 +20,6 @@ app.post('/avatar/original/delete' , function(req, res) {
 
     if (req.body['crop_path'] != '') {
       var filePath = req.body['crop_path']
-      console.log('crop', filePath)
       var filepath = path.join(__dirname, '../public', filePath)
       deleteFile(filepath, function() {
       })
@@ -74,11 +73,11 @@ app.post('/avatar/crop', function(req, res) {
       res.json({success: true, 'cropedImagePath': "/" + path.join('uploads/avatar', 'crd_'+path.basename(imagePath))})
     },
     function (err) {
-      console.log(err)
+      res.json({success: false, 'err': err})
     }
     )
   }, function (err) {
-    console.log(err)
+    res.json({success: false, 'err': err})
   })
 })
 
