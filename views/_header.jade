@@ -71,31 +71,29 @@ div.navbar.navbar-default.navbar-fixed-top
             a(data-toggle='modal' data-target='#loginModal')
               | Login 
 
-  div#loginModal.modal.fade(login-model role='dialog' ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
-    div.modal-dialog
-      div.modal-content
-        div.modal-header
-          button.close(type="button" data-dismiss="modal")
-           | &times;
-          div.modal-title
-            h2 Login
-        div.modal-body
-          div.central
-            form.form-horizontal
-              div.form-group
-                label.control-label(for='inputUsername') Username:
-                div
-                  input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
-            form.form-horizontal
-              div.form-group
-                label.control-label(for='inputUsername') Password:
-                div
-                  input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
-            div.alert.alert-danger(ng-if='err != null')
-              {{err}}
+  if !user
+    div.container#loginModal.modal.fade(login-model role='dialog' ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal")
+             | &times;
+            div.modal-title
+              h2 Login
+          div.modal-body
+            div.central
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputUsername') Username:
+                  div
+                    input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputUsername') Password:
+                  div
+                    input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+              div.alert.alert-danger(ng-if='err != null')
+                {{err}}
 
-        div.modal-footer
-          button.btn.btn-default(type="button" ng-click='login()') Login
-
-script
-
+          div.modal-footer
+            button.btn.btn-default(type="button" ng-click='login()') Login

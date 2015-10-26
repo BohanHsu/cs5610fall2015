@@ -1,3 +1,6 @@
+block vars
+  - var appName = 'TasteOfApp'
+
 extends _layout
 
 block header
@@ -6,7 +9,9 @@ block header
 block content
   h1!= message
 
-  a(href='/login')
-    |login
-
 block scripts
+  script(src='/js/home/app.js')
+  script(src='/js/login/LoginService.js')
+  script(src='/js/login/login.controller.js')
+
+

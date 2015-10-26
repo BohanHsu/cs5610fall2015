@@ -8,3 +8,11 @@ block content
   p
     | hello 
     = user.local.username
+  div
+    p
+      = user.local.firstname
+    p
+      = user.local.lastname
+    p
+      = user.local.email
+    img(src='#{user.local.imageUrl}')
