@@ -45,22 +45,25 @@ block content
               button.btn.btn-default(ng-click='signup()') Register
 
         div.col-sm-5
-          h3
-            | Upload Avatar
-          div(ng-show='uploader.isHTML5')
-            div#cropperDiv.ng-hide(ng-hide='originalImageUrlHide')
-              img#avatarOriginalImg(src='')
-              button.btn.btn-default(ng-click='crop()')
-                | Crop
-              hr
-            div(ng-hide='croppedImageUrlHide')
-              img(ng-src='{{croppedImageUrl}}')
-            div.btn.btn-default.btn-file
-              | {{chooseImageBtnText}}
-              input#avatarUpload(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
-          ul
-            li(ng-repeat='item in uploader.queue')
-              | {{item.file.name}}
+          div.col-sm-4
+          div.col-sm-8
+            h3
+              | Upload Avatar
+            div#cropperDivParent(ng-show='uploader.isHTML5')
+              div#cropperDiv.ng-hide(ng-hide='originalImageUrlHide')
+                img#avatarOriginalImg(src='')
+              div.ng-hide(ng-hide='originalImageUrlHide')
+                button.btn.btn-default(ng-click='crop()')
+                  | Crop
+                hr
+              div#avatarPreviewDiv(ng-hide='croppedImageUrlHide')
+                img(ng-src='{{croppedImageUrl}}')
+              div.btn.btn-default.btn-file
+                | {{chooseImageBtnText}}
+                input#avatarUpload(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
+            //- ul
+            //-   li(ng-repeat='item in uploader.queue')
+            //-     | {{item.file.name}}
 
 block scripts
   script(src='/vendor/angular-file-upload/dist/angular-file-upload.min.js')
@@ -68,8 +71,10 @@ block scripts
   script(src='/js/signup/app.js')
   script(src='/js/signup/signup.js')
   script(src='/js/signup/signup.controller.js')
+  script(src='/js/signup/signupService.js')
   script(src='/js/login/loginService.js')
   script(src='/js/login/login.controller.js')
+  script(src='/js/service/imageService.js')
 
 block style
   link(href='/vendor/cropper/dist/cropper.min.css' rel='stylesheet')
