@@ -103,7 +103,26 @@ app.post('/avatar/original', multipartMiddleware, function(req, res) {
           if (err)
             res.json({success: false, 'err': err})
 
-          res.json({success: true, imageUrl: '/' + path.join('uploads', 'avatar', newName)})
+          easyimg.info(newPath).then(function(file) {
+            if (file['width'] > 275) {
+              newHeight = file['height'] / file['width'] * 275
+              easyimg.resize({
+                src: newPath,
+                dst: newPath,
+                height: newHeight,
+                width: 275
+              }).then(
+              function(image) {
+                res.json({success: true, imageUrl: '/' + path.join('uploads', 'avatar', newName)})
+              },
+              function(err) {
+                res.json({success: false, 'err': err})
+              }
+              )
+            } else {
+              res.json({success: true, imageUrl: '/' + path.join('uploads', 'avatar', newName)})
+            }
+          })
         })
       })
     })
