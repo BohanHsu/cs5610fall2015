@@ -35,3 +35,13 @@ html, body { height: 100%; }
 #cropperDiv {
   min-width: 100%;
 }
+
+#cropperDivParent {
+  height: 200px;
+}
+
+#avatarPreviewDiv {
+  height: 100px;
+  width: 100px;
+}
+
