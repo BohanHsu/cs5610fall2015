@@ -1,18 +1,26 @@
 div.navbar.navbar-default.navbar-fixed-top
   div.container
     -
-      var leftList = [
-        ['Home', '/'], 
-        ['Comments', '/comments'], 
-        ['User', [
-          ['Login', '/login'], 
-          ['SignUp', '/login/signup']
-          ]
-        ]
-      ]
+      var leftList = []
+      //var leftList = [
+      //  ['Home', '/'], 
+      //  ['Comments', '/comments'], 
+      //  ['User', [
+      //    ['Login', '/login'], 
+      //    ['SignUp', '/login/signup']
+      //    ]
+      //  ]
+      //]
     div.navbar-header
-      a.navbar-brand(href='/')
-        | TasteOf
+      if user
+        a.navbar-brand(href='/#/timeline')
+          | TasteOf
+      else
+        a.navbar-brand(href='/#/timeline' ng-if='user != null')
+          | TasteOf
+        a.navbar-brand(href='/#/visitor' ng-if='user == null')
+          | TasteOf
+
       button.navbar-toggle(type='button' data-toggle='collapse' data-target='#navbar-main')
         span.icon-bar
         span.icon-bar
@@ -97,3 +105,5 @@ div.navbar.navbar-default.navbar-fixed-top
 
           div.modal-footer
             button.btn.btn-default(type="button" ng-click='login()') Login
+  else
+    div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")

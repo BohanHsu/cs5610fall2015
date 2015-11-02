@@ -5,7 +5,8 @@
 
       $scope.init = function(user) {
         $scope.err = null
-        $scope.user = user
+        //$scope.user = user
+        setUser(user)
       }
 
       $scope.login = function() {

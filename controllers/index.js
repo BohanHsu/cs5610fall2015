@@ -8,4 +8,5 @@ module.exports = function (app, passport) {
   app.use('/comments', require('./comment'))
   app.use('/login', require('./login')(passport))
   app.use('/api/image', require('./image'))
+  app.use('/api', require('./api'))
 }

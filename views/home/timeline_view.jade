@@ -1,0 +1,71 @@
+div.row(ng-controller='TimelineController')
+  div.col-sm-2
+  div.col-sm-8
+    h1
+      | What's up
+
+    div.row.timeline-tweet-box
+      div.row.home-tweet-box.tweet-box
+        div.col-xs-2.col-md-1
+          img#tweet-box-avatar(src='img/default.jpeg')
+        div.col-xs-10.col-md-11
+          textarea#tweet-box-input.form-control(adjust-textarea='' ng-model='post')
+      div.row.margin-vertical-8
+        div.pull-right
+          span.margin-horizontal-8 {{postRemainLength}}
+          button.button.btn(ng-click='sendPost()') Post
+
+    hr
+    div.text-center.row.ng-hide(ng-hide='timelineViewMoreHide')
+      span.text-center
+        a(ng-click='clickViewMore()') view more
+      hr
+
+    div.row
+      div.row.margin-vertical-4
+        div.col-xs-2.col-xs-offset-1.col-sm-1.col-sm-offset-1
+          img#post-template-img(src='img/default.jpeg')
+        div.col-xs-8.col-sm-9
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue ante, euismod sed pulvinar vitae, pellentesque ac lacus. Nam hendrerit, nisi sit amet mattis auctor, risus orci pretium velit, et efficitur velit metus non velit. 
+          div.row.margin-vertical-4
+            div.col-xs-2
+              img#post-reply-img(src='img/default.jpeg')
+            div.col-xs-10
+              textarea#tweet-reply-input.form-control(adjust-textarea='')
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p lou shang shi sha bi
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p ting ting san lou zenme shuo
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p er lou shi sha bi
+        div.col-xs-4.text-center
+          a forward
+        div.col-xs-4.text-center
+          a reply
+        div.col-xs-4.text-center
+          a like
+
+
+    hr
+    div.pagination-footer
+      nav.text-center
+        ul.pagination
+          li(ng-class='{disabled: currentPage == 1}')
+            a(aria-label='Previous' ng-click='prevPage()')
+              span(aria-hidden='true') &laquo;
+          li(ng-repeat='pageIndex in getPageScope()'  ng-class='{active: currentPage == pageIndex}')
+            a(ng-click='changePage(pageIndex)') {{pageIndex}}
+          li
+            a(aria-label='Next' ng-click='nextPage()')
+              span(aria-hidden='true') &raquo;
+
+  div.col-sm-2

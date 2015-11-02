@@ -3,7 +3,7 @@
     .module('TasteOfApp')
     .factory('LoginService', function($http) {
       return {
-        login: login
+        login: login,
       }
 
       function login(username, password, callback) {
