@@ -6,13 +6,14 @@
         login: login,
       }
 
-      function login(username, password, callback) {
+      function login(username, password, rememberMe, callback) {
         $http({
           method: 'POST',
           url: '/login',
           data: $.param({
             username: username,
-            password: password
+            password: password,
+            rememberMe: rememberMe
           }),
           dataType: 'json',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}

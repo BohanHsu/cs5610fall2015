@@ -19,7 +19,7 @@ div.row(ng-controller='TimelineController')
     div.text-center.row.ng-hide(ng-hide='timelineViewMoreHide')
       span.text-center
         a(ng-click='clickViewMore()') view more
-      hr
+    hr
 
     div.row
       div.row.margin-vertical-4
@@ -54,6 +54,47 @@ div.row(ng-controller='TimelineController')
         div.col-xs-4.text-center
           a like
 
+    div.row(ng-repeat='pt in posts')
+      hr
+      div.row.margin-vertical-4
+        div.col-xs-2.col-xs-offset-1.col-sm-1.col-sm-offset-1
+          img#post-template-img(src='img/default.jpeg')
+        div.col-xs-8.col-sm-9
+          p {{pt.tweet.content}}
+      div.row.margin-vertical-4.ng-hide(ng-hide='true')
+        div.col-xs-2.col-xs-offset-1.col-sm-1.col-sm-offset-1
+        div.col-xs-8.col-sm-9
+          div.row.margin-vertical-4
+            div.col-xs-2
+              img#post-reply-img(src='img/default.jpeg')
+            div.col-xs-10
+              textarea#tweet-reply-input.form-control(adjust-textarea='')
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p lou shang shi sha bi
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p ting ting san lou zenme shuo
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(src='img/default.jpeg')
+                div.col-xs-10
+                  p er lou shi sha bi
+      div.col-xs-4.text-center
+        a forward
+      div.col-xs-4.text-center
+        a reply
+      div.col-xs-4.text-center
+        a like
+
+    hr
+    button(ng-click='loadPost()')
+    p
+      | {{response}}
 
     hr
     div.pagination-footer

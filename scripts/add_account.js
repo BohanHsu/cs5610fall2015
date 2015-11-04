@@ -29,19 +29,19 @@ mongoose.connection.on('error', function (err) {
 
 var User = require('../models/user')
 var Following = require('../models/following')
-var Post = require('../models/following')
-var Tweet = require('../models/following')
+var Post = require('../models/post')
+var Tweet = require('../models/tweet')
 
-User.find({}).remove()
+User.find({}).remove(function() {})
 console.log('all user gone :)')
 
-Following.find({}).remove()
+Following.find({}).remove(function() {})
 console.log('all following gone :)')
 
-Post.find({}).remove()
+Post.find({}).remove(function() {})
 console.log('post gone')
 
-Tweet.find({}).remove()
+Tweet.find({}).remove(function() {})
 console.log('tweet gone')
 
 var user1 = new User()
@@ -50,8 +50,8 @@ user1.local.password = user1.generateHash('xbh')
 user1.save()
 
 var user2 = new User()
-user1.local.username = 'x'
-user1.local.password = user1.generateHash('x')
+user2.local.username = 'x'
+user2.local.password = user1.generateHash('x')
 user2.save()
 
 var following1 = new Following()
@@ -73,3 +73,33 @@ var following4 = new Following()
 following4.follow_by = user2._id
 following4.following = user2._id
 following4.save()
+
+var tweet1 = new Tweet()
+tweet1.content = 'user1 tweet1 post1 hehe'
+tweet1.save()
+
+var tweet2 = new Tweet()
+tweet2.content = 'user1 tweet2 post1 hehe'
+tweet2.save()
+
+var tweet3 = new Tweet()
+tweet3.content = 'user2 tweet3 post3 hehe'
+tweet3.save()
+
+var post1 = new Post()
+post1.post_type = 'tweet'
+post1.user_id = user1._id
+post1.tweet_id = tweet1._id
+post1.save()
+
+var post2 = new Post()
+post2.post_type = 'tweet'
+post2.user_id = user1._id
+post2.tweet_id = tweet2._id
+post2.save()
+
+var post3 = new Post()
+post3.post_type = 'tweet'
+post3.user_id = user2._id
+post3.tweet_id = tweet3._id
+post3.save()

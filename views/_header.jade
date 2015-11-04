@@ -100,6 +100,11 @@ div.navbar.navbar-default.navbar-fixed-top
                   label.control-label(for='inputUsername') Password:
                   div
                     input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputRememberMe') Remember Me:
+                  div
+                    input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe')
               div.alert.alert-danger(ng-if='err != null')
                 {{err}}
 

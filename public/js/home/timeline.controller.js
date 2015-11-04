@@ -40,6 +40,7 @@
       $scope.post = ''
       $scope.timelineViewMoreHide = false
       $scope.currentPage = 1
+      $posts = []
 
       function updatePostRemainLength() {
         $scope.postRemainLength = 280 - $scope.post.length
@@ -86,6 +87,34 @@
         if (user && $scope.post != '') {
           PostService.sendPost(user, $scope.post, function(response) {
             console.log('response', response)
+          })
+        }
+      }
+
+      $scope.loadPost = function() {
+        var user = $rootScope.user
+        if (user) {
+          PostService.loadPost(user, function(response) {
+            console.log(response)
+
+            if (response.success) {
+              tweet_dict = {}
+              response.tweets.forEach(function(element) {
+                tweet_dict[element._id] = element
+              })
+              response['tweet_dict'] = tweet_dict
+            }
+            console.log(tweet_dict)
+
+            response.posts.forEach(function(post) {
+              if (post.post_type == 'tweet') {
+                post['tweet'] = tweet_dict[post.tweet_id]
+              }
+            })
+
+            console.log(response)
+            $scope.response = response
+            $scope.posts = response.posts
           })
         }
       }
