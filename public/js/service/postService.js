@@ -4,12 +4,14 @@
     .factory('PostService', function($http) {
 
       return {
-        loadPost: function(user, callback) {
+        loadPost: function(user, page, amount, callback) {
           $http({
             method: 'POST',
             url: '/api/post/all',
             data: {
-              'user_id': user._id
+              'user_id': user._id,
+              'page': page,
+              'amount': amount
             }
           }).success(callback)
         },
@@ -24,18 +26,6 @@
               'tweet': post
             }
           }).success(callback)
-          //}).success(function(response) {
-          //  if (response.success) {
-          //    tweet_dict = {}
-          //    response.tweets.forEach(function(element) {
-          //      tweet_dict[element._id] = element
-          //    })
-          //    response['tweet_dict'] = tweet_dict
-          //    callback(response)
-          //  } else {
-          //    callback(response)
-          //  }
-          //})
         }
       }
     })

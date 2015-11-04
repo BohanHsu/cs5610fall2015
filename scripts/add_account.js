@@ -47,11 +47,13 @@ console.log('tweet gone')
 var user1 = new User()
 user1.local.username = 'xbh'
 user1.local.password = user1.generateHash('xbh')
+user1.local.imageUrl = '/uploads/avatar/crd_c9f2eb63-6b60-8cb9-68e6-3ad986a0f30b_download.jpeg'
 user1.save()
 
 var user2 = new User()
 user2.local.username = 'x'
 user2.local.password = user1.generateHash('x')
+user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
 user2.save()
 
 var following1 = new Following()
@@ -78,9 +80,6 @@ var tweet1 = new Tweet()
 tweet1.content = 'user1 tweet1 post1 hehe'
 tweet1.save()
 
-var tweet2 = new Tweet()
-tweet2.content = 'user1 tweet2 post1 hehe'
-tweet2.save()
 
 var tweet3 = new Tweet()
 tweet3.content = 'user2 tweet3 post3 hehe'
@@ -92,11 +91,18 @@ post1.user_id = user1._id
 post1.tweet_id = tweet1._id
 post1.save()
 
-var post2 = new Post()
-post2.post_type = 'tweet'
-post2.user_id = user1._id
-post2.tweet_id = tweet2._id
-post2.save()
+
+for (var i = 0; i < 100; i++) {
+  var tweet2 = new Tweet()
+  tweet2.content = 'user1 tweet2 post1 hehe, this is a random post, with id=' + i
+  tweet2.save()
+
+  var post2 = new Post()
+  post2.post_type = 'tweet'
+  post2.user_id = user1._id
+  post2.tweet_id = tweet2._id
+  post2.save()
+}
 
 var post3 = new Post()
 post3.post_type = 'tweet'

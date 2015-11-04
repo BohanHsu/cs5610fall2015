@@ -13,13 +13,28 @@ app.post('/all', function(req, res) {
       var following_ids = followings.map(function(follow) {
         return follow.following._id
       })
+
+      console.log('shabi', req.body.page)
+      console.log('shabi', req.body.amount)
+
+      var skip = (parseInt(req.body.page) - 1) * 20
       Post.find({
         user_id: {$in: following_ids}
-      }).
-      limit(20)
-      .skip(0)
-      .sort({date: -1})
+      })
+      .populate('user_id')
+      .sort({updated: '-1'})
+      .limit(parseInt(req.body.amount))
+      .skip(skip)
       .exec(function(err, posts) {
+
+        var totalCnt = null
+        Post.find({
+          user_id: {$in: following_ids}
+        }).count(function(err, cnt) {
+          totalCnt = cnt
+          console.log('cnt', cnt)
+        })
+
         var tweet_ids = posts.filter(function(post) {
           return post.post_type == 'tweet'
         }).map(function(post) {
@@ -29,7 +44,7 @@ app.post('/all', function(req, res) {
         Tweet.find({
           _id: {$in: tweet_ids}
         }).exec(function(err, tweets) {
-          res.json({success: true, 'posts': posts, 'tweets': tweets})
+          res.json({success: true, 'posts': posts, 'tweets': tweets, 'totalCnt': totalCnt})
         })
       })
     })

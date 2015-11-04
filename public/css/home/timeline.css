@@ -36,6 +36,11 @@
   margin-left: 8px;
 }
 
+.margin-horizontal-20 {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
 .margin-vertical-4 {
   margin-top: 4px;
   margin-bottom: 4px;
@@ -44,4 +49,63 @@
 .margin-vertical-2 {
   margin-top: 2px;
   margin-bottom: 2px;
+}
+
+.scroll {
+  rverflow: hidden;
+  max-height: 100vh;
+  overflow-y:scroll; 
+  overflow-x:hidden; 
+}
+
+.maxheigh30vh {
+  max-height: 30vh;
+}
+
+.heigh30vh {
+  height: 30vh;
+}
+
+.heigh40vh {
+  height: 40vh;
+}
+
+.heigh50vh {
+  height: 50vh;
+}
+
+.heigh60vh {
+  height: 60vh;
+}
+
+.heigh70vh {
+  height: 70vh;
+}
+
+.heigh80vh {
+  height: 80vh;
+}
+
+.height30p {
+  height: 30%;
+}
+
+.height40p {
+  height: 40%;
+}
+
+.height50p {
+  height: 50%;
+}
+
+.height60p {
+  height: 60%;
+}
+
+.height70p {
+  height: 70%;
+}
+
+span.username {
+  font-weight: bold;
 }

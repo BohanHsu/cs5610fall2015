@@ -37,6 +37,8 @@
     }})
 
     .controller('TimelineController', function($scope, $rootScope, PostService) {
+      var postInPage = 20
+      $scope.user = $rootScope.user
       $scope.post = ''
       $scope.timelineViewMoreHide = false
       $scope.currentPage = 1
@@ -59,7 +61,11 @@
         if (cpg == 1) {
           return [1, 2]
         } else {
-          return [cpg - 1, cpg, cpg + 1]
+          if ($scope.currentPage * postInPage < $scope.totalPost) {
+            return [cpg - 1, cpg, cpg + 1]
+          } else {
+            return [cpg - 1, cpg]
+          }
         }
       }
 
@@ -80,6 +86,13 @@
         }
       }
 
+      $scope.nextPageDisable = function() {
+          if ($scope.currentPage * postInPage < $scope.totalPost) {
+            return false
+          }
+          return true
+      }
+
       $scope.sendPost = function() {
         var user = $rootScope.user
         console.log(user)
@@ -94,7 +107,7 @@
       $scope.loadPost = function() {
         var user = $rootScope.user
         if (user) {
-          PostService.loadPost(user, function(response) {
+          PostService.loadPost(user, $scope.currentPage, postInPage, function(response) {
             console.log(response)
 
             if (response.success) {
@@ -115,8 +128,21 @@
             console.log(response)
             $scope.response = response
             $scope.posts = response.posts
+            $scope.totalPost = response.totalCnt
           })
         }
+      }
+
+      $scope.$watch('currentPage', function(newValue, oldValue) {
+        scrollToTop()
+        $scope.loadPost()
+      })
+
+      $scope.avatarUrlHelper = function(url) {
+        if (url == '') {
+          return 'img/default.jpeg'
+        }
+        return url
       }
     })
 })()
