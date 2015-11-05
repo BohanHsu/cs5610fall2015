@@ -8,6 +8,7 @@ block content
   div(ng-view)
 
 block scripts
+  script(src='/vendor/angular-file-upload/dist/angular-file-upload.min.js')
   script(src='/js/home/app.js')
   script(src='/js/home/config.js')
   script(src='/js/login/loginService.js')
@@ -16,6 +17,9 @@ block scripts
   script(src='/js/service/postService.js')
   script(src='/js/home/timeline.js')
   script(src='/js/home/timeline.controller.js')
+  script(src='/js/home/recipe.js')
+  script(src='/js/home/recipe.controller.js')
 
 block style
   link(href='/css/home/timeline.css' rel='stylesheet')
+  link(href='/css/recipe.css' rel='stylesheet')

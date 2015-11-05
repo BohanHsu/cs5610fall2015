@@ -11,9 +11,11 @@ div.row(ng-controller='TimelineController').heigh80vh
         div.col-xs-10.col-md-11
           textarea#tweet-box-input.form-control(adjust-textarea='' ng-model='post')
       div.row.margin-vertical-8
-        div.pull-right.margin-horizontal-20
-          span.margin-horizontal-8 {{postRemainLength}}
-          button.button.btn(ng-click='sendPost()') Post
+        div.col-xs-offset-1.col-xs-11
+          a(data-toggle='modal' data-target='#recipeModal') Post Recipe
+          div.pull-right.margin-horizontal-20
+            span.margin-horizontal-8 {{postRemainLength}}
+            button.button.btn(ng-click='sendPost()') Post
 
     div#scrollPanel.scroll.height70p
       div.text-center.row.ng-hide(ng-hide='timelineViewMoreHide')
@@ -76,3 +78,96 @@ div.row(ng-controller='TimelineController').heigh80vh
                 span(aria-hidden='true') &raquo;
 
   div.col-sm-2
+
+div#recipeModalParent.row(ng-controller='RecipeController')
+  div.container#recipeModal.modal.fade(role='dialog')
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          div.row
+            div.col-xs-10
+              h4 New recipe
+            div.col-xs-2
+              button.close(type="button" data-dismiss="modal")
+               | &times;
+        div.modal-body
+          div.form-horizontal(role='form')
+            div.row
+              div.col-xs-offset-1.col-xs-10
+                div.form-group
+                  label.control-label(for='recipeName') Recipe Name:
+                  input#recipeName.form-control(type='text' placeholder='recipe name' ng-model='recipeName')
+              div.col-xs-1
+
+            hr
+
+            div.row(ng-if='ingredients.length > 0')
+              div.col-xs-offset-1.col-xs-10
+                table.table-striped(width='100%')
+                  thead
+                    tr
+                      th(width='60%') Ingredient
+                      th(width='30%') Amount
+                      th(width='10%') Remove
+                  tbody
+                    tr(ng-repeat='ingredient in ingredients')
+                      td(width='60%') {{ingredient[0]}}
+                      td(width='30%') {{ingredient[1]}}
+                      td(width='10%') 
+                        i.glyphicon.glyphicon-remove(ng-click='deleteIngredient($index)')
+              div.col-xs-1
+
+            div.row
+              div.col-xs-offset-1.col-xs-6
+                div.form-group
+                  label.control-label(for='ingredientName') Ingredient:
+              div.col-xs-3
+                div.form-group
+                  label.control-label(for='ingredientAmount') Ingredient Amount:
+            div.row
+              div.col-xs-offset-1.col-xs-6
+                div.form-group
+                  input#ingredientName.form-control(type='text' placeholder='ingredients' ng-model='ingredientName')
+              div.col-xs-3
+                div.form-group
+                  input#ingredientAmount.form-control(type='text' placeholder='amount' ng-model='ingredientAmount')
+              div.col-xs-1
+                button.btn.btn-default.pull-righk(ng-click='addIngredient()')
+                  i.glyphicon.glyphicon-plus
+
+            hr
+
+            div.row(ng-if='steps.length > 0')
+              div.col-xs-offset-1.col-xs-10
+                table.table-striped(width='100%')
+                  thead
+                    tr
+                      th(width='60%') Step
+                      th(width='30%') Image
+                      th(width='10%') Remove
+                  tbody
+                    tr(ng-repeat='step in steps')
+                      td(width='60%') {{step[0]}}
+                      td(width='30%') 
+                        img.preview-img(ng-src='{{step[1]}}')
+                      td(width='10%') 
+                        i.glyphicon.glyphicon-remove(ng-click='deleteStep($index)')
+              div.col-xs-1
+            div.row
+              div.col-xs-offset-1.col-xs-10
+                div.form-group
+                  label.control-label(for='nextstep') Step:
+            div.row
+              div.col-xs-offset-1.col-xs-7
+                div.form-group
+                  textarea.form-control(adjust-textarea='' ng-model='nextstep' placeholder='nextstep')
+              div.col-xs-1
+                div.btn.btn-default.btn-file.changeImgBtn(rel='popover' target='_blank')
+                  i.glyphicon.glyphicon-cloud-upload
+                  input(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
+
+              div.col-xs-offset-1.col-xs-1
+                button.btn.btn-default(ng-click='addStep()')
+                  i.glyphicon.glyphicon-plus
+        div.modal-footer
+          button.btn.btn-default Hehe
