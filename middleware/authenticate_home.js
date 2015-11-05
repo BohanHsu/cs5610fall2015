@@ -13,7 +13,7 @@
           return next()
         })
       } else {
-        res.redirect('/')
+        return next()
       }
     }
   }

@@ -1,0 +1,14 @@
+h1 This is search User Page
+div.row(ng-controller='UserController')
+  div.form-control
+    input(type='text' ng-model='searchText')
+  div.form-control
+    button(ng-click='search()') Search
+
+  table
+    tr(ng-repeat='user in searchResult')
+      td 
+        img(ng-src='{{user.local.imageUrl}}')
+      td 
+        a(href='/users/#/{{user._id}}')
+          | {{user.local.username}}

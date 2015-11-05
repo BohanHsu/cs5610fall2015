@@ -1,5 +1,5 @@
 var express = require('express')
-var authenticate = require('../middleware/authenticate')
+var authenticate = require('../middleware/authenticate_home')
 var app = express()
 var cookieParser = require('cookie-parser')
 app.locals.pretty = true

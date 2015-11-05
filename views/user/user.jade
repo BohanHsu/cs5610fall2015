@@ -1,0 +1,18 @@
+block vars
+  - var appName = 'TasteOfApp'
+
+extends ../_layout
+
+block content
+  div(ng-view)
+
+block scripts
+  script(src='/js/user/app.js')
+  script(src='/js/user/config.js')
+  script(src='/js/service/UserService.js')
+  script(src='/js/user/user.controller.js')
+  script(src='/js/user/details.controller.js')
+  script(src='/js/login/loginService.js')
+  script(src='/js/login/login.controller.js')
+
+block style
