@@ -1,7 +1,7 @@
 div.navbar.navbar-default.navbar-fixed-top
   div.container
     -
-      var leftList = []
+      var leftList = [['Home', '/#/timeline'], ['User', '/users']]
       //var leftList = [
       //  ['Home', '/'], 
       //  ['Comments', '/comments'], 
@@ -26,7 +26,8 @@ div.navbar.navbar-default.navbar-fixed-top
         span.icon-bar
         span.icon-bar
     div#navbar-main.navbar-collapse.collapse
-      ul.nav.navbar-nav
+      div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
+      ul.nav.navbar-nav(ng-if='user != null')
         each menuItem in leftList
           - if (typeof menuItem[1] === 'string')
             li
@@ -111,4 +112,4 @@ div.navbar.navbar-default.navbar-fixed-top
           div.modal-footer
             button.btn.btn-default(type="button" ng-click='login()') Login
   else
-    div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
+    //- div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")

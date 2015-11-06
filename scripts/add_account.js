@@ -56,10 +56,10 @@ user2.local.password = user1.generateHash('x')
 user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
 user2.save()
 
-var following1 = new Following()
-following1.follow_by = user1._id
-following1.following = user1._id
-following1.save()
+//var following1 = new Following()
+//following1.follow_by = user1._id
+//following1.following = user1._id
+//following1.save()
 
 var following2 = new Following()
 following2.follow_by = user1._id
@@ -71,10 +71,10 @@ following3.follow_by = user2._id
 following3.following = user1._id
 following3.save()
 
-var following4 = new Following()
-following4.follow_by = user2._id
-following4.following = user2._id
-following4.save()
+//var following4 = new Following()
+//following4.follow_by = user2._id
+//following4.following = user2._id
+//following4.save()
 
 var tweet1 = new Tweet()
 tweet1.content = 'user1 tweet1 post1 hehe'

@@ -27,11 +27,11 @@ var postSchema = mongoose.Schema({
     required: false
   },
 
-  //recipe_id: {
-  //  type: Number,
-  //  ref: 'Recipe',
-  //  required: false
-  //},
+  recipe_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Recipe',
+    required: false
+  },
 
   post_id: {
     type: Schema.Types.ObjectId,

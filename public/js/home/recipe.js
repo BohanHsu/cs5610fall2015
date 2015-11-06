@@ -13,4 +13,9 @@ function setPreview() {
       return "<img id='previewPanelImg' src='"+path+"'>"
     }
   })
+  $('.changeImgBtn').popover('enable')
+}
+
+function resetPreview() {
+  $('.changeImgBtn').popover('disable')
 }

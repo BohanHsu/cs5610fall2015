@@ -49,7 +49,7 @@ app.post('/avatar/original/delete' , function(req, res) {
       })
     }
 
-    if (req.body['crop_path'] != '') {
+    if (req.body['crop_path'] && req.body['crop_path'] != '') {
       var filePath = req.body['crop_path']
       var filepath = path.join(__dirname, '../public', filePath)
       deleteFile(filepath, function() {

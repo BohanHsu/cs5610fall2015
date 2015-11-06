@@ -1,17 +1,15 @@
 (function() {
   angular
     .module('TasteOfApp')
-    .controller('RecipeController', function($scope, FileUploader) {
+    .controller('RecipeController', function($scope, $rootScope, $window, FileUploader, ImageService, PostService) {
+      $scope.user = $rootScope.user
       $scope.recipeName = ''
       $scope.ingredientName = ''
       $scope.ingredientAmount = ''
       $scope.nextstep = ''
-      //$scope.nextstepImage = ''
       $scope.nextstepUploadedImage = ''
       $scope.ingredients = []
       $scope.steps = []
-      //setPath('img/default.jpeg')
-      //setPreview()
 
       var uploader = $scope.uploader = new FileUploader({
         url: '/api/image/post/addphoto',
@@ -24,23 +22,17 @@
         }
       })
 
-       uploader.onAfterAddingFile = function(fileItem) {
-         //ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: $scope.croppedImageUrl}, function(response) {
-         //  uploader.uploadAll()
-         //})
-         console.log(fileItem)
-         uploader.uploadAll()
-       }
+      uploader.onAfterAddingFile = function(fileItem) {
+        if ($scope.nextstepUploadedImage != '') {
+          ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {
+            uploader.uploadAll()
+          })
+        } else {
+          uploader.uploadAll()
+        }
+      }
 
       uploader.onCompleteItem = function(fileItem, response, status, headers) {
-        //$scope.originalImageUrlHide = false
-        //$scope.croppedImageUrlHide = true
-        //$scope.originalImageUrl = response['imageUrl']
-        //$scope.chooseImageBtnText = 'Change Image'
-        //replaceUrl($scope.originalImageUrl)
-
-        console.log(response)
-
         if ($scope.nextstepUploadedImage == '') {
           setPreview()
         }
@@ -75,10 +67,32 @@
         console.log($scope.steps)
         $scope.nextstep = ''
         $scope.nextstepUploadedImage = ''
+        resetPreview()
       }
 
       $scope.deleteStep = function(idx) {
+        var imgUrl = $scope.steps[idx][1]
         $scope.steps.splice(idx, 1)
+        if (imgUrl != '') {
+          ImageService.deleteImage({path: imgUrl}, function(response) {})
+        }
+      }
+
+      $scope.postRecipe = function() {
+        console.log('post')
+
+        PostService.sendRecipe($scope.user, $scope.ingredients, $scope.steps, function(response) {
+          console.log(response)
+          if ($scope.nextstepUploadedImage && $scope.nextstepUploadedImage != '') {
+            ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {
+              return
+            })
+          }
+        })
+      }
+
+      $window.onbeforeunload =  function() {
+        ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {})
       }
     })
 })()

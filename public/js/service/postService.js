@@ -26,6 +26,19 @@
               'tweet': post
             }
           }).success(callback)
+        },
+
+        sendRecipe: function(user, ingredients, steps, callback) {
+          $http({
+            method: 'POST',
+            url: '/api/post/new/recipe',
+            data: {
+              'user_id': user._id,
+              'type': 'recipe',
+              'ingredients': ingredients,
+              'steps': steps
+            }
+          }).success(callback)
         }
       }
     })

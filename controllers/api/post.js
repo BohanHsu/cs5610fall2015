@@ -3,6 +3,7 @@ var app = express()
 var Post = require('../../models/post')
 var Tweet = require('../../models/tweet')
 var Following = require('../../models/following')
+var Recipe = require('../../models/recipe')
 app.locals.pretty = true
 
 app.post('/all', function(req, res) {
@@ -13,6 +14,7 @@ app.post('/all', function(req, res) {
       var following_ids = followings.map(function(follow) {
         return follow.following._id
       })
+      following_ids.push(req.session.user._id)
 
       console.log('shabi', req.body.page)
       console.log('shabi', req.body.amount)
@@ -80,6 +82,53 @@ app.post('/new', function (req, res) {
           })
         }
       })
+    } else {
+      res.json({success: false, err: 'Wrong type!'})
+    }
+  }
+})
+
+app.post('/new/recipe', function (req, res) {
+  if (req.session.user._id != req.body.user_id) {
+    res.json({success: false, err: 'Credential issue!'})
+  } else {
+
+    if (req.body.type == 'recipe') {
+      var recipe = new Recipe()
+      req.body.ingredients.forEach(function(ingredient) {
+        recipe.ingredients.push(ingredient)
+        return
+      })
+      req.body.steps.forEach(function(step) {
+        recipe.steps.push(step)
+        return
+      })
+      recipe.save(function(err) {
+        if (err) {
+          console.log('1', err)
+          res.json({success: false, 'err': err})
+        } else {
+          var post = new Post()
+          post.user_id = req.session.user._id
+          post.post_type = 'recipe'
+          post.recipe_id = recipe._id
+          post.save(function(err) {
+            if (err) {
+              console.log('2', err)
+              res.json({success: false, 'err': err})
+            } else {
+              res.json({
+                success: true, 
+                'post': post,
+                'recipe': recipe
+              })
+            }
+          })
+        }
+
+      })
+    } else {
+      res.json({success: false, err: 'Wrong type!'})
     }
   }
 })
