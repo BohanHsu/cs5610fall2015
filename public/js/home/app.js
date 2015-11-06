@@ -1,4 +1,4 @@
 (function () {
   angular
-    .module('TasteOfApp', [])
+    .module('TasteOfApp', ['ngRoute', 'angularFileUpload'])
 })()

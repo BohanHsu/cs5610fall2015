@@ -7,6 +7,10 @@ var multipartMiddleware = multipart()
 var fs = require('fs')
 var path = require('path')
 var mkdirp = require('mkdirp')
+var express = require('express')
+var cookieParser = require('cookie-parser')
+
+app.use(cookieParser())
 
 module.exports = function (passport) {
 
@@ -25,6 +29,9 @@ module.exports = function (passport) {
         res.json({success: false, err: err})
       } else {
         req.session['user'] = user
+        if (req.body['rememberMe']) {
+          res.cookie('uid', user._id, { maxAge: 900000, httpOnly: true })
+        }
         res.json({success: true, user: user})
       }
     })(req, res, null)
@@ -52,6 +59,7 @@ module.exports = function (passport) {
   app.get('/logout', function (req, res) {
     req.logout()
     req.session['user'] = null
+    res.cookie('uid', "", { maxAge: 900000, httpOnly: true })
     res.redirect('/')
   })
 

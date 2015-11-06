@@ -1,0 +1,37 @@
+h1 Details
+div(ng-controller='DetailsController')
+  p {{detailUser.local.username}}
+  img(ng-src='{{detailUser.local.imageUrl}}')
+
+  ul.nav.nav-tabs
+    li.active
+      a(data-toggle='pill' show-tab='' href='#postspanel') Posts
+    li
+      a(data-toggle='pill' show-tab='' href='#followingspanel') Following
+    li
+      a(data-toggle='pill' show-tab='' href='#followerpanel') Follower
+
+  div.tab-content
+    div#postspanel.tab-pane.fade.in.active
+      | post
+      table(border="1")
+        tr(ng-repeat='post in posts')
+          td {{post._id}}
+
+    div#followingspanel.tab-pane.fade
+      | following
+      table(border="1")
+        tr(ng-repeat='following in followings')
+          td
+            img(ng-src='{{following.following.local.imageUrl}}')
+          td
+            {{following.following.local.username}}
+
+    div#followerpanel.tab-pane.fade
+      | follower
+      table(border="1")
+        tr(ng-repeat='follower in followers')
+          td
+            img(ng-src='{{follower.follow_by.local.imageUrl}}')
+          td
+            {{follower.follow_by.local.username}}

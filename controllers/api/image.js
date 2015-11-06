@@ -9,37 +9,6 @@ var guid = require('guid')
 var im = require('imagemagick')
 var easyimg = require('easyimage')
 
-app.post('/post/addphoto', multipartMiddleware, function(req, res) {
-  fs.readFile(req.files.file.path, function(err, data) {
-    if (err)
-      res.json({success: false, 'err': err})
-
-    var newName = guid.raw(req.files.file.name)
-    newName = newName + '_' + req.files.file.name
-
-    var newPath = path.join(__dirname, '../public/uploads', 'post', newName)
-
-    mkdirp(path.dirname(newPath), function(err) {
-      if (err)
-        res.json({success: false, 'err': err})
-
-      fs.writeFile(newPath, data, function(err) {
-        if (err)
-          res.json({success: false, 'err': err})
-
-        fs.unlink(req.files.file.path, function(err) {
-          if (err)
-            res.json({success: false, 'err': err})
-
-
-          res.json({success: true, imageUrl: '/' + path.join('uploads', 'post', newName)})
-        })
-      })
-    })
-  })
-})
-
-
 app.post('/avatar/original/delete' , function(req, res) {
   if (req.body['path'] != '' || req.body['crop_path'] != '') {
     if (req.body['path'] != '') {
@@ -49,7 +18,7 @@ app.post('/avatar/original/delete' , function(req, res) {
       })
     }
 
-    if (req.body['crop_path'] && req.body['crop_path'] != '') {
+    if (req.body['crop_path'] != '') {
       var filePath = req.body['crop_path']
       var filepath = path.join(__dirname, '../public', filePath)
       deleteFile(filepath, function() {

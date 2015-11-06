@@ -1,24 +1,33 @@
 div.navbar.navbar-default.navbar-fixed-top
   div.container
     -
-      var leftList = [
-        ['Home', '/'], 
-        ['Comments', '/comments'], 
-        ['User', [
-          ['Login', '/login'], 
-          ['SignUp', '/login/signup']
-          ]
-        ]
-      ]
+      var leftList = [['Home', '/#/timeline'], ['User', '/users']]
+      //var leftList = [
+      //  ['Home', '/'], 
+      //  ['Comments', '/comments'], 
+      //  ['User', [
+      //    ['Login', '/login'], 
+      //    ['SignUp', '/login/signup']
+      //    ]
+      //  ]
+      //]
     div.navbar-header
-      a.navbar-brand(href='/')
-        | TasteOf
+      if user
+        a.navbar-brand(href='/#/timeline')
+          | TasteOf
+      else
+        a.navbar-brand(href='/#/timeline' ng-if='user != null')
+          | TasteOf
+        a.navbar-brand(href='/#/visitor' ng-if='user == null')
+          | TasteOf
+
       button.navbar-toggle(type='button' data-toggle='collapse' data-target='#navbar-main')
         span.icon-bar
         span.icon-bar
         span.icon-bar
     div#navbar-main.navbar-collapse.collapse
-      ul.nav.navbar-nav
+      div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
+      ul.nav.navbar-nav(ng-if='user != null')
         each menuItem in leftList
           - if (typeof menuItem[1] === 'string')
             li
@@ -92,8 +101,15 @@ div.navbar.navbar-default.navbar-fixed-top
                   label.control-label(for='inputUsername') Password:
                   div
                     input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+              form.form-horizontal
+                div.form-group
+                  label.control-label(for='inputRememberMe') Remember Me:
+                  div
+                    input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe')
               div.alert.alert-danger(ng-if='err != null')
                 {{err}}
 
           div.modal-footer
             button.btn.btn-default(type="button" ng-click='login()') Login
+  else
+    //- div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")

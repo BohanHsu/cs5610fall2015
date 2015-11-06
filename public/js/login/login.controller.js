@@ -5,12 +5,13 @@
 
       $scope.init = function(user) {
         $scope.err = null
-        $scope.user = user
+        setUser(user)
       }
 
       $scope.login = function() {
         
-        LoginService.login($scope.username, $scope.password, function (response) {
+        console.log($scope.rememberMe)
+        LoginService.login($scope.username, $scope.password, $scope.rememberMe, function (response) {
           if (response.success) {
             setUser(response.user)
             // stupid hack, angular can't close the damn modal???
