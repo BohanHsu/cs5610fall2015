@@ -54,5 +54,7 @@ require('./config/passport')(passport)
 
 require('./controllers')(app, passport)
 
+// for assignment
+app.use(require('./public/assignment/server/app.js'))
 
 app.listen(port, ipaddress);
