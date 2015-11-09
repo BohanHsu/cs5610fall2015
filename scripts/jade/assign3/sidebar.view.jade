@@ -1,0 +1,11 @@
+-
+  var leftMemuList = [
+    ['Home', '#/home'],
+    ['Profile', '#/profile'],
+    ['Form', '#/form']]
+
+ul.nav.nav-sidebar(ng-controller='SidebarController')
+  each menuItem in leftMemuList
+    li(ng-class="{'active' : '#{menuItem[1]}'.indexOf($location.path()) != -1}")
+      a(href='#{menuItem[1]}')
+        | #{menuItem[0]}

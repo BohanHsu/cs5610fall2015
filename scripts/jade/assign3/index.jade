@@ -1,0 +1,54 @@
+doctype html
+html(lang='en' ng-app='FormBuilderApp')
+  block vars
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='CS5610 fall 2015')
+    meta(name='author', content='Bohan Xu')
+    title Bohan Xu Assignment
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    link(href='css/style.css', rel='stylesheet')
+    //- link(href='css/template.css', rel='stylesheet')
+    link(href='css/dashboard.css', rel='stylesheet')
+    block styles
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+  body
+    nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .container(ng-include="'views/header/header.view.html'")
+
+    .container
+      .row
+        .col-md-3.col-md-2.sidebar(ng-include="'views/sidebar/sidebar.view.html'")
+
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          div(ng-view)
+
+    .container
+      hr
+      footer
+        .row
+          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2
+            p Copyright © Bohan Xu
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js")
+    script(src="guid.js")
+    script(src="app.js")
+    script(src="config.js")
+    script(src="./views/header/header.controller.js")
+    script(src="./views/sidebar/sidebar.controller.js")
+    script(src="./services/UserService.js")
+    script(src="./services/FormService.js")
+    script(src="./views/login/login.controller.js")
+    script(src="./views/register/register.controller.js")
+    script(src="./views/profile/profile.controller.js")
+    script(src="./views/form/form.controller.js")
+
+    block scripts

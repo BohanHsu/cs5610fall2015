@@ -1,0 +1,32 @@
+
+<h1>Register</h1>
+<hr/>
+<form ng-controller="RegisterController" class="form-horizontal">
+  <div class="form-group">
+    <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+    <div class="col-sm-7">
+      <input id="inputUsername" type="text" placeholder="User Name" ng-model="username" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-7">
+      <input id="inputPassword" type="password" placeholder="Password" ng-model="password" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPasswordConfirm" class="col-sm-2 control-label">Confirm Password</label>
+    <div class="col-sm-7">
+      <input id="inputPasswordConfirm" type="password" placeholder="Confirm Password" ng-model="confirmPassword" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-7">
+      <input id="inputEmail" type="email" placeholder="Email" ng-model="email" class="form-control"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-7"><a ng-click="register()" class="btn btn-default">Sign in</a></div>
+  </div>
+</form>

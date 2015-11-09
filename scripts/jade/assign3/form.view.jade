@@ -1,0 +1,28 @@
+h1 Forms
+hr
+ul.nav.nav-tabs
+  li.active
+    a(href='/assignment/forms.html') Forms
+  li
+    a(href='/assignment/form-fields.html') Fields
+div.tab-content(ng-controller='FormController')
+  div#forms.tab-pane.fade.in.active
+    table.table.table-striped(border='2')
+      tr
+        th 
+          span.glyphicon.glyphicon-triangle-bottom
+          |  Form Name
+        th 
+          span.glyphicon.glyphicon-triangle-bottom
+          |  Action
+      tr
+        td
+          input.form-control(type='text' placeholder='name' ng-model='form.name')
+        td
+          i.glyphicon.glyphicon-plus(ng-click='addForm()')
+          i.glyphicon.glyphicon-ok.pull-right(ng-click='updateForm()')
+      tr(ng-repeat="form in forms")
+        td {{form.name}}
+        td
+          i.glyphicon.glyphicon-remove(ng-click='deleteForm($index)')
+          i.glyphicon.glyphicon-pencil.pull-right(ng-click='selectForm($index)')
