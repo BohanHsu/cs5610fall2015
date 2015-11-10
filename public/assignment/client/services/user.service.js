@@ -3,8 +3,7 @@
     .module('FormBuilderApp')
     .factory('UserService', UserService)
 
-    function UserService() {
-      var currentUsers = []
+    function UserService($http, $q) {
 
       var service = {
         findUserByUsernameAndPassword: findUserByUsernameAndPassword,
@@ -15,46 +14,74 @@
       }
       return service
 
-      function findUserByUsernameAndPassword(username, password, callback) {
-        var matchUser = null
-        currentUsers.forEach(function (user, index, arr) {
-          if (user.username === username && user.password === password) {
-            matchUser = user
-          }
+      function findUserByUsernameAndPassword(username, password) {
+        var defer = $q.defer()
+        $http({
+          method: 'GET',
+          url: '/api/assignment/user?username=' + username + '&password=' + password
+        }).success(function(response) {
+          defer.resolve(response)
         })
-        return callback(matchUser)
+        return defer.promise
       }
 
-      function findAllUsers(callback) {
-        return callback(currentUsers)
+      function findAllUsers() {
+        var defer = $q.defer()
+        $http({
+          method: 'GET',
+          url: '/api/assignment/user'
+        }).success(function(response) {
+          defer.resolve(response)
+        })
+
+        return defer.promise
       }
 
-      function createUser(user, callback) {
+      function createUser(user) {
+        var defer = $q.defer()
+
         user.id = Guid.create(user).value
-        currentUsers.push(user)
-        return callback(user)
+
+        $http({
+           method: 'POST',
+           url: '/api/assignment/user',
+           data: {
+             user: user
+           }
+        }).success(function(response) {
+          defer.resolve(response)
+        })
+
+        return defer.promise
       }
 
-      function deleteUserById(id, callback) {
-        currentUsers.forEach(function (user, i, arr) {
-          if (user.id === id) {
-            currentUsers.slice(i, 1)
-          }
+      function deleteUserById(id) {
+        var defer = $q.defer()
+
+        $http({
+           method: 'DELETE',
+           url: '/api/assignment/user/' + id
+        }).success(function(response) {
+          defer.resolve(response)
         })
-        return callback(currentUsers)
+
+        return defer.promise
       }
 
-      function updateUser(id, newUser, callback) {
-        var updatedUser = null
-        currentUsers.forEach(function (user, i, arr) {
-          if (user.id === id) {
-            for (var key in newUser) {
-              user[key] = newUser[key]
-            }
-            updatedUser = user
-          }
+      function updateUser(id, newUser) {
+        var defer = $q.defer()
+
+        $http({
+           method: 'PUT',
+           url: '/api/assignment/user/' + id,
+           date: {
+             user: newUser
+           }
+        }).success(function(response) {
+          defer.resolve(response)
         })
-        return callback(updatedUser)
+
+        return defer.promise
       }
     }
 })()
