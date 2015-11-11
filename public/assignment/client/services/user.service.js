@@ -74,7 +74,7 @@
         $http({
            method: 'PUT',
            url: '/api/assignment/user/' + id,
-           date: {
+           data: {
              user: newUser
            }
         }).success(function(response) {

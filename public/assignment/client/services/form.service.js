@@ -3,7 +3,7 @@
     .module('FormBuilderApp')
     .factory('FormService', FormService)
 
-    function FormService() {
+    function FormService($q, $http) {
 
       var service = {
         createFormForUser: createFormForUser,
@@ -52,8 +52,8 @@
         var defer = $q.defer()
 
         $http({
-          method: 'GET',
-          url: '/api/assignment/user/form/' + formId
+          method: 'DELETE',
+          url: '/api/assignment/form/' + formId
         }).success(function (response) {
           defer.resolve(response)
         })
@@ -66,7 +66,7 @@
 
         $http({
           method: 'PUT',
-          url: '/api/assignment/user/form/' + formId,
+          url: '/api/assignment/form/' + formId,
           data: {
             form: newForm
           }

@@ -1,6 +1,12 @@
 module.exports = function(app, formModel, db) {
   app.get('/api/assignment/form/:formId/field', function(req, res) {
-    res.json(formModel.FindById(req.params.id)['fields'])
+    var form = formModel.FindById(req.params.formId)
+    console.log(form)
+    if (form) {
+      res.json(form['fields'])
+    } else {
+      res.json(null)
+    }
   })
 
   app.get('/api/assignment/form/:formId/field/:fieldId', function(req, res) {

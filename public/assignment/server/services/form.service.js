@@ -1,5 +1,6 @@
 module.exports = function(app, formModel, db) {
-  app.get(' /api/assignment/user/:userId/form', function(req, res) {
+  console.log('form online')
+  app.get('/api/assignment/user/:userId/form', function(req, res) {
     res.json(formModel.findByUserId(req.params.userId))
   })
 
@@ -8,6 +9,7 @@ module.exports = function(app, formModel, db) {
   })
 
   app.delete('/api/assignment/form/:formId', function(req, res) {
+    console.log('formId', req.params.formId)
     formModel.Delete(req.params.formId)
     res.json(null)
   })

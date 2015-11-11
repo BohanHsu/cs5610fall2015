@@ -1,0 +1,81 @@
+
+<h1>Forms</h1>
+<hr/>
+<div ng-controller="FieldController">
+  <ul class="nav nav-tabs">
+    <li><a href="#/form">Forms</a></li>
+    <li class="active"><a>Fields</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="forms" class="tab-pane fade in active">
+      <div ng-repeat="field in fields">
+        <div ng-switch="field.type" class="form-group animate-switch-container">
+          <div ng-switch-when="TEXT" class="row animate-switch">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <input id="field{{$index}}" type="text" placeholder="{{field.placeholder}}" class="form-control"/>
+            </div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-align-justify"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-plus"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-ok"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-pencil"></i></div>
+          </div>
+          <div ng-switch-when="TEXTAREA" class="row">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <textarea id="field{{$index}}" type="text" placeholder="{{field.placeholder}}" class="form-control"></textarea>
+            </div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-align-justify"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-plus"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-ok"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-pencil"></i></div>
+          </div>
+          <div ng-switch-when="DATE" class="row animate-switch">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <div data-date="11-10-2015" data-date-format="dd-mm-yyyy" class="input-append date">
+                <input type="text" value="11-10-2015" date-provider="datepicker" class="form-control datepicker"/><span class="add-on"><i class="icon-th"></i></span>
+              </div>
+            </div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-align-justify"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-plus"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-ok"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-pencil"></i></div>
+          </div>
+          <div ng-switch-when="OPTIONS" class="row animate-switch">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <select id="field{{$index}}" class="form-control">
+                <option ng-repeat="option in field.options" value="{{option.value}}">{{option.value}}</option>
+              </select>
+            </div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-align-justify"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-plus"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-ok"></i></div>
+            <div class="col-xs-1"><i class="glyphicon glyphicon-pencil"></i></div>
+          </div>
+          <div ng-switch-when="CHECKBOX" class="row animate-switch">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <div id="field{{$index}}">
+                <div ng-repeat="option in options" class="checkbox">
+                  <input type="checkbox" value="{{option.value}}"/>{{option.label}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-switch-when="&quot;RADIOS&quot;" class="row animate-switch">
+            <div class="col-xs-8">
+              <label for="field{{$index}}">{{field.label}}</label>
+              <div id="field{{$index}}">
+                <div ng-repeat="option in field.options" class="radio">
+                  <input type="radio" name="field{{$index}}" value="{{option.value}}" class="form-control"/>{{option.label}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

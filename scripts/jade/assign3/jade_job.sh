@@ -6,3 +6,4 @@ jade login.view.jade --out ./../../../public/assignment/client/views/login --pre
 jade register.view.jade --out ./../../../public/assignment/client/views/register --pretty
 jade profile.view.jade --out ./../../../public/assignment/client/views/profile --pretty
 jade form.view.jade --out ./../../../public/assignment/client/views/form --pretty
+jade field.view.jade --out ./../../../public/assignment/client/views/field --pretty

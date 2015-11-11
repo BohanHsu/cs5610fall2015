@@ -32,7 +32,8 @@
           email: $scope.email
         }
 
-        UserService.updateUser(user.id, newUser, function(user) {
+        UserService.updateUser(user.id, newUser).then(function(user) {
+          console.log(user)
           $rootScope.user = user
         })
       }

@@ -1,27 +1,32 @@
 module.exports = function() {
   var users = require('./user.mock.json')
 
+  function findById(id) {
+    var findUser = null
+    users.forEach(function(ele, idx, arr) {
+      if (ele['id'] == id) {
+        findUser = ele
+      }
+    })
+    return findUser
+  }
+
   return {
     Create: function(user) {
       users.push(user)
+      return user
     },
 
     FindAll: function() {
       return users
     },
 
-    FindById: function foundById(id) {
-      var foundUser = null
-      users.forEach(function(ele, idx, arr) {
-        if (ele['id'] == id) {
-          foundUser = ele
-        }
-      })
-      return foundUser
-    },
+    FindById: findById,
 
     Update: function(id, attrs) {
-      var user = foundById(id)
+      var user = findById(id)
+      console.log(user)
+      console.log(attrs)
       for (var k in attrs) {
         user[k] = attrs[k]
       }
@@ -40,27 +45,27 @@ module.exports = function() {
     },
 
     findUserByName: function(username) {
-      var foundUser = null
+      var findUser = null
 
       users.forEach(function(ele, idx, attr) {
         if (ele['username'] == username) {
-          foundUser = ele
+          findUser = ele
         }
       })
 
-      return foundUser
+      return findUser
     },
 
     findUserByCredentials: function(credentials) {
-      var foundUser = null
+      var findUser = null
 
       users.forEach(function(ele, idx, arr) {
         if (ele['password'] == credentials) {
-          foundUser = ele
+          findUser = ele
         }
       })
 
-      return foundUser
+      return findUser
     }
 
   }

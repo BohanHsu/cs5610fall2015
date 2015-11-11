@@ -1,26 +1,27 @@
 module.exports = function(app, userModels, db) {
   app.post('/api/assignment/user', function(req, res) {
-    var user = app.body.user
+    var user = req.body.user
     var newUser = {}
     for (var k in user) {
       newUser[k] = user[k]
     }
-    userModels.Create(newUser)
-    res.json(userModels.FindAll())
+    res.json(userModels.Create(newUser))
   })
 
   app.get('/api/assignment/user', function(req, res) {
-    if (req.params.username) {
-      if (req.params.password) {
-        var userByUserName = userModels.findUserByName(req.params.username)
-        var userByUserPassword = userModels.findUserByCredentials(req.params.password)
-        if (userByUserName.id == userByUserPassword.id) {
+    if (req.query.username) {
+      if (req.query.password) {
+        var userByUserName = userModels.findUserByName(req.query.username)
+        var userByUserPassword = userModels.findUserByCredentials(req.query.password)
+        if (userByUserName == null || userByUserPassword == null) {
+          res.json(null)
+        } else if (userByUserName.id == userByUserPassword.id) {
           res.json(userByUserName)
         } else {
           res.json(null)
         }
       } else {
-        res.json(userModels.findUserByName(req.params.username))
+        res.json(userModels.findUserByName(req.query.username))
       }
     } else {
       res.json(userModels.FindAll())
@@ -32,7 +33,7 @@ module.exports = function(app, userModels, db) {
   })
 
   app.put('/api/assignment/user/:id', function(req, res) {
-    res.json(userModels.Update(req.params.body, req.body.user))
+    res.json(userModels.Update(req.params.id, req.body.user))
   })
 
   app.delete('/api/assignment/user/:id', function(req, res) {

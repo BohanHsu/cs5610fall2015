@@ -2,6 +2,16 @@ var uuid = require('node-uuid')
 module.exports = function() {
   var forms = require('./form.mock.json')
 
+  function findById(id) {
+    var foundForm = null
+    forms.forEach(function(ele, idx, arr) {
+      if (ele['id'] == id) {
+        foundForm = ele
+      }
+    })
+    return foundForm
+  }
+
   return {
     Create: function(form) {
       form['id'] = uuid.v1()
@@ -12,15 +22,7 @@ module.exports = function() {
       return forms
     },
 
-    FindById: function findById(id) {
-      var foundForm = null
-      forms.forEach(function(ele, idx, arr) {
-        if (ele['id'] == id) {
-          foundForm = ele
-        }
-      })
-      return foundForm
-    },
+    FindById: findById,
 
     Update: function(id, attrs) {
       var form = findById(id)
@@ -36,6 +38,8 @@ module.exports = function() {
           index = idx
         }
       })
+
+      console.log(forms[index])
 
       forms.splice(index, 1)
     },
