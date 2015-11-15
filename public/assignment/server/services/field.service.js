@@ -23,8 +23,8 @@ module.exports = function(app, formModel, db) {
     res.json(null)
   })
 
-  app.put('/api/assignment/form/:formId/field/:fieldId', function() {
-    updateFieldInForm(req.params.formId, req.params.fieldId, req.body.field)
+  app.put('/api/assignment/form/:formId/field/:fieldId', function(req, res) {
+    formModel.updateFieldInForm(req.params.formId, req.params.fieldId, req.body.field)
     res.json(null)
   })
 }

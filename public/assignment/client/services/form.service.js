@@ -123,7 +123,7 @@
         var defer = $q.defer()
 
         $http({
-          method: 'PUT',
+          method: 'DELETE',
           url: '/api/assignment/form/' + formId + '/field/' + fieldId
         }).success(function (response) {
           defer.resolve(response)

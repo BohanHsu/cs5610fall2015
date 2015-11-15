@@ -17,16 +17,19 @@
     ]
     $scope.formId = $routeParams.formId
 
-    FormService.getFieldsForForm($scope.formId).then(function(response) {
-      console.log(response)
-      $scope.fields = response
-      $scope.isEditing = []
-      $scope.editingString = []
-      $scope.fields.forEach(function(ele, idx, arr) {
-        $scope.isEditing.push(false)
-        $scope.editingString.push(JSON.stringify(ele))
+    function loadAllFieldForForm() {
+      FormService.getFieldsForForm($scope.formId).then(function(response) {
+        $scope.fields = response
+        $scope.isEditing = []
+        $scope.editingString = []
+        $scope.fields.forEach(function(ele, idx, arr) {
+          $scope.isEditing.push(false)
+          $scope.editingString.push(JSON.stringify(ele))
+        })
       })
-    })
+    }
+
+    loadAllFieldForForm()
 
     $scope.getEditingString = function(index) {
       return $scope.editingString[index]
@@ -78,12 +81,9 @@
     }
 
     $scope.addField = function() {
-      console.log($scope.newFeild)
-      if ($scope.newFeild != '') {
-        $scope.fields.push($scope.newFieldMap[$scope.newFeild]())
-        $scope.isEditing.push(false)
-        $scope.editingString.push(JSON.stringify($scope.fields[$scope.fields.length-1]))
-      }
+      FormService.createFieldForForm($scope.formId, $scope.newFieldMap[$scope.newFeild]()).then(function(response) {
+        loadAllFieldForForm()
+      })
     }
 
     $scope.editField = function(index) {
@@ -92,8 +92,9 @@
 
     $scope.updateField = function(index) {
       var jsonObj = JSON.parse($scope.editingString[index])
-      $scope.fields[index] = jsonObj
-      $scope.setIsEditing(index, false)
+      FormService.updateField($scope.formId, $scope.fields[index]['id'], jsonObj).then(function(response) {
+        loadAllFieldForForm()
+      })
     }
 
     function deepCopy(obj) {
@@ -134,18 +135,17 @@
       // a very ugly but quick to be implement way of copy object
       var newObject = JSON.parse(JSON.stringify($scope.fields[index]))
 
-      console.log(Guid.create(newObject).value)
       newObject['id'] = Guid.create(newObject).value
 
-      $scope.fields.push(newObject)
-      $scope.isEditing.push(false)
-      $scope.editingString.push(JSON.stringify(newObject))
+      FormService.createFieldForForm($scope.formId, newObject).then(function(response) {
+        loadAllFieldForForm()
+      })
     }
 
     $scope.removeFeild = function(index) {
-      $scope.fields.splice(index, 1)
-      $scope.isEditing.splice(index, 1)
-      $scope.editingString.splice(index, 1)
+      FormService.deleteFieldFromForm($scope.formId, $scope.fields[index]['id']).then(function(response) {
+        loadAllFieldForForm()
+      })
     }
   }
 })()

@@ -2,6 +2,19 @@ var uuid = require('node-uuid')
 module.exports = function() {
   var forms = require('./form.mock.json')
 
+  function findFieldByFormIdAndFieldId(formId, fieldId) {
+    var fields = findById(formId)['fields']
+    var foundField = null
+
+    fields.forEach(function(ele, idx, arr) {
+      if (ele['id'] == fieldId) {
+        foundField = ele
+      }
+    })
+
+    return foundField
+  }
+
   function findById(id) {
     var foundForm = null
     forms.forEach(function(ele, idx, arr) {
@@ -39,7 +52,6 @@ module.exports = function() {
         }
       })
 
-      console.log(forms[index])
 
       forms.splice(index, 1)
     },
@@ -68,18 +80,7 @@ module.exports = function() {
       return foundForms
     },
 
-    findFieldByFormIdAndFieldId: function findFieldByFormIdAndFieldId(formId, fieldId) {
-      var fields = findById(formId)['fields']
-      var foundField = null
-
-      fields.forEach(function(ele, idx, arr) {
-        if (ele['id'] == fieldId) {
-          foundField = ele
-        }
-      })
-
-      return foundField
-    },
+    findFieldByFormIdAndFieldId: findFieldByFormIdAndFieldId,
 
     deleteFieldByFormIdAndFieldId: function(formId, fieldId) {
       var fields = findById(formId)['fields']
