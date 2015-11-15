@@ -5,6 +5,17 @@
 
   function FieldController($scope, $rootScope, $routeParams, FormService) {
 
+    $scope.list = {
+      label: "Men",
+      allowedTypes: ['man'],
+      max: 4,
+      people: [
+        {name: "Bob", type: "man"},
+        {name: "Charlie", type: "man"},
+        {name: "Dave", type: "man"}
+      ]
+    }
+
     $scope.model = {}
     $scope.model.fieldType = null
     $scope.model.selections = [
@@ -145,6 +156,31 @@
     $scope.removeFeild = function(index) {
       FormService.deleteFieldFromForm($scope.formId, $scope.fields[index]['id']).then(function(response) {
         loadAllFieldForForm()
+      })
+    }
+
+    $scope.moved = function(index) {
+      $scope.dragedField = $scope.fields[index]
+
+      $scope.oldIndex = index
+      $scope.fields.splice(index, 1)
+    }
+
+    $scope.dragEnd = function(event) {
+      console.log(event)
+      console.log($scope.fields)
+      console.log($scope.dragedField)
+      $scope.newIndex = 0
+      $scope.fields.forEach(function(ele, idx, attr) {
+        if (ele['id'] == $scope.dragedField['id']) {
+          $scope.newIndex = idx
+        }
+      })
+      FormService.sortField($scope.formId, $scope.oldIndex, $scope.newIndex).then(function(response) {
+        loadAllFieldForForm()
+        $scope.oldIndex = null
+        $scope.newIndex = null
+        $scope.dragedField = null
       })
     }
   }

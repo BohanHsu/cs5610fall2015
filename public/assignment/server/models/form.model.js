@@ -106,6 +106,13 @@ module.exports = function() {
       for (var k in attrs) {
         field[k] = attrs[k]
       }
+    },
+
+    sortFieldInForm: function(formId, oldIndex, newIndex) {
+      var fields = findById(formId)['fields']
+      var field = fields[oldIndex]
+      fields.splice(oldIndex, 1)
+      fields.splice(newIndex, 0, field)
     }
   }
 }

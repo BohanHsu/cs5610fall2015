@@ -14,7 +14,8 @@
         getFieldsForForm: getFieldsForForm,
         getFieldForForm: getFieldForForm,
         deleteFieldFromForm: deleteFieldFromForm,
-        updateField: updateField
+        updateField: updateField,
+        sortField: sortField
       }
 
       return service
@@ -147,5 +148,23 @@
 
         return defer.promise
       }
+
+      function sortField(formId, oldIndex, newIndex) {
+        var defer = $q.defer()
+
+        $http({
+          method: 'PUT',
+          url: '/api/assignment/form/' + formId + '/sort',
+          data: {
+            oldIndex: oldIndex,
+            newIndex: newIndex
+          }
+        }).success(function (response) {
+          defer.resolve(response)
+        })
+
+        return defer.promise
+      }
     }
+
 })()

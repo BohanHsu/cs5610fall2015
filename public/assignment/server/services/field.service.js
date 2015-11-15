@@ -27,4 +27,9 @@ module.exports = function(app, formModel, db) {
     formModel.updateFieldInForm(req.params.formId, req.params.fieldId, req.body.field)
     res.json(null)
   })
+
+  app.put('/api/assignment/form/:formId/sort', function(req, res) {
+    formModel.sortFieldInForm(req.params.formId, req.body.oldIndex, req.body.newIndex)
+    res.json(null)
+  })
 }
