@@ -4,6 +4,7 @@
   .controller('FieldController', FieldController)
 
   function FieldController($scope, $rootScope, $routeParams, FormService) {
+
     $scope.model = {}
     $scope.model.fieldType = null
     $scope.model.selections = [
