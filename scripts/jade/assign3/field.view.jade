@@ -8,72 +8,117 @@ div(ng-controller='FieldController')
       a() Fields
   div.tab-content
     div#forms.tab-pane.fade.in.active
-      div(ng-repeat='field in fields')
+      div(ng-repeat='field in fields track by $id($index)')
         div.form-group.animate-switch-container(ng-switch='field.type')
           div.row.animate-switch(ng-switch-when="TEXT")
-            div.col-xs-8
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
               input.form-control(id='field{{$index}}' type='text' placeholder='{{field.placeholder}}')
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
             div.col-xs-1
               i.glyphicon.glyphicon-align-justify
-            div.col-xs-1
-              i.glyphicon.glyphicon-plus
-            div.col-xs-1
-              i.glyphicon.glyphicon-ok
-            div.col-xs-1
-              i.glyphicon.glyphicon-pencil
           div.row(ng-switch-when='TEXTAREA')
-            div.col-xs-8
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
               textarea.form-control(id='field{{$index}}' type='text' placeholder='{{field.placeholder}}')
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
             div.col-xs-1
               i.glyphicon.glyphicon-align-justify
-            div.col-xs-1
-              i.glyphicon.glyphicon-plus
-            div.col-xs-1
-              i.glyphicon.glyphicon-ok
-            div.col-xs-1
-              i.glyphicon.glyphicon-pencil
           div.row.animate-switch(ng-switch-when='DATE')
-            div.col-xs-8
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
               div.input-append.date(data-date='11-10-2015' data-date-format='dd-mm-yyyy')
                 input.form-control.datepicker(type='text' value='11-10-2015' date-provider='datepicker')
                 span.add-on
                   i.icon-th
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
             div.col-xs-1
               i.glyphicon.glyphicon-align-justify
-            div.col-xs-1
-              i.glyphicon.glyphicon-plus
-            div.col-xs-1
-              i.glyphicon.glyphicon-ok
-            div.col-xs-1
-              i.glyphicon.glyphicon-pencil
           div.row.animate-switch(ng-switch-when='OPTIONS')
-            div.col-xs-8
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
               select.form-control(id='field{{$index}}')
                 option(ng-repeat="option in field.options" value='{{option.value}}') {{option.value}}
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
             div.col-xs-1
               i.glyphicon.glyphicon-align-justify
-            div.col-xs-1
-              i.glyphicon.glyphicon-plus
-            div.col-xs-1
-              i.glyphicon.glyphicon-ok
-            div.col-xs-1
-              i.glyphicon.glyphicon-pencil
-          div.row.animate-switch(ng-switch-when='CHECKBOX')
-            div.col-xs-8
+          div.row.animate-switch(ng-switch-when='CHECKBOXES')
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
               div(id='field{{$index}}')
-                div.checkbox(ng-repeat='option in options')
-                  input(type='checkbox' value='{{option.value}}')
-                  {{option.label}}
-          div.row.animate-switch(ng-switch-when='"RADIOS"')
-            div.col-xs-8
+                div.checkbox(ng-repeat='option in field.options')
+                  label
+                    input(type='checkbox' value='{{option.value}}')
+                    {{option.label}}
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-align-justify
+          div.row(ng-switch-when='RADIOS')
+            div.col-xs-7
               label(for='field{{$index}}') {{field.label}}
-              div(id='field{{$index}}')
-                div.radio(ng-repeat='option in field.options')
-                  input.form-control(type='radio' name='field{{$index}}' value='{{option.value}}')
-                  {{option.label}}
+              div(id='field{{$index}}' ng-repeat='option in field.options')
+                div.radio()
+                  label
+                    input(type='radio' name='field_{{field.label}}' value='{{option.value}}')
+                    {{option.label}}
+              textarea.form-control.ng-hide(ng-model='editingString[$index]' ng-hide='!getIsEditing($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-pencil(ng-click='editField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-ok(ng-click='updateField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-plus(ng-click='copyField($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-remove(ng-click='removeFeild($index)')
+            div.col-xs-1
+              i.glyphicon.glyphicon-align-justify
+
+    hr
+    div.row
+      div.col-xs-8
+        select.form-control#new-field(ng-model='newFeild')
+          option(ng-repeat='menuItem in newFieldSelection()' value='{{menuItem}}') {{menuItem}}
+      div.col-xs-2.col-xs-offset-2
+        button.btn.btn-default(ng-click='addField()')
+          i.glyphicon.glyphicon-plus
 
