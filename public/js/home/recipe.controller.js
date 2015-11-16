@@ -79,20 +79,40 @@
       }
 
       $scope.postRecipe = function() {
-        console.log('post')
+        if (recipeName != '') {
+          PostService.sendRecipe($scope.user, $scope.recipeName, $scope.ingredients, $scope.steps, function(response) {
+            console.log(response)
 
-        PostService.sendRecipe($scope.user, $scope.ingredients, $scope.steps, function(response) {
-          console.log(response)
-          if ($scope.nextstepUploadedImage && $scope.nextstepUploadedImage != '') {
-            ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {
-              return
-            })
-          }
-        })
+            $scope.recipeName = ''
+            $scope.ingredientName = ''
+            $scope.ingredientAmount = ''
+            $scope.nextstep = ''
+            $scope.nextstepUploadedImage = ''
+            $scope.ingredients = []
+            $scope.steps = []
+
+            console.log('before toggle')
+            $('#recipeModal').modal('toggle')
+            $rootScope.$emit('rootScope:emit', 'postRecipe')
+            if ($scope.nextstepUploadedImage && $scope.nextstepUploadedImage != '') {
+              ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {
+                return
+              })
+            }
+          })
+        }
       }
 
       $window.onbeforeunload =  function() {
-        ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {})
+        $scope.steps.forEach(function(ele, idx, arr) {
+          ImageService.deleteImage({path: ele[1]}, function(response) {
+            return
+          })
+          return
+        })
+        ImageService.deleteImage({path: $scope.nextstepUploadedImage}, function(response) {
+          return
+        })
       }
     })
 })()

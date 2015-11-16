@@ -52,7 +52,7 @@
 }
 
 .scroll {
-  rverflow: hidden;
+  overflow: hidden;
   max-height: 100vh;
   overflow-y:scroll; 
   overflow-x:hidden; 
@@ -108,4 +108,9 @@
 
 span.username {
   font-weight: bold;
+}
+
+.viewingRecipeImg {
+  margin: auto;
+  width: 90%;
 }

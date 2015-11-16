@@ -28,13 +28,14 @@
           }).success(callback)
         },
 
-        sendRecipe: function(user, ingredients, steps, callback) {
+        sendRecipe: function(user, recipeName, ingredients, steps, callback) {
           $http({
             method: 'POST',
             url: '/api/post/new/recipe',
             data: {
               'user_id': user._id,
               'type': 'recipe',
+              'recipeName': recipeName,
               'ingredients': ingredients,
               'steps': steps
             }

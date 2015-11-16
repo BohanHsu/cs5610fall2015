@@ -16,9 +16,6 @@ app.post('/all', function(req, res) {
       })
       following_ids.push(req.session.user._id)
 
-      console.log('shabi', req.body.page)
-      console.log('shabi', req.body.amount)
-
       var skip = (parseInt(req.body.page) - 1) * 20
       Post.find({
         user_id: {$in: following_ids}
@@ -43,10 +40,20 @@ app.post('/all', function(req, res) {
           return post.tweet_id
         })
 
+        var recipe_ids = posts.filter(function(post) {
+          return post.post_type == 'recipe'
+        }).map(function(post) {
+          return post.recipe_id
+        })
+
         Tweet.find({
           _id: {$in: tweet_ids}
         }).exec(function(err, tweets) {
-          res.json({success: true, 'posts': posts, 'tweets': tweets, 'totalCnt': totalCnt})
+          Recipe.find({
+            _id: {$in: recipe_ids}
+          }).exec(function(err, recipes) {
+            res.json({success: true, 'posts': posts, 'tweets': tweets, 'recipes': recipes, 'totalCnt': totalCnt})
+          })
         })
       })
     })
@@ -95,6 +102,7 @@ app.post('/new/recipe', function (req, res) {
 
     if (req.body.type == 'recipe') {
       var recipe = new Recipe()
+      console.log(req.body)
       req.body.ingredients.forEach(function(ingredient) {
         recipe.ingredients.push(ingredient)
         return
@@ -103,6 +111,7 @@ app.post('/new/recipe', function (req, res) {
         recipe.steps.push(step)
         return
       })
+      recipe.recipeName = req.body.recipeName
       recipe.save(function(err) {
         if (err) {
           console.log('1', err)

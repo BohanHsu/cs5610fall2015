@@ -40,9 +40,14 @@
       var postInPage = 20
       $scope.user = $rootScope.user
       $scope.post = ''
-      $scope.timelineViewMoreHide = false
+      $scope.timelineViewMoreHide = true
       $scope.currentPage = 1
-      $posts = []
+
+      $rootScope.$on('rootScope:emit', function (event, data) {
+        console.log(data); // 'Emit!'
+        console.log(event)
+        $scope.timelineViewMoreHide = false
+      })
 
       function updatePostRemainLength() {
         $scope.postRemainLength = 280 - $scope.post.length
@@ -53,6 +58,7 @@
       })
 
       $scope.clickViewMore = function() {
+        $scope.loadPost()
         $scope.timelineViewMoreHide = true
       }
 
@@ -95,11 +101,10 @@
 
       $scope.sendPost = function() {
         var user = $rootScope.user
-        console.log(user)
-        console.log($scope.post)
         if (user && $scope.post != '') {
           PostService.sendPost(user, $scope.post, function(response) {
-            console.log('response', response)
+            $scope.post = ''
+            $rootScope.$emit('rootScope:emit', 'postTweet')
           })
         }
       }
@@ -116,8 +121,13 @@
                 tweet_dict[element._id] = element
               })
               response['tweet_dict'] = tweet_dict
+
+              recipe_dict = {}
+              response.recipes.forEach(function(element) {
+                recipe_dict[element._id] = element
+              })
+              response['recipe_dict'] = recipe_dict
             }
-            console.log(tweet_dict)
 
             response.posts.forEach(function(post) {
               if (post.post_type == 'tweet') {
@@ -125,12 +135,26 @@
               }
             })
 
-            console.log(response)
+            response.posts.forEach(function(post) {
+              if (post.post_type == 'recipe') {
+                post['recipe'] = recipe_dict[post.recipe_id]
+              }
+            })
+
             $scope.response = response
             $scope.posts = response.posts
+            $scope.replys = {}
+            $scope.posts.forEach(function(ele, idx, arr) {
+              $scope.replys[ele._id] = null
+            })
             $scope.totalPost = response.totalCnt
           })
         }
+      }
+
+      $scope.viewRecipe = function(index) {
+        $scope.viewingRecipe = $scope.posts[index].recipe
+        console.log($scope.viewingRecipe)
       }
 
       $scope.$watch('currentPage', function(newValue, oldValue) {
@@ -144,5 +168,18 @@
         }
         return url
       }
+
+      $scope.replyHide = function(index) {
+        return $scope.replys[$scope.posts[index]._id] == null
+      }
+
+      $scope.openReplyPanel = function(index) {
+        $scope.replys[$scope.posts[index]._id] = []
+      }
+
+      $scope.closeReplyPanel = function(index) {
+        $scope.replys[$scope.posts[index]._id] = null
+      }
+      
     })
 })()
