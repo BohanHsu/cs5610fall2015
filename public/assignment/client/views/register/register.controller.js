@@ -14,6 +14,7 @@
         UserService.createUser(user).then(function (user) {
           console.log(user)
           if (user) {
+            user['id'] = user['_id']
             $rootScope.user = user
             $location.path('/profile')
           }

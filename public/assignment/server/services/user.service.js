@@ -5,39 +5,54 @@ module.exports = function(app, userModels, db) {
     for (var k in user) {
       newUser[k] = user[k]
     }
-    res.json(userModels.Create(newUser))
+    userModels.Create(newUser).then(function(user) {
+      res.json(user)
+    })
   })
 
   app.get('/api/assignment/user', function(req, res) {
     if (req.query.username) {
       if (req.query.password) {
-        var userByUserName = userModels.findUserByName(req.query.username)
-        var userByUserPassword = userModels.findUserByCredentials(req.query.password)
-        if (userByUserName == null || userByUserPassword == null) {
-          res.json(null)
-        } else if (userByUserName.id == userByUserPassword.id) {
-          res.json(userByUserName)
-        } else {
-          res.json(null)
-        }
+        userModels.findUserByName(req.query.username).then(function(userByUserName) {
+          userModels.findUserByCredentials(req.query.password).then(function(userByUserPassword) {
+            if (userByUserName == null || userByUserPassword == null) {
+              res.json(null)
+            } else if (userByUserName.id == userByUserPassword.id) {
+              res.json(userByUserName)
+            } else {
+              res.json(null)
+            }
+          })
+        })
       } else {
-        res.json(userModels.findUserByName(req.query.username))
+        userModels.findUserByName(req.query.username).then(function(err, userByUserName) {
+          res.json(userModels.findUserByName(userByUserName))
+        })
       }
     } else {
-      res.json(userModels.FindAll())
+      userModels.FindAll().then(function(users) {
+        res.json(users)
+      })
     }
   })
 
   app.get('/api/assignment/user/:id', function(req, res) {
-    res.json(userModels.FindById(req.params.id))
+    userModels.FindById(req.params.id).then(function(user) {
+      res.json()
+    })
   })
 
   app.put('/api/assignment/user/:id', function(req, res) {
-    res.json(userModels.Update(req.params.id, req.body.user))
+    userModels.Update(req.params.id, req.body.user).then(function(user) {
+      res.json(user)
+    })
   })
 
   app.delete('/api/assignment/user/:id', function(req, res) {
-    userModels.Delete(req.params.id)
-    res.json(userModels.FindAll())
+    userModels.Delete(req.params.id).then(function() {
+      userModels.FindAll().then(function(users) {
+        res.json()
+      })
+    })
   })
 }
