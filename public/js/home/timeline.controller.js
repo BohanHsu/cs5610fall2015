@@ -155,8 +155,11 @@
       }
 
       $scope.viewRecipe = function(index) {
-        $scope.viewingRecipe = $scope.posts[index].recipe
-        console.log($scope.viewingRecipe)
+        $scope.recipeIndex = index
+        loadReplyOfPostAccoringToIndex(index, function() {
+          $scope.recipeIndex = index
+          $scope.viewingRecipe = $scope.posts[index].recipe
+        })
       }
 
       $scope.$watch('currentPage', function(newValue, oldValue) {
@@ -184,11 +187,13 @@
         loadReplyOfPostAccoringToIndex(index)
       }
 
-      function loadReplyOfPostAccoringToIndex(index) {
+      function loadReplyOfPostAccoringToIndex(index, callback) {
         $scope.replys[$scope.posts[index]._id] = []
         CommentService.getCommentForType('post', $scope.posts[index]._id, function(response) {
           console.log(response)
           $scope.replys[$scope.posts[index]._id] = response['comments']
+          if (callback)
+            callback()
         })
       }
 
@@ -200,7 +205,8 @@
         return 280 - $scope.replyContents[$scope.posts[index]._id]['content'].length
       }
 
-      $scope.sendPost = function(index){
+      $scope.sendComment = function(index){
+        console.log(index)
         if (!($scope.replyContents[$scope.posts[index]._id]['content'].length > 0 && $scope.replyContents[$scope.posts[index]._id]['content'].length <= 280)) {
           return
         }
@@ -208,6 +214,7 @@
         var objectId = $scope.posts[index]._id
         var content = $scope.replyContents[$scope.posts[index]._id]['content']
         var commentId = $scope.replyContents[$scope.posts[index]._id]['commentId']
+        console.log('ojId', objectId, 'content', content, 'commentId', commentId)
         CommentService.addNewCommentForType(type, objectId, content, commentId, function(response) {
           console.log(response)
           // clean up

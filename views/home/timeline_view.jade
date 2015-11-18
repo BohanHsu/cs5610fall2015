@@ -45,7 +45,7 @@ div.row(ng-controller='TimelineController').heigh80vh
                     div.col-xs-8.col-sm-10
                       textarea#tweet-reply-input.form-control(adjust-textarea='' ng-model='replyContents[posts[$index]._id]["content"]')
                     div.col-xs-4.col-sm-2
-                      button.btn.btn-default(ng-click='sendPost($index)')
+                      button.btn.btn-default(ng-click='sendComment($index)')
                         i.glyphicon.glyphicon-ok
                   div.row(ng-if='replyContents[posts[$index]._id]["commentId"] != null')
                     div.col-xs-12
@@ -123,21 +123,59 @@ div.row(ng-controller='TimelineController').heigh80vh
               button.close(type="button" data-dismiss="modal")
                | &times;
         div.modal-body
-          div.form-horizontal(role='form')
-            label.control-label(for='viewingIngredients') Ingredients:
-            ul#viewingIngredients
-              li(ng-repeat='ingredient in viewingRecipe.ingredients')
-                p {{ingredient[0]}}
-                p {{ingredient[1]}}
+          div.row
+            div.col-xs-10.col-xs-offset-1
+              div.form-horizontal(role='form')
+                label.control-label(for='viewingIngredients') Ingredients:
+                ul#viewingIngredients
+                  li(ng-repeat='ingredient in viewingRecipe.ingredients')
+                    p {{ingredient[0]}}
+                    p {{ingredient[1]}}
 
-            label.control-label(for='viewingSteps') Steps:
-            ul#viewingSteps
-              li.margin-vertical-20(ng-repeat='ingredient in viewingRecipe.steps')
-                p {{ingredient[0]}}
-                img.margin-vertical-20.viewingRecipeImg(ng-src='{{ingredient[1]}}')
+                label.control-label(for='viewingSteps') Steps:
+                ul#viewingSteps
+                  li.margin-vertical-20(ng-repeat='ingredient in viewingRecipe.steps')
+                    p {{ingredient[0]}}
+                    img.margin-vertical-20.viewingRecipeImg(ng-src='{{ingredient[1]}}')
+          div.row(ng-if='recipeIndex != null')
+            hr
+            div.col-xs-10.col-xs-offset-1
+              div.row.margin-vertical-4
+                div.col-xs-2
+                  img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
+                div.col-xs-10
+                  div.row
+                    div.col-xs-8.col-sm-10
+                      textarea#tweet-reply-input.form-control(adjust-textarea='' ng-model='replyContents[posts[recipeIndex]._id]["content"]')
+                    div.col-xs-4.col-sm-2
+                      button.btn.btn-default(ng-click='sendComment(recipeIndex)')
+                        i.glyphicon.glyphicon-ok
+                  div.row(ng-if='replyContents[posts[recipeIndex]._id]["commentId"] != null')
+                    div.col-xs-12
+                      p Reply to: {{replyContents[posts[recipeIndex]._id]["commentObj"].user_id.local.username}}, of: {{replyContents[posts[recipeIndex]._id]["commentObj"].content}}
+                  div.row
+                    div.col-xs-8
+                    div.col-xs-4
+                      p {{calculateCommentRemainLength(recipeIndex)}}
+                  hr
+
+                  div(ng-repeat='reply in replys[posts[recipeIndex]._id]')
+                    div.row.margin-vertical-4
+                      div.col-xs-2
+                        img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
+                      div.col-xs-10
+                        div.row
+                          p(ng-if='reply.comment_id != null') 
+                            | Reply to 
+                            strong {{reply.comment_id.user_id.local.username}}
+                            | : {{reply.content}}
+                          p(ng-if='reply.comment_id == null') {{reply.content}}
+                        div.row
+                          span.text-center
+                            a(ng-click='selectReplyComment(recipeIndex, $index)') Reply
+                    hr
 
         div.modal-footer
-          button.btn.btn-default(ng-click='postRecipe()') Post
 
 div.container#recipeModal.modal.fade(role='dialog' ng-controller='RecipeController')
   div.modal-dialog
