@@ -12,58 +12,100 @@ block content
   div(ng-controller='SignupController')
     ul.nav.nav-tabs
       li.active
-        a(href='#individual-tab') Individual
+        a(data-toggle='pill' show-tab='' href='#individual-tab') Individual
+      li
+        a(data-toggle='pill' show-tab='' href='#enterprise-tab') Enterprise
 
-    div.tab-content
-      div.row
-        div.col-sm-7
+    div.row
+      div.col-sm-7
+        div.tab-content
           div#individual-tab.tab-pane.fade.in.active
-            //- form(action='/login/signup', method='post')
-            div.form-group
-              div.alert.alert-danger(ng-if='err != null')
-                | {{err}}
-            div.form-group
-              label(for='username') Username:
-              input#username.form-control(type='text', name='username' placeholder='username' ng-model='username')
-            div.form-group
-              label(for='password') Password:
-              input#password.form-control(type='password', name='password' placeholder='password' ng-model='password')
-            div.form-group
-              label(for='confirm-password') Confirm Password:
-              input#confirm-password.form-control(type='password', name='confirm_password' placeholder='confirm password' ng-model='confirm_password')
-            div.form-group
-              label(for='first-name') First Name:
-              input#first-name.form-control(type='text', name='firstname' placeholder='first name' ng-model='firstname')
-            div.form-group
-              label(for='last-name') Last Name:
-              input#last-name.form-control(type='text', name='lastname' placeholder='last name' ng-model='lastname')
-            div.form-group
-              label(for='email') Email:
-              input#email.form-control(type='email', name='email' placeholder='email' ng-model='email')
-            hr
-            div.form-group
-              button.btn.btn-default(ng-click='signup()') Register
+            div(ng-if='type="individual"')
+              div.form-group
+                div.alert.alert-danger(ng-if='err != null')
+                  | {{err}}
+              div.form-group
+                label(for='username') Username:
+                input#username.form-control(type='text', name='username' placeholder='username' ng-model='username')
+              div.form-group
+                label(for='password') Password:
+                input#password.form-control(type='password', name='password' placeholder='password' ng-model='password')
+              div.form-group
+                label(for='confirm-password') Confirm Password:
+                input#confirm-password.form-control(type='password', name='confirm_password' placeholder='confirm password' ng-model='confirm_password')
+              div.form-group
+                label(for='first-name') First Name:
+                input#first-name.form-control(type='text', name='firstname' placeholder='first name' ng-model='firstname')
+              div.form-group
+                label(for='last-name') Last Name:
+                input#last-name.form-control(type='text', name='lastname' placeholder='last name' ng-model='lastname')
+              div.form-group
+                label(for='email') Email:
+                input#email.form-control(type='email', name='email' placeholder='email' ng-model='email')
+              hr
+              div.form-group
+                button.btn.btn-default(ng-click='signup()') Register
 
-        div.col-sm-5
-          div.col-sm-4
-          div.col-sm-8
-            h3
-              | Upload Avatar
-            div#cropperDivParent(ng-show='uploader.isHTML5')
-              div#cropperDiv.ng-hide(ng-hide='originalImageUrlHide')
-                img#avatarOriginalImg(src='')
-              div.ng-hide(ng-hide='originalImageUrlHide')
-                button.btn.btn-default(ng-click='crop()')
-                  | Crop
-                hr
-              div#avatarPreviewDiv(ng-hide='croppedImageUrlHide')
-                img(ng-src='{{croppedImageUrl}}')
-              div.btn.btn-default.btn-file
-                | {{chooseImageBtnText}}
-                input#avatarUpload(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
-            //- ul
-            //-   li(ng-repeat='item in uploader.queue')
-            //-     | {{item.file.name}}
+          div#enterprise-tab.tab-pane.fade
+            div(ng-if='type="enterprise"')
+              div.form-group
+                div.alert.alert-danger(ng-if='err != null')
+                  | {{err}}
+              div.form-group
+                label(for='username') Username:
+                input#username.form-control(type='text', name='username' placeholder='username' ng-model='username')
+              div.form-group
+                label(for='password') Password:
+                input#password.form-control(type='password', name='password' placeholder='password' ng-model='password')
+              div.form-group
+                label(for='confirm-password') Confirm Password:
+                input#confirm-password.form-control(type='password', name='confirm_password' placeholder='confirm password' ng-model='confirm_password')
+              div.form-group
+                label(for='last-name') Business Name:
+                input#business-name.form-control(type='text', name='business' placeholder='business name' ng-model='business')
+              div.form-group
+                label(for='email') Email:
+                input#email.form-control(type='email', name='email' placeholder='email' ng-model='email')
+              hr
+              div.form-group
+                label(for='last-name') Address:
+                input#address.form-control(type='text', name='address' placeholder='address' ng-model='address')
+              div.form-group
+                label(for='open-hours') Open Hours:
+                div#open-hours.row
+                  div.col-xs-4
+                    select.form-control
+                      option(ng-repeat='day in days' value='day') {{day}}
+                  div.col-xs-4
+                    input#open-from.form-control
+                  div.col-xs-4
+                    input#open-to.form-control
+
+
+
+
+
+              hr
+              div.form-group
+                button.btn.btn-default(ng-click='signup()') Register
+
+      div.col-sm-5
+        div.col-sm-4
+        div.col-sm-8
+          h3
+            | Upload Avatar
+          div#cropperDivParent(ng-show='uploader.isHTML5')
+            div#cropperDiv.ng-hide(ng-hide='originalImageUrlHide')
+              img#avatarOriginalImg(src='')
+            div.ng-hide(ng-hide='originalImageUrlHide')
+              button.btn.btn-default(ng-click='crop()')
+                | Crop
+              hr
+            div#avatarPreviewDiv(ng-hide='croppedImageUrlHide')
+              img(ng-src='{{croppedImageUrl}}')
+            div.btn.btn-default.btn-file
+              | {{chooseImageBtnText}}
+              input#avatarUpload(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
 
 block scripts
   script(src='/vendor/angular-file-upload/dist/angular-file-upload.min.js')
@@ -75,6 +117,7 @@ block scripts
   script(src='/js/login/loginService.js')
   script(src='/js/login/login.controller.js')
   script(src='/js/service/imageService.js')
+  script(src='/vendor/bootstrap-datepicker.js')
 
 block style
   link(href='/vendor/cropper/dist/cropper.min.css' rel='stylesheet')

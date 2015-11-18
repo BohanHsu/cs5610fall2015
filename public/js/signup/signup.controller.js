@@ -3,6 +3,7 @@
     .module('TasteOfApp', ['angularFileUpload'])
     .controller('SignupController', function($scope, $http, $window, FileUploader, SignupService, ImageService) {
 
+      $scope.type = 'individual'
       $scope.originalImageUrl = ''
       $scope.originalImageUrlHide = true
       $scope.croppedImageUrl = ''
@@ -78,6 +79,12 @@
           }
         })
       }
+
+      $scope.changeType = function(type) {
+        $scope.type = type
+      }
+
+      $scope.days = ['Sun', 'Mon', 'Tu', 'Wed', 'Th', 'Fri', 'Sat']
       
       $window.onbeforeunload =  function() {
         ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: ''}, function(response) {
