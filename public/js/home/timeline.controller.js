@@ -36,7 +36,7 @@
       }
     }})
 
-    .controller('TimelineController', function($scope, $rootScope, PostService) {
+    .controller('TimelineController', function($scope, $rootScope, PostService, CommentService) {
       var postInPage = 20
       $scope.user = $rootScope.user
       $scope.post = ''
@@ -144,8 +144,10 @@
             $scope.response = response
             $scope.posts = response.posts
             $scope.replys = {}
+            $scope.replyContents = {}
             $scope.posts.forEach(function(ele, idx, arr) {
               $scope.replys[ele._id] = null
+              $scope.replyContents[ele._id] = {'content': '', 'commentId': null}
             })
             $scope.totalPost = response.totalCnt
           })
@@ -174,12 +176,53 @@
       }
 
       $scope.openReplyPanel = function(index) {
+        //$scope.replys[$scope.posts[index]._id] = []
+        //CommentService.getCommentForType('post', $scope.posts[index]._id, function(response) {
+        //  console.log(response)
+        //  $scope.replys[$scope.posts[index]._id] = response['comments']
+        //})
+        loadReplyOfPostAccoringToIndex(index)
+      }
+
+      function loadReplyOfPostAccoringToIndex(index) {
         $scope.replys[$scope.posts[index]._id] = []
+        CommentService.getCommentForType('post', $scope.posts[index]._id, function(response) {
+          console.log(response)
+          $scope.replys[$scope.posts[index]._id] = response['comments']
+        })
       }
 
       $scope.closeReplyPanel = function(index) {
         $scope.replys[$scope.posts[index]._id] = null
       }
-      
+
+      $scope.calculateCommentRemainLength = function(index) {
+        return 280 - $scope.replyContents[$scope.posts[index]._id]['content'].length
+      }
+
+      $scope.sendPost = function(index){
+        if (!($scope.replyContents[$scope.posts[index]._id]['content'].length > 0 && $scope.replyContents[$scope.posts[index]._id]['content'].length <= 280)) {
+          return
+        }
+        var type = 'post'
+        var objectId = $scope.posts[index]._id
+        var content = $scope.replyContents[$scope.posts[index]._id]['content']
+        var commentId = $scope.replyContents[$scope.posts[index]._id]['commentId']
+        CommentService.addNewCommentForType(type, objectId, content, commentId, function(response) {
+          console.log(response)
+          // clean up
+          $scope.replyContents[$scope.posts[index]._id]['content'] = ''
+          $scope.replyContents[$scope.posts[index]._id]['commentId'] = null
+          $scope.replyContents[$scope.posts[index]._id]['commentObj'] = null
+          loadReplyOfPostAccoringToIndex(index)
+        })
+      }
+
+      $scope.selectReplyComment = function(postIndex, commentIndex) {
+        console.log('postIndex', postIndex, 'commentIndex', commentIndex)
+        $scope.replyContents[$scope.posts[postIndex]._id]['commentId'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]._id
+        $scope.replyContents[$scope.posts[postIndex]._id]['commentObj'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]
+        console.log($scope.replyContents[$scope.posts[postIndex]._id]['commentId'])
+      }
     })
 })()

@@ -34,24 +34,44 @@ div.row(ng-controller='TimelineController').heigh80vh
                   {{pt.user_id.local.username}}
               div.row
                 p {{pt.tweet.content}}
-          div.row.margin-vertical-4.ng-hide(ng-hide='replyHide($index)')
+          div#reply.row.margin-vertical-4.ng-hide(ng-hide='replyHide($index)')
             div.col-xs-2.col-xs-offset-1.col-sm-1.col-sm-offset-1
             div.col-xs-8.col-sm-9
               div.row.margin-vertical-4
                 div.col-xs-2
-                  img#post-reply-img(src='img/default.jpeg')
+                  img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
                 div.col-xs-10
                   div.row
                     div.col-xs-8.col-sm-10
-                      textarea#tweet-reply-input.form-control(adjust-textarea='')
+                      textarea#tweet-reply-input.form-control(adjust-textarea='' ng-model='replyContents[posts[$index]._id]["content"]')
                     div.col-xs-4.col-sm-2
-                      button.btn.btn-default 
+                      button.btn.btn-default(ng-click='sendPost($index)')
                         i.glyphicon.glyphicon-ok
-                  div.row.margin-vertical-4(ng-repeat='reply in replys[$index]')
-                    div.col-xs-2
-                      img#post-reply-img(src='img/default.jpeg')
-                    div.col-xs-10
-                      p lou shang shi sha bi
+                  div.row(ng-if='replyContents[posts[$index]._id]["commentId"] != null')
+                    div.col-xs-12
+                      p Reply to: {{replyContents[posts[$index]._id]["commentObj"].user_id.local.username}}, of: {{replyContents[posts[$index]._id]["commentObj"].content}}
+                  div.row
+                    div.col-xs-8
+                    div.col-xs-4
+                      p {{calculateCommentRemainLength($index)}}
+                  hr
+
+                  div(ng-repeat='reply in replys[posts[$index]._id]')
+                    div.row.margin-vertical-4
+                      div.col-xs-2
+                        img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
+                      div.col-xs-10
+                        div.row
+                          p(ng-if='reply.comment_id != null') 
+                            | Reply to 
+                            strong {{reply.comment_id.user_id.local.username}}
+                            | : {{reply.content}}
+                          p(ng-if='reply.comment_id == null') {{reply.content}}
+                        div.row
+                          span.text-center
+                            a(ng-click='selectReplyComment($parent.$index, $index)') Reply
+                    hr
+
           div.row.margin-vertical-8
             div.col-xs-4.text-center
               a forward

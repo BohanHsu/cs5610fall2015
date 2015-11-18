@@ -31,7 +31,6 @@ app.post('/all', function(req, res) {
           user_id: {$in: following_ids}
         }).count(function(err, cnt) {
           totalCnt = cnt
-          console.log('cnt', cnt)
         })
 
         var tweet_ids = posts.filter(function(post) {
@@ -102,7 +101,6 @@ app.post('/new/recipe', function (req, res) {
 
     if (req.body.type == 'recipe') {
       var recipe = new Recipe()
-      console.log(req.body)
       req.body.ingredients.forEach(function(ingredient) {
         recipe.ingredients.push(ingredient)
         return
@@ -114,7 +112,6 @@ app.post('/new/recipe', function (req, res) {
       recipe.recipeName = req.body.recipeName
       recipe.save(function(err) {
         if (err) {
-          console.log('1', err)
           res.json({success: false, 'err': err})
         } else {
           var post = new Post()
@@ -123,7 +120,6 @@ app.post('/new/recipe', function (req, res) {
           post.recipe_id = recipe._id
           post.save(function(err) {
             if (err) {
-              console.log('2', err)
               res.json({success: false, 'err': err})
             } else {
               res.json({
