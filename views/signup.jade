@@ -20,7 +20,7 @@ block content
       div.col-sm-7
         div.tab-content
           div#individual-tab.tab-pane.fade.in.active
-            div(ng-if='type="individual"')
+            div
               div.form-group
                 div.alert.alert-danger(ng-if='err != null')
                   | {{err}}
@@ -47,47 +47,77 @@ block content
                 button.btn.btn-default(ng-click='signup()') Register
 
           div#enterprise-tab.tab-pane.fade
-            div(ng-if='type="enterprise"')
-              div.form-group
-                div.alert.alert-danger(ng-if='err != null')
-                  | {{err}}
-              div.form-group
-                label(for='username') Username:
-                input#username.form-control(type='text', name='username' placeholder='username' ng-model='username')
-              div.form-group
-                label(for='password') Password:
-                input#password.form-control(type='password', name='password' placeholder='password' ng-model='password')
-              div.form-group
-                label(for='confirm-password') Confirm Password:
-                input#confirm-password.form-control(type='password', name='confirm_password' placeholder='confirm password' ng-model='confirm_password')
-              div.form-group
-                label(for='last-name') Business Name:
-                input#business-name.form-control(type='text', name='business' placeholder='business name' ng-model='business')
-              div.form-group
-                label(for='email') Email:
-                input#email.form-control(type='email', name='email' placeholder='email' ng-model='email')
-              hr
-              div.form-group
-                label(for='last-name') Address:
-                input#address.form-control(type='text', name='address' placeholder='address' ng-model='address')
-              div.form-group
-                label(for='open-hours') Open Hours:
-                div#open-hours.row
-                  div.col-xs-4
-                    select.form-control
-                      option(ng-repeat='day in days' value='day') {{day}}
-                  div.col-xs-4
-                    input#open-from.form-control
-                  div.col-xs-4
-                    input#open-to.form-control
+            div.form-group
+              div.alert.alert-danger(ng-if='err != null')
+                | {{err}}
+            div.form-group
+              label(for='username') Username:
+              input#username.form-control(type='text', name='username' placeholder='username' ng-model='username')
+            div.form-group
+              label(for='password') Password:
+              input#password.form-control(type='password', name='password' placeholder='password' ng-model='password')
+            div.form-group
+              label(for='confirm-password') Confirm Password:
+              input#confirm-password.form-control(type='password', name='confirm_password' placeholder='confirm password' ng-model='confirm_password')
+            div.form-group
+              label(for='last-name') Business Name:
+              input#business-name.form-control(type='text', name='business' placeholder='business name' ng-model='business')
+            div.form-group
+              label(for='email') Email:
+              input#email.form-control(type='email', name='email' placeholder='email' ng-model='email')
+            hr
+            div.form-group
+              label(for='last-name') Address:
+              input#address.form-control(type='text', name='address' placeholder='address' ng-model='address')
+            div.form-group
+              label(for='open-hours') Open Hours:
+              div#open-hours.row
+                div.col-xs-3
+                  select.form-control(name='daySelect' ng-model='daySelection')
+                    option(ng-repeat='day in days' value='{{day}}') {{day}}
+                div.col-xs-4
+                  div.input-group.bootstrap-timepicker.timepicker
+                    input#open-from.form-control.input-small(type='text' ng-model='openHour')
+                    span.input-group-addon
+                      i.glyphicon.glyphicon-time
+                div.col-xs-4
+                  div.input-group.bootstrap-timepicker.timepicker
+                    input#open-to.form-control.input-small(type='text' onload='setTimePicker()' ng-model='closeHour')
+                    span.input-group-addon
+                      i.glyphicon.glyphicon-time
+                div.col-xs-1
+                  button.btn.btn-default(ng-click='addOpenHour()')
+                    i.glyphicon.glyphicon-plus
+            div.form-group(ng-if='daysDictSizeHelper() != 0')
+              label(for='open-hours-preview') Open Hours Preview:
+              ul#open-hours-preview
+                li(ng-repeat='day in days' ng-if='daysDict[day] != null') 
+                  span {{day}}: {{daysDict[day][0]}} - {{daysDict[day][1]}}
+                  span.pull-right
+                    i.glyphicon.glyphicon-remove(ng-click='removeFromDaysDict(day)')
+
+            div.form-group
+              label(for='tag') Tag (add tags to help user search for you information, you can have up to 10 tags):
+              div#tag.row
+                div.col-xs-11
+                  input#tag.form-control(type='text', name='tag' placeholder='tag' ng-model='tag')
+                div.col-xs-1
+                  button.btn.btn-default(ng-click='addTag()')
+                    i.glyphicon.glyphicon-plus
 
 
+            div.form-group(ng-if='tags.length > 0')
+              label(for='tags-preview') Open Hours Preview:
+              ul#tags-preview
+                li(ng-repeat='tg in tags') 
+                  span {{tg}}
+                  span.pull-right
+                    i.glyphicon.glyphicon-remove(ng-click='removeTag($index)')
 
 
-
-              hr
-              div.form-group
-                button.btn.btn-default(ng-click='signup()') Register
+            hr
+            div.form-group
+              button.btn.btn-default(ng-click='signup()') Register
 
       div.col-sm-5
         div.col-sm-4
@@ -111,13 +141,14 @@ block scripts
   script(src='/vendor/angular-file-upload/dist/angular-file-upload.min.js')
   script(src='/vendor/cropper/dist/cropper.min.js')
   script(src='/js/signup/app.js')
+  script(src='/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js')
   script(src='/js/signup/signup.js')
   script(src='/js/signup/signup.controller.js')
   script(src='/js/signup/signupService.js')
   script(src='/js/login/loginService.js')
   script(src='/js/login/login.controller.js')
   script(src='/js/service/imageService.js')
-  script(src='/vendor/bootstrap-datepicker.js')
 
 block style
   link(href='/vendor/cropper/dist/cropper.min.css' rel='stylesheet')
+  link(href='/vendor/bootstrap-timepicker/less/timepicker.less' rel='stylesheet')

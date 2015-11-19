@@ -29,3 +29,10 @@ function setCropper() {
 function replaceUrl(newUrl) {
   $('#avatarOriginalImg').cropper('replace', newUrl)
 }
+
+(function setTimePicker() {
+  $('document').ready(function() {
+    $('#open-from').timepicker();
+    $('#open-to').timepicker();
+  })
+})()

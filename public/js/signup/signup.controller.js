@@ -81,10 +81,48 @@
       }
 
       $scope.changeType = function(type) {
-        $scope.type = type
+        //$scope.type = type
+        //setTimePicker()
       }
 
       $scope.days = ['Sun', 'Mon', 'Tu', 'Wed', 'Th', 'Fri', 'Sat']
+      $scope.daysDict = {}
+      $scope.days.forEach(function(ele, idx, arr) {
+        $scope.daysDict[ele] = null
+      })
+
+      $scope.addOpenHour = function() {
+        $scope.daysDict[$scope.daySelection] = [$scope.openHour, $scope.closeHour]
+      }
+
+      $scope.removeFromDaysDict = function(key) {
+        $scope.daysDict[key] = null
+      }
+
+      $scope.daysDictSizeHelper = function() {
+        var size = 0
+        $scope.days.forEach(function(ele, idx, arr) {
+          if ($scope.daysDict[ele]) {
+            size++
+          }
+        })
+        return size
+      }
+
+      $scope.tag = ''
+      $scope.tags = []
+
+      $scope.addTag = function() {
+        if ($scope.tags.length == 10) {
+          $scope.tags.splice(0, 1)
+        }
+        $scope.tags.push($scope.tag)
+        $scope.tag = ''
+      }
+
+      $scope.removeTag = function(index) {
+        $scope.tags.splice(index, 1)
+      }
       
       $window.onbeforeunload =  function() {
         ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: ''}, function(response) {
