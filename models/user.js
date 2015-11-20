@@ -11,6 +11,18 @@ var userSchema = mongoose.Schema({
     imageUrl: 'string'
   },
 
+  user_type: {
+    type: String,
+    default: 'individual'
+  },
+
+  enterprise: {
+    businessname: String,
+    address: String,
+    openHours: [],
+    tags: []
+  },
+
   facebook: {
     id: 'string',
     token: 'string',

@@ -12,9 +12,9 @@ block content
   div(ng-controller='SignupController')
     ul.nav.nav-tabs
       li.active
-        a(data-toggle='pill' show-tab='' href='#individual-tab') Individual
+        a(data-toggle='pill' show-tab='' href='#individual-tab' ng-click='changeType("individual")') Individual
       li
-        a(data-toggle='pill' show-tab='' href='#enterprise-tab') Enterprise
+        a(data-toggle='pill' show-tab='' href='#enterprise-tab' ng-click='changeType("enterprise")') Enterprise
 
     div.row
       div.col-sm-7
@@ -117,7 +117,7 @@ block content
 
             hr
             div.form-group
-              button.btn.btn-default(ng-click='signup()') Register
+              button.btn.btn-default(ng-click='signupbusiness()') Register
 
       div.col-sm-5
         div.col-sm-4

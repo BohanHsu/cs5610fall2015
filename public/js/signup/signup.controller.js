@@ -52,16 +52,25 @@
       }
 
       $scope.signup = function() {
+        clearErr()
         if (isEmpty($scope.username)) {
           logErr('Username can\'t be empty')
+          return
         }
 
         if (isEmpty($scope.password)) {
           logErr('Password can\'t be empty')
+          return
         }
 
         if ($scope.password != $scope.confirm_password) {
           logErr('Password not match')
+          return
+        }
+
+        if (typeof $scope.email == 'undefined') {
+          logErr('Please enter a valid email address.')
+          return
         }
 
         SignupService.userSignUp({
@@ -81,8 +90,8 @@
       }
 
       $scope.changeType = function(type) {
-        //$scope.type = type
-        //setTimePicker()
+        $scope.type = type
+        clearErr()
       }
 
       $scope.days = ['Sun', 'Mon', 'Tu', 'Wed', 'Th', 'Fri', 'Sat']
@@ -123,6 +132,76 @@
       $scope.removeTag = function(index) {
         $scope.tags.splice(index, 1)
       }
+
+      $scope.signupbusiness = function() {
+        clearErr()
+        //console.log($scope.username)
+        //console.log($scope.password)
+        //console.log($scope.confirm_password)
+        //console.log($scope.business)
+        //console.log($scope.email)
+        //console.log($scope.address)
+        //console.log($scope.daysDict)
+        //console.log($scope.tags)
+
+        if (isEmpty($scope.username)) {
+          logErr('Username can\'t be empty')
+          return
+        }
+
+        if (isEmpty($scope.password)) {
+          logErr('Password can\'t be empty')
+          return
+        }
+
+        if ($scope.password != $scope.confirm_password) {
+          logErr('Password not match')
+          return
+        }
+
+        if (isEmpty($scope.business)) {
+          logErr('Please enter business name')
+          return
+        }
+
+        if (typeof $scope.email == 'undefined') {
+          logErr('For enterprise user, you need to enter a valid email address.')
+          return
+        }
+
+        if ($scope.croppedImageUrl == null || $scope.croppedImageUrl == '') {
+          logErr('For enterprise user, you need to upload a avatar image.')
+          return
+        }
+
+        var openHoursArray = []
+
+        $scope.days.forEach(function(ele, idx, arr) {
+          if ($scope.daysDict[ele]) {
+            openHoursArray.push([ele] + ',' + $scope.daysDict[ele])
+          }
+        })
+
+        console.log(openHoursArray)
+
+        SignupService.userSignUp({
+          username: $scope.username,
+          password: $scope.password,
+          email: $scope.email,
+          imageUrl: $scope.croppedImageUrl,
+          userType: 'enterprise',
+          businessname: $scope.business,
+          address: $scope.address,
+          openHours: openHoursArray,
+          tags: $scope.tags
+        }, function(response) {
+          if (response['success']) {
+            window.location = '/'
+          } else {
+            logErr(response['err'])
+          }
+        })
+      }
       
       $window.onbeforeunload =  function() {
         ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: ''}, function(response) {
@@ -135,6 +214,10 @@
 
       function logErr(err) {
         $scope.err = err
+      }
+
+      function clearErr(err) {
+        $scope.err = null
       }
     })
 })()

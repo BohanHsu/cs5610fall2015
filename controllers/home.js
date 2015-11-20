@@ -17,4 +17,8 @@ app.get('/home/timeline.view', function(req, res) {
   res.render('./home/timeline_view', {user: req.session.user})
 })
 
+app.get('/home/business.view', function(req, res) {
+  res.render('./home/business_view', {user: req.session.user})
+})
+
 module.exports = app

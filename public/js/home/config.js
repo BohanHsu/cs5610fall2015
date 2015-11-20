@@ -11,7 +11,11 @@
               {
                 templateUrl: 'home/timeline.view',
               })
-        .otherwise('/timeline')
+        .when('/business',
+              {
+                templateUrl: 'home/business.view',
+              })
+        .otherwise('/visitor')
     })
 
 })()
