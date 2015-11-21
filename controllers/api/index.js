@@ -7,5 +7,6 @@ app.use(bodyParser.json())
 app.use('/post', require('./post'))
 app.use('/user', require('./user'))
 app.use('/comment', require('./comment'))
+app.use('/search', require('./search'))
 
 module.exports = app

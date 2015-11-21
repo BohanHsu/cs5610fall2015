@@ -12,6 +12,11 @@ var recipeSchema = mongoose.Schema({
 
   steps: {
     type: []
+  },
+
+  post_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
   }
 })
 

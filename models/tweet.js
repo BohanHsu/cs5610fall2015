@@ -9,6 +9,11 @@ var tweetSchema = mongoose.Schema({
       },
       message: 'Wrong length'
     }
+  },
+
+  post_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
   }
 })
 

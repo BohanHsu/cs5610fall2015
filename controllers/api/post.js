@@ -79,10 +79,17 @@ app.post('/new', function (req, res) {
             if (err) {
               res.json({success: false, 'err': err})
             } else {
-              res.json({
-                success: true, 
-                'post': post,
-                'tweet': tweet
+              tweet.post_id = post._id
+              tweet.save(function(err) {
+                if (err) {
+                  res.json({success: false, 'err': err})
+                } else {
+                  res.json({
+                    success: true, 
+                    'post': post,
+                    'tweet': tweet
+                  })
+                }
               })
             }
           })
@@ -122,10 +129,17 @@ app.post('/new/recipe', function (req, res) {
             if (err) {
               res.json({success: false, 'err': err})
             } else {
-              res.json({
-                success: true, 
-                'post': post,
-                'recipe': recipe
+              recipe.post_id = post._id
+              recipe.save(function(err) {
+                if (err) {
+                  res.json({success: false, 'err': err})
+                } else {
+                  res.json({
+                    success: true, 
+                    'post': post,
+                    'recipe': recipe
+                  })
+                }
               })
             }
           })

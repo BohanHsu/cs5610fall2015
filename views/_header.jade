@@ -46,31 +46,11 @@ div.navbar.navbar-default.navbar-fixed-top
 
       if user
         ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a.dropdown-toggle#loggedInMenu(data-toggle='dropdown')
-              | Welcome, #{user.local.username}!
-              span.caret
-            ul.dropdown-menu(aria-labelledby='loggedInMenu')
-              li
-                a(href='/login/profile')
-                  | My Profile
-              li
-                a(href='/login/logout')
-                  | Logout
+          include _header_right.jade
 
       else
         ul.nav.navbar-nav.navbar-right(ng-if='user != null')
-          li.dropdown
-            a.dropdown-toggle#loggedInMenu(data-toggle='dropdown')
-              | Welcome, {{user.local.username}}!
-              span.caret
-            ul.dropdown-menu(aria-labelledby='loggedInMenu')
-              li
-                a(href='/login/profile')
-                  | My Profile
-              li
-                a(href='/login/logout')
-                  | Logout
+          include _header_right.jade
         
         ul.nav.navbar-nav.navbar-right(ng-if='user == null')
           li
@@ -112,4 +92,3 @@ div.navbar.navbar-default.navbar-fixed-top
           div.modal-footer
             button.btn.btn-default(type="button" ng-click='login()') Login
   else
-    //- div(ng-controller='LoginController' ng-init="init(#{JSON.stringify(user)})")
