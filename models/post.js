@@ -8,7 +8,6 @@ var postSchema = mongoose.Schema({
       validator: function(val) {
       
         var index = ['tweet', 'forward', 'recipe'].indexOf(val)
-        console.log(index)
         return index != -1
       },
       message: 'Wrong type!'
