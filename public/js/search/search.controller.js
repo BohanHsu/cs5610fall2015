@@ -9,20 +9,28 @@
       $scope.searchFromHeader = function() {
         SearchService.search($rootScope.user, $scope.searchText, {}, function(response) {
           $rootScope.searchResult = response.result
+          $rootScope.lastSearchText = $scope.searchText
           $location.path('/search')
         })
       }
 
       $scope.searchResult = $rootScope.searchResult
+      $scope.searchText = $rootScope.lastSearchText
 
       $scope.searchFromSearchPage = function() {
         SearchService.search($rootScope.user, $scope.searchText, {}, function(response) {
           $scope.searchResult = response.result
+          console.log(response.result)
         })
       }
 
       $scope.$watch('searchResult', function(newValue, oldValue) {
         queryFollowing()
+      })
+
+      $rootScope.$watch('lastSearchText', function(newValue, oldValue) {
+        $scope.searchText = newValue
+        $scope.searchResult = $rootScope.searchResult
       })
 
       function queryFollowing() {

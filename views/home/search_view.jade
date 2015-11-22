@@ -11,6 +11,7 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
         button.btn.btn-default(ng-click='searchFromSearchPage()')
           | Search
     div.row
+      h3(ng-if='searchResult.users && searchResult.users.length != 0') Users
       div.col-xs-1
       div.col-xs-10
         div.row(ng-repeat='user in searchResult.users')
@@ -31,3 +32,25 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
               | Follow
           div.col-xs-3(ng-if='currentUser._id == user._id')
 
+    div.row
+      h3(ng-if='searchResult.tweets && searchResult.tweets.length != 0') Tweets
+      div.col-xs-1
+      div.col-xs-10
+        div.row(ng-repeat='tweet in searchResult.tweets')
+          hr
+          div.col-xs-3
+            img.searchUserImg(ng-src='{{tweet.post_id.user_id.local.imageUrl}}')
+          div.col-xs-9
+            p {{tweet.content}}
+
+    div.row
+      h3(ng-if='searchResult.recipes && searchResult.recipes.length != 0') Recipes
+      div.col-xs-1
+      div.col-xs-10
+        div.row(ng-repeat='recipe in searchResult.recipes')
+          hr
+          div.col-xs-3
+            img.searchUserImg(ng-src='{{recipe.post_id.user_id.local.imageUrl}}')
+          div.col-xs-9
+            p
+            {{recipe.recipeName}}

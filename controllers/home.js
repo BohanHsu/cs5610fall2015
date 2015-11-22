@@ -25,4 +25,12 @@ app.get('/home/search.view', function(req, res) {
   res.render('./home/search_view', {user: req.session.user})
 })
 
+app.get('/home/user.view', function(req, res) {
+  res.render('./home/user_view', {user: req.session.user})
+})
+
+app.get('/home/post.view', function(req, res) {
+  res.render('./home/post_view', {user: req.session.user})
+})
+
 module.exports = app

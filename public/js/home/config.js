@@ -19,6 +19,14 @@
               {
                 templateUrl: 'home/search.view',
               })
+        .when('/user/:id',
+              {
+                templateUrl: 'home/user.view',
+              })
+        .when('/post/:id',
+              {
+                templateUrl: 'home/user.view',
+              })
         .otherwise('/visitor')
     })
 

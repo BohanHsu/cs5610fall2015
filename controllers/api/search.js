@@ -31,7 +31,13 @@ app.post('/', authenticate, function(req, res) {
   }
 
   var searchTweet = function(results, callback) {
-    Tweet.find({'content': {'$regex':searchText}}).populate('post_id').exec(function(err, tweets) {
+    Tweet.find({'content': {'$regex':searchText}}).populate({
+      'path': 'post_id',
+      'populate': {
+        'path': 'user_id',
+        'model': 'User'
+      }
+    }).exec(function(err, tweets) {
       if (err) {
         res.json({success: false, 'err': err})
       }
@@ -41,7 +47,13 @@ app.post('/', authenticate, function(req, res) {
   }
 
   var searchRecipe = function(results, callback) {
-    Recipe.find({'recipeName': {'$regex': searchText}}).populate('post_id').exec(function(err, recipes) {
+    Recipe.find({'recipeName': {'$regex': searchText}}).populate({
+      'path': 'post_id',
+      'populate': {
+        'path': 'user_id',
+        'model': 'User'
+      }
+    }).exec(function(err, recipes) {
       if (err) {
         res.json({success: false, 'err': err})
       }
