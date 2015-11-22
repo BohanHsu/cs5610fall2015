@@ -1,9 +1,67 @@
 (function() {
   angular
     .module('TasteOfApp')
-    .controller('SearchController', function($scope, $rootScope) {
+    .controller('SearchController', function($scope, $rootScope, $location, SearchService, UserService) {
+      $scope.followingRelationship = null
+      $scope.currentUser = $rootScope.user
+      $scope.followingRelationship = {}
+
       $scope.searchFromHeader = function() {
-        console.log($scope.searchText)
+        SearchService.search($rootScope.user, $scope.searchText, {}, function(response) {
+          $rootScope.searchResult = response.result
+          $location.path('/search')
+        })
+      }
+
+      $scope.searchResult = $rootScope.searchResult
+
+      $scope.searchFromSearchPage = function() {
+        SearchService.search($rootScope.user, $scope.searchText, {}, function(response) {
+          $scope.searchResult = response.result
+        })
+      }
+
+      $scope.$watch('searchResult', function(newValue, oldValue) {
+        queryFollowing()
+      })
+
+      function queryFollowing() {
+        if (!($scope.searchResult && $scope.searchResult.users)) {
+          return
+        }
+
+        var curUserId = $rootScope.user._id
+        var userIds = $scope.searchResult.users.map(function(user) {
+          return user._id
+        })
+
+        if (userIds.length == 0) {
+          return
+        }
+
+        UserService.queryFollowing(curUserId, userIds, function(response) {
+          console.log(response)
+          $scope.followingRelationship = response.result
+        })
+      }
+
+      $scope.followUser = function(userId) {
+        $scope.followingRelationship[userId] = null
+        UserService.followingUser($scope.currentUser._id, userId, function(response) {
+          if (response.success) {
+            $scope.followingRelationship[userId] = true
+          }
+        })
+      }
+
+      $scope.unFollowUser = function(userId) {
+        $scope.followingRelationship[userId] = null
+        console.log('unfollowl', userId)
+        UserService.unFollowingUser($scope.currentUser._id, userId, function(response) {
+          if (response.success) {
+            $scope.followingRelationship[userId] = false
+          }
+        })
       }
     })
 })()

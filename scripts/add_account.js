@@ -37,7 +37,19 @@ var Recipe = require('../models/recipe')
 var Comment = require('../models/comment')
 
 var user1 = new User()
+user1.local.username = 'xbh'
+user1.local.firstname = 'leo'
+user1.local.lastname = 'messi'
+user1.local.password = user1.generateHash('xbh')
+user1.local.imageUrl = '/uploads/avatar/crd_c9f2eb63-6b60-8cb9-68e6-3ad986a0f30b_download.jpeg'
+
 var user2 = new User()
+user2.local.username = 'x'
+user2.local.firstname = 'luis'
+user2.local.lastname = 'suarez'
+user2.local.password = user1.generateHash('x')
+user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
+
 removeAllRecord()
 
 function removeAllRecord() {
@@ -63,13 +75,13 @@ function removeAllRecord() {
 }
 
 function addNewUser() {
-  user1.local.username = 'xbh'
-  user1.local.password = user1.generateHash('xbh')
-  user1.local.imageUrl = '/uploads/avatar/crd_c9f2eb63-6b60-8cb9-68e6-3ad986a0f30b_download.jpeg'
+  //user1.local.username = 'xbh'
+  //user1.local.password = user1.generateHash('xbh')
+  //user1.local.imageUrl = '/uploads/avatar/crd_c9f2eb63-6b60-8cb9-68e6-3ad986a0f30b_download.jpeg'
   user1.save(function(err) {
-    user2.local.username = 'x'
-    user2.local.password = user1.generateHash('x')
-    user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
+    //user2.local.username = 'x'
+    //user2.local.password = user1.generateHash('x')
+    //user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
     user2.save(function(err) {
       var following2 = new Following()
       following2.follow_by = user1._id

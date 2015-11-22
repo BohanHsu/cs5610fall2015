@@ -15,6 +15,10 @@
               {
                 templateUrl: 'home/business.view',
               })
+        .when('/search',
+              {
+                templateUrl: 'home/search.view',
+              })
         .otherwise('/visitor')
     })
 

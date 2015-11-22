@@ -21,4 +21,8 @@ app.get('/home/business.view', function(req, res) {
   res.render('./home/business_view', {user: req.session.user})
 })
 
+app.get('/home/search.view', function(req, res) {
+  res.render('./home/search_view', {user: req.session.user})
+})
+
 module.exports = app

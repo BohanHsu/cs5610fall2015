@@ -9,7 +9,7 @@ var Recipe = require('../../models/recipe')
 var authenticate = require('../../middleware/authenticate_api')
 app.locals.pretty = true
 
-app.post('/search', authenticate, function(req, res) {
+app.post('/', authenticate, function(req, res) {
   var searchText = req.body.searchText
 
   var searchUser = function(results, callback) {
@@ -51,7 +51,7 @@ app.post('/search', authenticate, function(req, res) {
   }
 
   var searchResult = {}
-  searchUser(searchTweet, function(result1) {
+  searchUser(searchResult, function(result1) {
     searchTweet(result1, function(result2) {
       searchRecipe(result2, function(result3) {
         res.json({success: true, 'result': result3})

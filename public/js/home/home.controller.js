@@ -8,10 +8,14 @@
 
       function goTimeline() {
         if ($rootScope.user) {
-          if ($rootScope.user.user_type == 'individual') {
-            $location.path('/timeline')
-          } else if ($rootScope.user.user_type == 'enterprise') {
-            $location.path('/business')
+          if ($location.path() == '/visitor') {
+            console.log('path',$location.path())
+            if ($rootScope.user.user_type == 'individual') {
+              $location.path('/timeline')
+            } else if ($rootScope.user.user_type == 'enterprise') {
+              $location.path('/business')
+            }
+          } else {
           }
         } else {
           $location.path('/visitor')

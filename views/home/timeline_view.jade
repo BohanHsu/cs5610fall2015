@@ -84,9 +84,9 @@ div.row(ng-controller='TimelineController').heigh80vh
         div(ng-if='pt.post_type == "recipe"')
           hr
           div.row.margin-vertical-4
-            div.col-xs-2.col-xs-offset-1.col-sm-1.col-sm-offset-1
+            div.col-xs-2.col-xs-offset-1.col-lg-1.col-lg-offset-1
               img#post-template-img(ng-src='{{avatarUrlHelper(pt.user_id.local.imageUrl)}}')
-            div.col-xs-8.col-sm-9
+            div.col-xs-8.col-lg-9
               div.row
                 span.username.margin-vertical-4
                   {{pt.user_id.local.username}}

@@ -4,6 +4,7 @@ var Post = require('../../models/post')
 var Tweet = require('../../models/tweet')
 var Following = require('../../models/following')
 var User = require('../../models/user')
+var authenticate = require('../../middleware/authenticate_api')
 app.locals.pretty = true
 
 app.post('/userDetails', function(req, res) {
@@ -37,5 +38,64 @@ app.post('/search', function(req, res) {
   }
 })
 
-module.exports = app
+app.post('/following/query', authenticate, function(req, res) {
+  var userIds = req.body.userIds
+  var curUserId = req.body.user_id
 
+  function queryOne(results) {
+    console.log(userIds)
+    if (userIds.length > 0) {
+      var userId = userIds[0]
+      Following.find({'follow_by': curUserId, 'following': userId}).exec(function(err, following) {
+        if (err) {
+          res.json({success: false, 'err': err})
+        }
+
+        results[userId] = following.length != 0
+        userIds.splice(0, 1)
+        queryOne(results)
+      })
+    } else {
+      res.json({success: true, 'result': results})
+    }
+  }
+
+  queryOne({})
+})
+
+app.post('/following/new', authenticate, function(req, res) {
+  var curUserId = req.body.user_id
+  var followingUserId = req.body.followingUserId
+  Following.find({'follow_by': curUserId, 'following': followingUserId}).exec(function(err, followings) {
+    if (err) {
+      res.json({success: false, 'err': err})
+    }
+    if (followings.length != 0) {
+      res.json({success: false, 'err': 'Already following'})
+    }
+
+    var newFollowing = new Following()
+    newFollowing.follow_by = curUserId
+    newFollowing.following = followingUserId
+    newFollowing.save(function(err) {
+      if (err) {
+        res.json({success: false, 'err': err})
+      }
+      res.json({success: true, 'following': newFollowing})
+    })
+  })
+})
+
+app.post('/following/delete', authenticate, function(req, res) {
+  var curUserId = req.body.user_id
+  var followingUserId = req.body.followingUserId
+  Following.find({'follow_by': curUserId, 'following': followingUserId}).remove(function(err, followings) {
+    if (err) {
+      res.json({success: false, 'err': err})
+    }
+
+    res.json({success: true, 'followings': followings})
+  })
+})
+
+module.exports = app
