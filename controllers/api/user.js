@@ -13,6 +13,8 @@ app.post('/userDetails', function(req, res) {
       Following.find({'following': user._id}).populate('follow_by').exec(function(err, followBys) {
         Post.find({user_id: user._id})
         .sort({updated: -1})
+        .populate('tweet_id')
+        .populate('recipe_id')
         .exec(function(err, posts) {
           var tweetIds = posts.filter(function(post) {
             return post.post_type == 'tweet'

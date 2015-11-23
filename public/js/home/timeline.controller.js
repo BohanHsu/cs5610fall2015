@@ -158,7 +158,7 @@
         $scope.recipeIndex = index
         loadReplyOfPostAccoringToIndex(index, function() {
           $scope.recipeIndex = index
-          $scope.viewingRecipe = $scope.posts[index].recipe
+          $scope.viewingRecipe = $scope.posts[index].recipe_id
         })
       }
 
@@ -179,11 +179,6 @@
       }
 
       $scope.openReplyPanel = function(index) {
-        //$scope.replys[$scope.posts[index]._id] = []
-        //CommentService.getCommentForType('post', $scope.posts[index]._id, function(response) {
-        //  console.log(response)
-        //  $scope.replys[$scope.posts[index]._id] = response['comments']
-        //})
         loadReplyOfPostAccoringToIndex(index)
       }
 
@@ -206,7 +201,6 @@
       }
 
       $scope.sendComment = function(index){
-        console.log(index)
         if (!($scope.replyContents[$scope.posts[index]._id]['content'].length > 0 && $scope.replyContents[$scope.posts[index]._id]['content'].length <= 280)) {
           return
         }
@@ -226,7 +220,6 @@
       }
 
       $scope.selectReplyComment = function(postIndex, commentIndex) {
-        console.log('postIndex', postIndex, 'commentIndex', commentIndex)
         $scope.replyContents[$scope.posts[postIndex]._id]['commentId'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]._id
         $scope.replyContents[$scope.posts[postIndex]._id]['commentObj'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]
         console.log($scope.replyContents[$scope.posts[postIndex]._id]['commentId'])

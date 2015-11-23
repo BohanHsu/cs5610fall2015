@@ -1,0 +1,7 @@
+div.col-xs-3
+  img.searchUserImg(ng-src='{{user.local.imageUrl}}')
+div.col-xs-6
+  p
+    a.normalText(href='#/user/{{user._id}}') {{user.local.firstname + " " + user.local.lastname}}
+  p
+    a.normalText(href='#/user/{{user._id}}') {{user.local.username}}

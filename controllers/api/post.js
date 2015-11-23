@@ -4,6 +4,7 @@ var Post = require('../../models/post')
 var Tweet = require('../../models/tweet')
 var Following = require('../../models/following')
 var Recipe = require('../../models/recipe')
+var authenticate = require('../../middleware/authenticate_api')
 app.locals.pretty = true
 
 app.post('/all', function(req, res) {
@@ -21,6 +22,8 @@ app.post('/all', function(req, res) {
         user_id: {$in: following_ids}
       })
       .populate('user_id')
+      .populate('tweet_id')
+      .populate('recipe_id')
       .sort({updated: '-1'})
       .limit(parseInt(req.body.amount))
       .skip(skip)
@@ -150,6 +153,20 @@ app.post('/new/recipe', function (req, res) {
       res.json({success: false, err: 'Wrong type!'})
     }
   }
+})
+
+app.post('/find/:id', authenticate, function(req, res) {
+  var id = req.params.id
+  Post.find({'_id': id})
+  .populate('user_id')
+  .populate('tweet_id')
+  .populate('recipe_id')
+  .exec(function(err, posts) {
+    if (err) {
+      res.json({success: false, 'err': err})
+    }
+    res.json({success: true, 'post': posts[0]})
+  })
 })
 
 module.exports = app

@@ -1,0 +1,15 @@
+div.row.heigh80vh(ng-controller='PostController' ng-init='')
+  div.col-sm-2
+  div.col-sm-8
+    h1
+      | View {{post.post_type}}:
+    div(ng-repeat='pt in posts')
+      div(ng-if='pt.post_type == "tweet"')
+        hr
+        include template/_tweetblock.jade
+      div(ng-if='pt.post_type == "recipe"')
+        hr
+        div.row
+          div.col-xs-10
+          h3 {{viewingRecipe.recipeName}}
+        include template/_recipeblock.jade

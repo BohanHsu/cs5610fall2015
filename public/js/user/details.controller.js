@@ -11,9 +11,11 @@
       }
     }
   })
-  .controller('DetailsController', function($scope, $routeParams, UserService) {
-    console.log($routeParams['id'])
-    //$scope.detailUser = UserService.findById($routeParams['id'], function(res))
+  .controller('DetailsController', function($scope, $rootScope, $routeParams, UserService) {
+    var copiedDetailUser = null
+
+    $scope.user = $rootScope.user
+
     UserService.userDetails($routeParams['id'], function(response) {
       console.log(response)
       $scope.detailUser = response.user
@@ -21,6 +23,21 @@
       $scope.followings = response.followings
       $scope.followers = response.followBys
     })
-    //console.log($scope.detailUser)
+
+    $scope.isChangeingProfile = false
+
+    $scope.setChangeProfile = function(value) {
+      if (value) {
+        copiedDetailUser = JSON.parse(JSON.stringify($scope.detailUser))
+      }
+
+      if ($scope.detailUser._id == $scope.user._id) {
+        if ($scope.isChangeingProfile && !value) {
+          $scope.detailUser = copiedDetailUser
+        }
+        $scope.isChangeingProfile = value
+      }
+    }
+
   })
 })()

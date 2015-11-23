@@ -25,7 +25,7 @@
               })
         .when('/post/:id',
               {
-                templateUrl: 'home/user.view',
+                templateUrl: 'home/post.view',
               })
         .otherwise('/visitor')
     })

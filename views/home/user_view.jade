@@ -1,0 +1,96 @@
+div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
+  div.col-sm-2
+  div.col-sm-8
+    h1
+      | {{detailUser.local.username}}
+    div.row
+      div.col-xs-offset-1.col-xs-10
+        div.row
+          div.col-xs-4
+            div.row
+              img.userUserImage(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
+              button.btn.btn-default.userBtn Follow
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
+              button.btn.btn-default.userBtn
+                span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
+              button.btn.btn-default.userBtn Unfollow
+            div.row.margin-vertical-8(ng-if='isChangeingProfile')
+              button.btn.btn-default.userBtn Change Image
+          div.col-xs-8
+            div.form-horizontal(ng-if='detailUser.user_type == "individual"')
+              div.form-group
+                label.control-label.col-xs-3(for='usernameInput') Username:
+                div#usernameInput.col-xs-9
+                  input.form-control(ng-disabled='true' ng-model='detailUser.local.username')
+              div.form-group
+                label.control-label.col-xs-3(for='firstNameInput') First Name:
+                div#firstNameInput.col-xs-9
+                  input.form-control(ng-disabled='!isChangeingProfile' ng-model='detailUser.local.firstname')
+              div.form-group
+                label.control-label.col-xs-3(for='lastNameInput') Last Name:
+                div#lastNameInput.col-xs-9
+                  input.form-control(ng-disabled='!isChangeingProfile' ng-model='detailUser.local.lastname')
+              div.form-group(ng-if='isChangeingProfile')
+                label.control-label.col-xs-3(for='passwordInput') Password:
+                div#passwordInput.col-xs-9
+                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='newPassword')
+              div.form-group(ng-if='isChangeingProfile')
+                label.control-label.col-xs-3(for='confirmPasswordInput') Password:
+                div#confirmPasswordInput.col-xs-9
+                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='confirmNewPassword')
+              div.form-group
+                label.control-label.col-xs-3(for='emailInput') Email:
+                div#emailInput.col-xs-9
+                  input.form-control(type='email' ng-disabled='!isChangeingProfile' ng-model='detailUser.local.email')
+              div.form-group(ng-if='detailUser._id == user._id && !isChangeingProfile')
+                button.btn.btn-default.pull-right(ng-click='setChangeProfile(true)') Change Profile
+              div.form-group(ng-if='detailUser._id == user._id && isChangeingProfile')
+                button.btn.btn-default.pull-right(ng-click='setChangeProfile(false)') Cancel
+                button.btn.btn-default.pull-right.margin-horizontal-20(ng-click='') Update
+
+      div.col-xs-1
+
+    hr
+    div.row
+      div.col-xs-offset-1.col-xs-10
+        ul.nav.nav-tabs
+          li.active
+            a(data-toggle='pill' show-tab='' href='#postspanel') Posts
+          li
+            a(data-toggle='pill' show-tab='' href='#followingspanel') Following
+          li
+            a(data-toggle='pill' show-tab='' href='#followerpanel') Follower
+
+        div.tab-content
+          div#postspanel.tab-pane.fade.in.active
+            div(ng-repeat='post in posts')
+              hr
+              div.row.margin-vertical-4(ng-if='post.post_type == "tweet"')
+                div.col-xs-3
+                  img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+                div.col-xs-9
+                  div.row
+                    span.username.margin-vertical-4
+                      {{detailUser.local.username}}
+                  div.row
+                    p {{post.tweet_id.content}}
+
+              div.row.margin-vertical-4(ng-if='post.post_type == "recipe"')
+                div.col-xs-3
+                  img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+                div.col-xs-9
+                  div.row
+                    span.username.margin-vertical-4
+                      {{detailUser.local.username}}
+                  div.row
+                    p {{post.recipe_id.recipeName}}
+
+          div#followingspanel.tab-pane.fade
+            div(ng-repeat='following in followings' ng-init='user=following.following')
+              include template/_userlistblock.jade
+
+          div#followerpanel.tab-pane.fade
+            div(ng-repeat='follower in followers' ng-init='user=follower.follow_by')
+              include template/_userlistblock.jade

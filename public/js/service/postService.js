@@ -40,6 +40,18 @@
               'steps': steps
             }
           }).success(callback)
+        },
+
+        loadPostById: function(userId, postId, callback) {
+          $http({
+            method: 'POST',
+            url: '/api/post/find/' + postId,
+            data: {
+              user_id: userId
+            }
+          }).success(function(response) {
+            callback(response)
+          })
         }
       }
     })
