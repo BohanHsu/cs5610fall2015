@@ -13,6 +13,19 @@
           }).success(callback)
         },
 
+        updateUser: function(userId, updateAttrs, callback) {
+          $http({
+            method: 'POST',
+            url: '/api/user/update/' + userId,
+            data: {
+              user_id: userId,
+              updateAttrs: updateAttrs
+            }
+          }).success(function(response) {
+            callback(response)
+          })
+        },
+
         search: function(searchText, callback) {
           $http({
             method: 'POST',

@@ -8,7 +8,28 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
         div.row
           div.col-xs-4
             div.row
-              img.userUserImage(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+              img.userUserImage(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}' ng-if='!isChangeingProfile')
+
+              div#cropperDivParent(ng-show='uploader.isHTML5 && isChangeingProfile')
+                div.row
+                  div.ng-hide(ng-hide='croppedImageUrl != "" || originalImageUrl != ""')
+                    img.userUserImage(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+                  div#cropperDiv.ng-hide(ng-hide='originalImageUrlHide')
+                    img.userUserImage#avatarOriginalImg(src='')
+                  div.ng-hide(ng-hide='originalImageUrlHide')
+                    button.margin-vertical-8.btn.btn-default(ng-click='crop()')
+                      | Crop
+                    hr
+                  div#avatarPreviewDiv(ng-hide='croppedImageUrlHide')
+                    img.userUserImage(ng-src='{{croppedImageUrl}}')
+                div.row
+                  div.margin-vertical-8.btn.btn-default.btn-file
+                    | {{chooseImageBtnText}}
+                    input#avatarUpload(type='file' nv-file-select='' uploader='uploader' ng-model='file' ng-change='fileChange()')
+                div.row
+                  div.margin-vertical-8.btn.btn-warning(ng-click='discardUpdateImage()' ng-hide='!(croppedImageUrl != "" || originalImageUrl != "")')
+                    | Discard
+
             div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == false')
               button.btn.btn-default.userBtn(ng-click='followUser(detailUser._id)') Follow
             div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == null')
@@ -16,10 +37,13 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                 span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
             div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == true')
               button.btn.btn-warning.userBtn(ng-click='unFollowUser(detailUser._id)') Unfollow
-            div.row.margin-vertical-8(ng-if='isChangeingProfile')
-              button.btn.btn-default.userBtn Change Image
+
           div.col-xs-8
             div.form-horizontal(ng-if='detailUser.user_type == "individual"')
+              div.form-group
+                div.col-xs-3
+                div.col-xs-9.alert.alert-danger(ng-if='err != null')
+                  | {{err}}
               div.form-group
                 label.control-label.col-xs-3(for='usernameInput') Username:
                 div#usernameInput.col-xs-9
@@ -33,22 +57,28 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                 div#lastNameInput.col-xs-9
                   input.form-control(ng-disabled='!isChangeingProfile' ng-model='detailUser.local.lastname')
               div.form-group(ng-if='isChangeingProfile')
-                label.control-label.col-xs-3(for='passwordInput') Password:
-                div#passwordInput.col-xs-9
-                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='newPassword')
-              div.form-group(ng-if='isChangeingProfile')
-                label.control-label.col-xs-3(for='confirmPasswordInput') Password:
-                div#confirmPasswordInput.col-xs-9
-                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='confirmNewPassword')
-              div.form-group(ng-if='isChangeingProfile')
                 label.control-label.col-xs-3(for='emailInput') Email:
                 div#emailInput.col-xs-9
                   input.form-control(type='email' ng-disabled='!isChangeingProfile' ng-model='detailUser.local.email')
+              div.form-group(ng-if='isChangeingProfile && !isChangeingPassword')
+                div.col-xs-3
+                div.col-xs-9
+                  span.text-center
+                    a(ng-click='changingPassword()') Change Password
+              div.form-group(ng-show='isChangeingProfile && isChangeingPassword')
+                label.control-label.col-xs-3(for='passwordInput') New Password:
+                div#passwordInput.col-xs-9
+                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='passwords.newPassword' placeholder='new password')
+              div.form-group(ng-show='isChangeingProfile && isChangeingPassword')
+                label.control-label.col-xs-3(for='confirmPasswordInput') Confirm New Password:
+                div#confirmPasswordInput.col-xs-9
+                  input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='passwords.confirmNewPassword' placeholder='confirm new password')
+
               div.form-group(ng-if='detailUser._id == user._id && !isChangeingProfile')
                 button.btn.btn-default.pull-right(ng-click='setChangeProfile(true)') Change Profile
               div.form-group(ng-if='detailUser._id == user._id && isChangeingProfile')
                 button.btn.btn-default.pull-right(ng-click='setChangeProfile(false)') Cancel
-                button.btn.btn-default.pull-right.margin-horizontal-20(ng-click='') Update
+                button.btn.btn-default.pull-right.margin-horizontal-20(ng-click='updateUser()') Update
 
       div.col-xs-1
 

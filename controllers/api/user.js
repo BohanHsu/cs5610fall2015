@@ -31,6 +31,40 @@ app.post('/userDetails', function(req, res) {
   })
 })
 
+app.post('/update/:id', authenticate, function(req, res) {
+  var userId = req.params.id
+  var updateAttrs = req.body.updateAttrs
+  User.findById(userId, function(err, user) {
+    if (updateAttrs.firstname) {
+      user.local.firstname = updateAttrs.firstname
+    }
+
+    if (updateAttrs.lastname) {
+      user.local.lastname = updateAttrs.lastname
+    }
+
+    if (updateAttrs.email) {
+      user.local.email = updateAttrs.email
+    }
+
+    if (updateAttrs.newPassword) {
+      user.local.password = user.generateHash(updateAttrs.newPassword)
+    }
+
+    if (updateAttrs.imageUrl) {
+      user.local.imageUrl = updateAttrs.imageUrl
+    }
+
+    user.save(function(err) {
+      if (err) {
+        res.json({success: false, 'err': err})
+      } else {
+        res.json({success: true, user: user})
+      }
+    })
+  })
+})
+
 app.post('/search', function(req, res) {
   if (req.body.type = 'id') {
     var searchText = req.body.searchText
@@ -45,7 +79,6 @@ app.post('/following/query', authenticate, function(req, res) {
   var curUserId = req.body.user_id
 
   function queryOne(results) {
-    console.log(userIds)
     if (userIds.length > 0) {
       var userId = userIds[0]
       Following.find({'follow_by': curUserId, 'following': userId}).exec(function(err, following) {
