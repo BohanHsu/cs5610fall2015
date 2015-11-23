@@ -17,8 +17,13 @@ li.dropdown
     span.caret
   ul.dropdown-menu(aria-labelledby='loggedInMenu')
     li
-      a(href='/login/profile')
-        | My Profile
+      if user
+        a(href='#/user/#{user._id}')
+          | My Profile
+      else
+        a(href='#/user/{{user._id}}')
+          | My Profile
+
     li
       a(href='/login/logout')
         | Logout

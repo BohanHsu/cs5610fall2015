@@ -46,6 +46,24 @@
         $scope.isChangeingProfile = value
       }
     }
+    
+    $scope.followUser = function(userId) {
+      $scope.isFollowing = null
+      UserService.followingUser($scope.user._id, userId, function(response) {
+        if (response.success) {
+          $scope.isFollowing = true
+        }
+      })
+    }
+
+    $scope.unFollowUser = function(userId) {
+      $scope.isFollowing = null
+      UserService.unFollowingUser($scope.user._id, userId, function(response) {
+        if (response.success) {
+          $scope.isFollowing = false
+        }
+      })
+    }
 
   })
 })()

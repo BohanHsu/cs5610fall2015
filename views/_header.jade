@@ -1,16 +1,7 @@
 div.navbar.navbar-default.navbar-fixed-top
   div.container
     -
-      var leftList = [['Home', '/#/timeline'], ['User', '/users']]
-      //var leftList = [
-      //  ['Home', '/'], 
-      //  ['Comments', '/comments'], 
-      //  ['User', [
-      //    ['Login', '/login'], 
-      //    ['SignUp', '/login/signup']
-      //    ]
-      //  ]
-      //]
+      var leftList = [['Home', '/#/timeline']]
     div.navbar-header
       if user
         a.navbar-brand(href='/#/timeline')
@@ -71,23 +62,27 @@ div.navbar.navbar-default.navbar-fixed-top
               h2 Login
           div.modal-body
             div.central
-              form.form-horizontal
-                div.form-group
-                  label.control-label(for='inputUsername') Username:
-                  div
-                    input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
-              form.form-horizontal
-                div.form-group
-                  label.control-label(for='inputUsername') Password:
-                  div
-                    input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
-              form.form-horizontal
-                div.form-group
-                  label.control-label(for='inputRememberMe') Remember Me:
-                  div
-                    input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe')
-              div.alert.alert-danger(ng-if='err != null')
-                {{err}}
+              div.row
+                div.col-xs-2
+                div.col-xs-8
+                  form.form-horizontal
+                    div.form-group
+                      label.control-label(for='inputUsername') Username:
+                      div
+                        input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
+                  form.form-horizontal
+                    div.form-group
+                      label.control-label(for='inputUsername') Password:
+                      div
+                        input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+                  form.form-horizontal
+                    div.form-group
+                      label.control-label(for='inputRememberMe') Remember Me:
+                      div
+                        input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe')
+                  div.alert.alert-danger(ng-if='err != null')
+                    {{err}}
+                div.col-xs-8
 
           div.modal-footer
             button.btn.btn-default(type="button" ng-click='login()') Login
