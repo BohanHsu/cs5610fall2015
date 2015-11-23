@@ -17,14 +17,6 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
         div.row(ng-repeat='user in searchResult.users')
           hr
           include template/_userlistblock.jade
-          //-div.col-xs-3
-          //-  img.searchUserImg(ng-src='{{user.local.imageUrl}}')
-          //-div.col-xs-6
-          //-  p
-          //-    | {{user.local.firstname + " " + user.local.lastname}}
-          //-  a(href='#/user/{{user._id}}') View
-          //-  p
-          //-    | {{user.local.username}}
           div.col-xs-3(ng-if='currentUser._id != user._id')
             button.btn.btn-default.userBtn(disabled ng-if='followingRelationship[user._id] == null')
               span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
@@ -43,7 +35,7 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
           div.col-xs-3
             img.searchUserImg(ng-src='{{tweet.post_id.user_id.local.imageUrl}}')
           div.col-xs-9
-            p {{tweet.content}}
+            a.normalText(href='#/post/{{tweet.post_id._id}}') {{tweet.content}}
 
     div.row
       h3(ng-if='searchResult.recipes && searchResult.recipes.length != 0') Recipes
@@ -54,5 +46,4 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
           div.col-xs-3
             img.searchUserImg(ng-src='{{recipe.post_id.user_id.local.imageUrl}}')
           div.col-xs-9
-            p
-            {{recipe.recipeName}}
+            a.normalText(href='#/post/{{recipe.post_id._id}}') {{recipe.recipeName}}

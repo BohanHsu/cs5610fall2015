@@ -9,13 +9,13 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
           div.col-xs-4
             div.row
               img.userUserImage(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
-            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == false')
               button.btn.btn-default.userBtn Follow
-            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == null')
               button.btn.btn-default.userBtn
                 span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
-            div.row.margin-vertical-8(ng-if='detailUser._id != user._id')
-              button.btn.btn-default.userBtn Unfollow
+            div.row.margin-vertical-8(ng-if='detailUser._id != user._id && isFollowing == true')
+              button.btn.btn-warning.userBtn Unfollow
             div.row.margin-vertical-8(ng-if='isChangeingProfile')
               button.btn.btn-default.userBtn Change Image
           div.col-xs-8
@@ -40,7 +40,7 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                 label.control-label.col-xs-3(for='confirmPasswordInput') Password:
                 div#confirmPasswordInput.col-xs-9
                   input.form-control(type='password' ng-disabled='!isChangeingProfile' ng-model='confirmNewPassword')
-              div.form-group
+              div.form-group(ng-if='isChangeingProfile')
                 label.control-label.col-xs-3(for='emailInput') Email:
                 div#emailInput.col-xs-9
                   input.form-control(type='email' ng-disabled='!isChangeingProfile' ng-model='detailUser.local.email')
@@ -75,7 +75,7 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                     span.username.margin-vertical-4
                       {{detailUser.local.username}}
                   div.row
-                    p {{post.tweet_id.content}}
+                    a.normalText(href='#/post/{{post._id}}') {{post.tweet_id.content}}
 
               div.row.margin-vertical-4(ng-if='post.post_type == "recipe"')
                 div.col-xs-3
@@ -85,7 +85,8 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                     span.username.margin-vertical-4
                       {{detailUser.local.username}}
                   div.row
-                    p {{post.recipe_id.recipeName}}
+                    //-p {{post.recipe_id.recipeName}}
+                    a.normalText(href='#/post/{{post._id}}') {{post.recipe_id.recipeName}}
 
           div#followingspanel.tab-pane.fade
             div(ng-repeat='following in followings' ng-init='user=following.following')

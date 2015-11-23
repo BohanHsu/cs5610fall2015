@@ -22,6 +22,14 @@
       $scope.posts = response.posts
       $scope.followings = response.followings
       $scope.followers = response.followBys
+
+      if ($scope.detailUser._id != $scope.user._id) {
+        var ids = [$scope.detailUser._id]
+        UserService.queryFollowing($scope.user._id, ids, function(response) {
+          console.log(response)
+          $scope.isFollowing = response.result[$scope.detailUser._id]
+        })
+      }
     })
 
     $scope.isChangeingProfile = false
