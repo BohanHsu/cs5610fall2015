@@ -40,6 +40,11 @@ var userSchema = mongoose.Schema({
     token: 'string',
     email: 'string',
     name: 'string'
+  },
+
+  updated: {
+    type: Date, 
+    default: Date.now
   }
 
 })

@@ -30,17 +30,42 @@ app.post('/all/:type/:objectId', authenticate, function(req, res) {
       }
     })
   }
+
+  if (req.params.type == 'user') {
+    var commentonuserId = req.params.objectId
+    Comment.find({comment_type: 'user', commentonuser_id: commentonuserId})
+    .populate('user_id')
+    .populate('commentonuser_id')
+    .populate({
+      path: 'comment_id',
+      populate: {
+        path: 'user_id',
+        model: 'User'
+      }
+    })
+    .sort({'updated': '-1'})
+    .exec(function(err, comments) {
+      if (err) {
+        res.json({success: false, err: err})
+      } else {
+        res.json({success: true, comments: comments})
+      }
+    })
+  }
 })
 
 app.post('/new/:type/:objectId', authenticate, function(req, res) {
   var newComment = new Comment()
-  console.log('haha da sha bi')
-  console.log('userId:', req.body.user_id)
   newComment.user_id = req.body.user_id
   newComment.content = req.body.content
   newComment.comment_type = req.params.type
+
   if (newComment.comment_type == 'post') {
     newComment.post_id = req.params.objectId
+  }
+
+  if (newComment.comment_type == 'user') {
+    newComment.commentonuser_id = req.params.objectId
   }
 
   if (req.body.comment_id) {

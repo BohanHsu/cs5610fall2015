@@ -11,7 +11,7 @@
       }
     }
   })
-  .controller('DetailsController', function($scope, $rootScope, $routeParams, $window, UserService, FileUploader, ImageService, PostService) {
+  .controller('DetailsController', function($scope, $rootScope, $routeParams, $window, UserService, FileUploader, ImageService, PostService, CommentService) {
     var copiedDetailUser = null
     setCropper()
 
@@ -25,10 +25,18 @@
         $scope.followings = response.followings
         $scope.followers = response.followBys
 
+        if ($scope.detailUser.user_type == 'enterprise') {
+          loadReplyOfPostAccoringToIndex()
+          setAddr($scope.detailUser.enterprise.address)
+          initializeMap1()
+        }
+
         if ($scope.detailUser._id != $scope.user._id) {
           var ids = [$scope.detailUser._id]
           UserService.queryFollowing($scope.user._id, ids, function(response) {
             $scope.isFollowing = response.result[$scope.detailUser._id]
+
+
           })
         }
       })
@@ -158,6 +166,8 @@
       var email = $scope.detailUser.local.email
       var newPassword = $scope.passwords.newPassword
       var confirmNewPassword = $scope.passwords.confirmNewPassword
+      var businessname = $scope.detailUser.enterprise.businessname
+      var address = $scope.detailUser.enterprise.address
 
       if (isEmpty($scope.croppedImageUrl) && !isEmpty($scope.originalImageUrl)) {
         logErr('Please cut your uploaded image.')
@@ -191,6 +201,14 @@
         updateAttrs.imageUrl = $scope.croppedImageUrl
       }
 
+      if (!isEmpty(businessname)) {
+        updateAttrs.businessname = businessname
+      }
+
+      if (!isEmpty(address)) {
+        updateAttrs.address = address
+      }
+
       UserService.updateUser($scope.user._id, updateAttrs, function(response) {
         $scope.detailUser = response.user
         $scope.user = response.user
@@ -205,7 +223,6 @@
     }
 
     $scope.deletePost = function(postId) {
-      console.log(postId)
       PostService.deletePost($scope.user._id, postId, function(response) {
         loadDetailUser()
       })
@@ -214,6 +231,52 @@
 
     $window.onbeforeunload =  function() {
       ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: $scope.croppedImageUrl}, function(response) {
+      })
+    }
+
+    $scope.avatarUrlHelper = function(url) {
+      if (url == '') {
+        return 'img/default.jpeg'
+      }
+      return url
+    }
+
+    $scope.replyContents = {'content': '', 'commentId': null, 'commentObj': null}
+
+    $scope.calculateCommentRemainLength = function() {
+      return 280 - $scope.replyContents['content'].length
+    }
+
+    $scope.sendComment = function(index){
+      if (!($scope.replyContents['content'].length > 0 && $scope.replyContents['content'].length <= 280)) {
+        return
+      }
+      var type = 'user'
+      var objectId = $scope.detailUser._id
+      var content = $scope.replyContents['content']
+      var commentId = $scope.replyContents['commentId']
+      CommentService.addNewCommentForType(type, objectId, content, commentId, function(response) {
+        // clean up
+        $scope.replyContents['content'] = ''
+        $scope.replyContents['commentId'] = null
+        $scope.replyContents['commentObj'] = null
+
+        loadReplyOfPostAccoringToIndex(function() {
+        })
+      })
+    }
+
+    $scope.selectReplyComment = function(commentIndex) {
+      $scope.replyContents['commentId'] = $scope.comments[commentIndex]._id
+      $scope.replyContents['commentObj'] = $scope.comments[commentIndex]
+    }
+
+    function loadReplyOfPostAccoringToIndex(callback) {
+      $scope.comments = []
+      CommentService.getCommentForType('user', $scope.detailUser._id, function(response) {
+        $scope.comments = response['comments']
+        if (callback)
+          callback()
       })
     }
 

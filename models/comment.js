@@ -16,7 +16,7 @@ var commentSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function(val) {
-        var index = ['post'].indexOf(val)
+        var index = ['post', 'user'].indexOf(val)
         return index != -1
       },
       message: 'Wrong type!'
@@ -26,6 +26,11 @@ var commentSchema = new mongoose.Schema({
   post_id: {
     type: ObjectId,
     ref: 'Post'
+  },
+
+  commentonuser_id: {
+    type: ObjectId,
+    ref: 'User'
   },
 
   comment_id: {

@@ -50,6 +50,18 @@ user2.local.lastname = 'suarez'
 user2.local.password = user1.generateHash('x')
 user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
 
+
+var user3 = new User()
+user3.user_type = 'enterprise'
+user3.local.username = 'mdl'
+user3.local.imageUrl = '/uploads/avatar/crd_8d925537-d1b5-1230-0397-5424da5cd408_photo.jpg'
+user3.local.password = user3.generateHash('mdl')
+user3.enterprise.businessname = "McDonald's"
+user3.enterprise.address = "10 Summer St, Malden, MA, 02148"
+user3.local.email = 'm@dl.com'
+user3.enterprise.openHours = [ [ "Mon", "8:45 PM", "8:45 PM" ], [ "Tu", "8:45 PM", "8:45 PM" ] ]
+user3.enterprise.tags = ['burger', 'fast food']
+
 removeAllRecord()
 
 function removeAllRecord() {
@@ -75,23 +87,19 @@ function removeAllRecord() {
 }
 
 function addNewUser() {
-  //user1.local.username = 'xbh'
-  //user1.local.password = user1.generateHash('xbh')
-  //user1.local.imageUrl = '/uploads/avatar/crd_c9f2eb63-6b60-8cb9-68e6-3ad986a0f30b_download.jpeg'
   user1.save(function(err) {
-    //user2.local.username = 'x'
-    //user2.local.password = user1.generateHash('x')
-    //user2.local.imageUrl = '/uploads/avatar/crd_b392e107-9b0d-c071-895d-fe2454b9abaa_hi-res-e96e2dc827900905d33d96f102d08f41_crop_north.jpg'
     user2.save(function(err) {
-      var following2 = new Following()
-      following2.follow_by = user1._id
-      following2.following = user2._id
-      following2.save(function(err) {
-        var following3 = new Following()
-        following3.follow_by = user2._id
-        following3.following = user1._id
-        following3.save(function(err) {
-          injectTweets()
+      user3.save(function(err) {
+        var following2 = new Following()
+        following2.follow_by = user1._id
+        following2.following = user2._id
+        following2.save(function(err) {
+          var following3 = new Following()
+          following3.follow_by = user2._id
+          following3.following = user1._id
+          following3.save(function(err) {
+            injectTweets()
+          })
         })
       })
     })

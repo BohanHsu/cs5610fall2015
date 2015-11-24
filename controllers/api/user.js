@@ -55,6 +55,14 @@ app.post('/update/:id', authenticate, function(req, res) {
       user.local.imageUrl = updateAttrs.imageUrl
     }
 
+    if (updateAttrs.businessname) {
+      user.enterprise.businessname = updateAttrs.businessname
+    }
+
+    if (updateAttrs.address) {
+      user.enterprise.address = updateAttrs.address
+    }
+
     user.save(function(err) {
       if (err) {
         res.json({success: false, 'err': err})

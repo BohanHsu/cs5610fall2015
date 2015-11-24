@@ -1,7 +1,9 @@
 div.col-xs-3
   img.searchUserImg(ng-src='{{user.local.imageUrl}}')
 div.col-xs-6
-  p
+  p(ng-if='user.user_type == "individual"')
     a.normalText(href='#/user/{{user._id}}') {{user.local.firstname + " " + user.local.lastname}}
+  p(ng-if='user.user_type == "enterprise"')
+    a.normalText(href='#/user/{{user._id}}') {{user.enterprise.businessname}}
   p
     a.normalText(href='#/user/{{user._id}}') {{user.local.username}}
