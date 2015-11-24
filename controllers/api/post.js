@@ -4,6 +4,7 @@ var Post = require('../../models/post')
 var Tweet = require('../../models/tweet')
 var Following = require('../../models/following')
 var Recipe = require('../../models/recipe')
+var Comment = require('../../models/comment')
 var authenticate = require('../../middleware/authenticate_api')
 app.locals.pretty = true
 
@@ -171,6 +172,48 @@ app.post('/find/:id', authenticate, function(req, res) {
 
 app.post('/delete/:postId', authenticate, function(req, res) {
   var postId = req.params.postId
+
+  function removePost() {
+    Post.find({'_id': postId}).remove(function(err) {
+      if (err) {
+        res.json({success: false, 'err': err})
+      }
+
+      res.json({success: true, 'postId': postId})
+    })
+  }
+  Post.findById(postId).exec(function(err, post) {
+    if (err) {
+      res.json({success: false, 'err': err})
+    }
+
+    Comment.find({'post_id': post._id}).remove(function(err) {
+      if (err) {
+        res.json({success: false, 'err': err})
+      }
+
+
+      if (post.post_type == 'tweet') {
+        Tweet.find({'_id': post.tweet_id}).remove(function(err) {
+          if (err) {
+            res.json({success: false, 'err': err})
+          }
+
+          removePost()
+        })
+      }
+
+      if (post.post_type == 'recipe') {
+        Recipe.find({'_id': post.recipe_id}).remove(function(err) {
+          if (err) {
+            res.json({success: false, 'err': err})
+          }
+
+          removePost()
+        })
+      }
+    })
+  })
 })
 
 module.exports = app

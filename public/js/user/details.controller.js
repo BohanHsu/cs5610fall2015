@@ -11,26 +11,30 @@
       }
     }
   })
-  .controller('DetailsController', function($scope, $rootScope, $routeParams, $window, UserService, FileUploader, ImageService) {
+  .controller('DetailsController', function($scope, $rootScope, $routeParams, $window, UserService, FileUploader, ImageService, PostService) {
     var copiedDetailUser = null
     setCropper()
 
     $scope.user = $rootScope.user
     clearErr()
 
-    UserService.userDetails($routeParams['id'], function(response) {
-      $scope.detailUser = response.user
-      $scope.posts = response.posts
-      $scope.followings = response.followings
-      $scope.followers = response.followBys
+    function loadDetailUser() {
+      UserService.userDetails($routeParams['id'], function(response) {
+        $scope.detailUser = response.user
+        $scope.posts = response.posts
+        $scope.followings = response.followings
+        $scope.followers = response.followBys
 
-      if ($scope.detailUser._id != $scope.user._id) {
-        var ids = [$scope.detailUser._id]
-        UserService.queryFollowing($scope.user._id, ids, function(response) {
-          $scope.isFollowing = response.result[$scope.detailUser._id]
-        })
-      }
-    })
+        if ($scope.detailUser._id != $scope.user._id) {
+          var ids = [$scope.detailUser._id]
+          UserService.queryFollowing($scope.user._id, ids, function(response) {
+            $scope.isFollowing = response.result[$scope.detailUser._id]
+          })
+        }
+      })
+    }
+
+    loadDetailUser()
 
     $scope.isChangeingProfile = false
     $scope.isChangeingPassword = false
@@ -202,6 +206,10 @@
 
     $scope.deletePost = function(postId) {
       console.log(postId)
+      PostService.deletePost($scope.user._id, postId, function(response) {
+        loadDetailUser()
+      })
+
     }
 
     $window.onbeforeunload =  function() {

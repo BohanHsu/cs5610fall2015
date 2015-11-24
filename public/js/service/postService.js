@@ -52,7 +52,20 @@
           }).success(function(response) {
             callback(response)
           })
+        },
+
+        deletePost: function(userId, postId, callback) {
+          $http({
+            method: 'POST',
+            url: '/api/post/delete/' + postId,
+            data: {
+              user_id: userId
+            }
+          }).success(function(response) {
+            callback(response)
+          })
         }
+
       }
     })
 })()
