@@ -169,4 +169,8 @@ app.post('/find/:id', authenticate, function(req, res) {
   })
 })
 
+app.post('/delete/:postId', authenticate, function(req, res) {
+  var postId = req.params.postId
+})
+
 module.exports = app

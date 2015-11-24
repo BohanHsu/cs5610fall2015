@@ -200,6 +200,10 @@
       })
     }
 
+    $scope.deletePost = function(postId) {
+      console.log(postId)
+    }
+
     $window.onbeforeunload =  function() {
       ImageService.deleteImage({path: $scope.originalImageUrl, crop_path: $scope.croppedImageUrl}, function(response) {
       })
