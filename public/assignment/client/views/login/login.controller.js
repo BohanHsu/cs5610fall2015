@@ -7,6 +7,7 @@
       function login() {
         UserService.findUserByUsernameAndPassword($scope.username, $scope.password).then(function (user) {
           if (user) {
+            user['id'] = user['_id']
             console.log(user)
             $rootScope.user = user
             $location.path('/profile')

@@ -1,4 +1,13 @@
 (function() {
+
+  function idHelper(array) {
+    if (array) {
+      array.forEach(function(ele, idx, arr) {
+        ele['id'] = ele['_id']
+      })
+    }
+  }
+
   angular
     .module('FormBuilderApp')
     .controller('FormController', FormController)
@@ -11,8 +20,8 @@
         if ($rootScope.user) {
           userId = $rootScope.user.id
         }
-        console.log(userId)
         FormService.findAllFormsForUser(userId).then(function(forms) {
+          idHelper(forms)
           console.log(forms)
           $scope.forms = forms
         })
@@ -27,7 +36,6 @@
         }
         var newForm = $scope.form
         FormService.createFormForUser(userId, newForm).then(function(form) {
-          //console.log(form)
           loadAllFormsForUser()
         })
       }
@@ -38,7 +46,6 @@
         for (var key in $scope.form) {
           newForm[key] = $scope.form[key]
         }
-        console.log(newForm)
         FormService.updateFormById($scope.form.id, newForm).then(function(form) {
           $scope.form = form
           loadAllFormsForUser()

@@ -31,12 +31,21 @@
     function loadAllFieldForForm() {
       FormService.getFieldsForForm($scope.formId).then(function(response) {
         $scope.fields = response
+
+        if ($scope.fields) {
+          $scope.fields.forEach(function(ele, idx, arr) {
+            ele['type'] = ele['fieldType']
+          })
+        }
+
         $scope.isEditing = []
         $scope.editingString = []
-        $scope.fields.forEach(function(ele, idx, arr) {
-          $scope.isEditing.push(false)
-          $scope.editingString.push(JSON.stringify(ele))
-        })
+        if ($scope.fields) {
+          $scope.fields.forEach(function(ele, idx, arr) {
+            $scope.isEditing.push(false)
+            $scope.editingString.push(JSON.stringify(ele))
+          })
+        }
       })
     }
 
