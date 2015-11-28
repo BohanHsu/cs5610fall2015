@@ -55,6 +55,6 @@ require('./config/passport')(passport)
 require('./controllers')(app, passport)
 
 // for assignment
-//app.use(require('./public/assignment/server/app.js'))
+app.use(require('./public/assignment/server/app.js')(mongoose))
 
 app.listen(port, ipaddress);
