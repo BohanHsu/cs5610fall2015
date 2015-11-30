@@ -63,3 +63,8 @@ input[disabled]{
   width: 100%;
   height: 380px;
 }
+
+.visitor-new-user-img {
+  height: 50;
+  width: 50;
+}
