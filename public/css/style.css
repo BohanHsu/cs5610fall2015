@@ -68,3 +68,8 @@ input[disabled]{
   height: 50;
   width: 50;
 }
+
+.notificationImg {
+  height: 25px;
+  width: 25px;
+}

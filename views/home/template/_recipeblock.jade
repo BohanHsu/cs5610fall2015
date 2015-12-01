@@ -34,7 +34,7 @@ div.row(ng-if='recipeIndex != null')
             p {{calculateCommentRemainLength(recipeIndex)}}
         hr
 
-        div(ng-repeat='reply in replys[posts[recipeIndex]._id]')
+        div(ng-repeat='reply in replys[posts[recipeIndex]._id]' ng-class="{'heighlightComment': (reply._id == highlightCommentId)}")
           div.row.margin-vertical-4
             div.col-xs-2
               img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')

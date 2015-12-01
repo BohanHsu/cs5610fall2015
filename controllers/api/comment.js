@@ -5,6 +5,7 @@ var Tweet = require('../../models/tweet')
 var Following = require('../../models/following')
 var Recipe = require('../../models/recipe')
 var Comment = require('../../models/comment')
+var Notification = require('../../models/notification')
 var authenticate = require('../../middleware/authenticate_api')
 app.locals.pretty = true
 
@@ -76,7 +77,37 @@ app.post('/new/:type/:objectId', authenticate, function(req, res) {
     if (err) {
       res.json({success: false, err: err})
     } else {
-      res.json({success: true, comment: newComment})
+      var newNotification = new Notification()
+      newNotification.comment_from = newComment._id
+      newNotification.comment_to = newComment.comment_id
+      newNotification.user_from = newComment.user_id
+
+      function saveNotification() {
+        newNotification.save(function(err) {
+          if (err) {
+            res.json({success: false, err: err})
+          }
+
+          res.json({success: true, comment: newComment})
+        })
+      }
+
+      if (newComment.comment_type == 'user') {
+        newNotification.user_to = newComment.commentonuser_id
+
+        saveNotification()
+      }
+
+      if (newComment.comment_type == 'post') {
+        Post.find({_id: newComment.post_id})
+        .populate('user_id')
+        .exec(function(err, posts) {
+          newNotification.post_id = posts[0]._id
+          newNotification.user_to = posts[0].user_id._id
+
+          saveNotification()
+        })
+      }
     }
   })
 })

@@ -30,7 +30,7 @@ div#reply.row.margin-vertical-4.ng-hide(ng-hide='replyHide($index)')
             p {{calculateCommentRemainLength($index)}}
         hr
 
-        div(ng-repeat='reply in replys[posts[$index]._id]')
+        div(ng-repeat='reply in replys[posts[$index]._id]' ng-class="{'heighlightComment': (reply._id == highlightCommentId)}")
           div.row.margin-vertical-4
             div.col-xs-2
               img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')

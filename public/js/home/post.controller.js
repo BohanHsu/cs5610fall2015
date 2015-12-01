@@ -2,6 +2,11 @@
   angular
   .module('TasteOfApp')
   .controller('PostController', function($scope, $rootScope, $routeParams, PostService, CommentService) {
+    if ($routeParams.commentId) {
+      $scope.highlightCommentId = $routeParams.commentId
+    } else {
+      $scope.highlightCommentId = null
+    }
 
     var postId = $routeParams['id']
     $scope.user = $rootScope.user

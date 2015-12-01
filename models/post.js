@@ -23,13 +23,11 @@ var postSchema = mongoose.Schema({
   tweet_id: {
     type: Schema.Types.ObjectId,
     ref: 'Tweet',
-    required: false
   },
 
   recipe_id: {
     type: Schema.Types.ObjectId,
     ref: 'Recipe',
-    required: false
   },
 
   post_id: {

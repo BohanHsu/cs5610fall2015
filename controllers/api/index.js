@@ -8,5 +8,6 @@ app.use('/post', require('./post'))
 app.use('/user', require('./user'))
 app.use('/comment', require('./comment'))
 app.use('/search', require('./search'))
+app.use('/notification', require('./notification'))
 
 module.exports = app

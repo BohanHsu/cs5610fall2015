@@ -12,6 +12,13 @@
     }
   })
   .controller('DetailsController', function($scope, $rootScope, $routeParams, $window, UserService, FileUploader, ImageService, PostService, CommentService) {
+
+    if ($routeParams.commentId) {
+      $scope.highlightCommentId = $routeParams.commentId
+    } else {
+      $scope.highlightCommentId = null
+    }
+
     var copiedDetailUser = null
     setCropper()
 

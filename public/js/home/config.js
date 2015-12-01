@@ -23,7 +23,15 @@
               {
                 templateUrl: 'home/user.view',
               })
+        .when('/user/:id/comment/:commentId',
+              {
+                templateUrl: 'home/user.view',
+              })
         .when('/post/:id',
+              {
+                templateUrl: 'home/post.view',
+              })
+        .when('/post/:id/comment/:commentId',
               {
                 templateUrl: 'home/post.view',
               })

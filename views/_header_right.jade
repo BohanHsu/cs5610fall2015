@@ -1,5 +1,6 @@
 li.dropdown(ng-controller='SearchController')
   a.dropdown-toggle#searchMenu(data-toggle='dropdown')
+    i.glyphicon.glyphicon-search&nbsp;
     span
       | Search
     span.caret
@@ -11,6 +12,34 @@ li.dropdown(ng-controller='SearchController')
       a
         button.btn.btn-default(ng-click='searchFromHeader()')
           i.glyphicon.glyphicon-search
+
+li.dropdown(ng-controller='NotificationController')
+  a.dropdown-toggle#notificationMenu(data-toggle='dropdown')
+    i.glyphicon.glyphicon-inbox&nbsp;
+    span
+      | Notifications
+    span(ng-if='myNotifications.length > 0')
+      | ({{myNotifications.length}})
+
+    span.caret
+  ul.dropdown-menu(aria-labelledby='notificationMenu')
+    li(ng-repeat='notification in myNotifications')
+      hr(ng-if='!$first')
+      a(ng-click='viewNotification(notification)')
+        div
+          p
+            img.notificationImg(ng-src='{{notification.user_from.local.imageUrl}}')
+        div(ng-if='notification.type == "user"')
+            p {{notification.user_from.local.username}} comment on your page: 
+            p {{trimStr(notification.comment_from.content)}}
+        div(ng-if='notification.type == "comment"')
+          p {{notification.user_from.local.username}} replied to you: {{trimStr(notification.comment_from.content)}}
+          p(ng-if='notification.post_id.post_type=="tweet"') to the post: {{trimStr(notification.post_id.tweet_id.content)}}
+          p(ng-if='notification.post_id.post_type=="recipe"') to the post: {{trimStr(notification.post_id.recipe_id.recipeName)}}
+        div(ng-if='notification.type == "reply"')
+          p {{notification.user_from.local.username}} replied to you: {{trimStr(notification.comment_from.content)}}
+          p to the comment: {{trimStr(notification.comment_to.content)}}
+
 li.dropdown
   a.dropdown-toggle#loggedInMenu(data-toggle='dropdown')
     | Welcome, {{user.local.username}}!

@@ -153,7 +153,7 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                     p {{calculateCommentRemainLength()}}
                 hr
 
-                div(ng-repeat='comment in comments')
+                div(ng-repeat='comment in comments' ng-class="{'heighlightComment': (comment._id == highlightCommentId)}")
                   div.row.margin-vertical-4
                     div.col-xs-2
                       img#post-reply-img(ng-src='{{avatarUrlHelper(comment.user_id.local.imageUrl)}}')

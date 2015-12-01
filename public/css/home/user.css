@@ -2,3 +2,11 @@
   width: 120px;
   height: 120px;
 }
+
+.heighlightComment {
+  border-radius: 10px;
+  background: #e6e6e6;
+}
+
+#rcorners1 {
+}
