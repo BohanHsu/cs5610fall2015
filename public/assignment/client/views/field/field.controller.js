@@ -3,7 +3,7 @@
   .module('FormBuilderApp')
   .controller('FieldController', FieldController)
 
-  function FieldController($scope, $rootScope, $routeParams, FormService) {
+  function FieldController($scope, $rootScope, $routeParams, FieldService) {
 
     $scope.list = {
       label: "Men",
@@ -29,7 +29,7 @@
     $scope.formId = $routeParams.formId
 
     function loadAllFieldForForm() {
-      FormService.getFieldsForForm($scope.formId).then(function(response) {
+      FieldService.getFieldsForForm($scope.formId).then(function(response) {
         $scope.fields = response
 
         if ($scope.fields) {
@@ -101,7 +101,7 @@
     }
 
     $scope.addField = function() {
-      FormService.createFieldForForm($scope.formId, $scope.newFieldMap[$scope.newFeild]()).then(function(response) {
+      FieldService.createFieldForForm($scope.formId, $scope.newFieldMap[$scope.newFeild]()).then(function(response) {
         loadAllFieldForForm()
       })
     }
@@ -112,7 +112,7 @@
 
     $scope.updateField = function(index) {
       var jsonObj = JSON.parse($scope.editingString[index])
-      FormService.updateField($scope.formId, $scope.fields[index]['id'], jsonObj).then(function(response) {
+      FieldService.updateField($scope.formId, $scope.fields[index]['id'], jsonObj).then(function(response) {
         loadAllFieldForForm()
       })
     }
@@ -157,13 +157,13 @@
 
       newObject['id'] = Guid.create(newObject).value
 
-      FormService.createFieldForForm($scope.formId, newObject).then(function(response) {
+      FieldService.createFieldForForm($scope.formId, newObject).then(function(response) {
         loadAllFieldForForm()
       })
     }
 
     $scope.removeFeild = function(index) {
-      FormService.deleteFieldFromForm($scope.formId, $scope.fields[index]['id']).then(function(response) {
+      FieldService.deleteFieldFromForm($scope.formId, $scope.fields[index]['id']).then(function(response) {
         loadAllFieldForForm()
       })
     }
@@ -185,7 +185,7 @@
           $scope.newIndex = idx
         }
       })
-      FormService.sortField($scope.formId, $scope.oldIndex, $scope.newIndex).then(function(response) {
+      FieldService.sortField($scope.formId, $scope.oldIndex, $scope.newIndex).then(function(response) {
         loadAllFieldForForm()
         $scope.oldIndex = null
         $scope.newIndex = null
