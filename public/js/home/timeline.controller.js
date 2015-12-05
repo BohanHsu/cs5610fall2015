@@ -58,6 +58,8 @@
       $scope.clickViewMore = function() {
         $scope.loadPost()
         $scope.timelineViewMoreHide = true
+        $scope.latestPostId = null
+        latestPost()
       }
 
       $scope.getPageScope = function() {
@@ -106,26 +108,44 @@
         }
       }
 
-      function lastestPost() {
+
+      var latestPostTimeout = null
+
+      function latestPost() {
+        if ($scope.currentPage != 1) {
+          return
+        }
+
+        var oldId = $scope.latestPostId
         PostService.loadPost($rootScope.user, 1, 1, function(response) {
-          console.log(response)
-          $scope.lastestPostId = response.posts[0]._id
-          console.log($scope.lastestPostId)
+          var latestPostId = response.posts[0]._id
+          if (oldId != null && oldId != latestPostId) {
+            $scope.timelineViewMoreHide = false
+            latestPostTimeout = null
+          } else {
+            $scope.latestPostId = latestPostId
+            latestPostTimeout = setTimeout(latestPost, 10000)
+          }
         })
       }
 
-      //lastestPost()
-
       $scope.$watch('currentPage', function(newValue, oldValue) {
-        console.log(newValue)
-        console.log(oldValue)
+        if (newValue == 1) {
+          if (latestPostTimeout == null) {
+            latestPost()
+          }
+        } else {
+          if (latestPostTimeout != null) {
+            clearTimeout(latestPostTimeout)
+            latestPostTimeout = null
+          }
+        }
       })
 
       $scope.loadPost = function() {
         var user = $rootScope.user
         if (user) {
           PostService.loadPost(user, $scope.currentPage, postInPage, function(response) {
-            console.log(response.posts)
             if (response.success) {
               tweet_dict = {}
               response.tweets.forEach(function(element) {

@@ -18,6 +18,7 @@
       }
 
       loadMyNotification()
+      var notificationLoop = setInterval(loadMyNotification, 10000)
 
       $scope.trimStr = function(str) {
         return Util.leftMostNChars(10, str)
