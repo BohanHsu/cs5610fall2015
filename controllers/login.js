@@ -11,6 +11,7 @@ var express = require('express')
 var cookieParser = require('cookie-parser')
 
 app.use(cookieParser())
+var cookieTimeOut = 99999999
 
 module.exports = function (passport) {
 
@@ -30,7 +31,7 @@ module.exports = function (passport) {
       } else {
         req.session['user'] = user
         if (req.body['rememberMe']) {
-          res.cookie('uid', user._id, { maxAge: 900000, httpOnly: true })
+          res.cookie('uid', user._id, { maxAge: cookieTimeOut, httpOnly: true })
         }
         res.json({success: true, user: user})
       }
@@ -59,7 +60,7 @@ module.exports = function (passport) {
   app.get('/logout', function (req, res) {
     req.logout()
     req.session['user'] = null
-    res.cookie('uid', "", { maxAge: 900000, httpOnly: true })
+    res.cookie('uid', "", { maxAge: cookieTimeOut, httpOnly: true })
     res.redirect('/')
   })
 

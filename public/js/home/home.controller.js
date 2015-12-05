@@ -8,12 +8,11 @@
 
       function goTimeline() {
         if ($rootScope.user) {
-          if ($location.path() == '/visitor') {
-            console.log('path',$location.path())
+          if ($location.path() != '/individual') {
             if ($rootScope.user.user_type == 'individual') {
               $location.path('/timeline')
             } else if ($rootScope.user.user_type == 'enterprise') {
-              $location.path('/business')
+              $location.path('/timeline')
             }
           } else {
           }

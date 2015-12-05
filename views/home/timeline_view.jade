@@ -28,12 +28,12 @@ div.row(ng-controller='TimelineController').heigh80vh
           include template/_tweetblock.jade
           div.row.margin-vertical-8
             div.col-xs-4.text-center
-              a forward
+              //-a forward
             div.col-xs-4.text-center
               a(ng-click='openReplyPanel($index)' ng-if='replyHide($index)') reply
               a(ng-click='closeReplyPanel($index)' ng-if='!replyHide($index)') close reply
             div.col-xs-4.text-center
-              a like
+              //-a like
 
         div(ng-if='pt.post_type == "recipe"')
           hr
