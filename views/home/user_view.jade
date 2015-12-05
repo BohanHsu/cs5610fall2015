@@ -211,9 +211,11 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                     | Delete
 
           div#followingspanel.tab-pane.fade
-            div(ng-repeat='following in followings' ng-init='user=following.following')
+            div.row(ng-repeat='following in followings' ng-init='user=following.following')
+              hr
               include template/_userlistblock.jade
 
           div#followerpanel.tab-pane.fade
-            div(ng-repeat='follower in followers' ng-init='user=follower.follow_by')
+            div.row(ng-repeat='follower in followers' ng-init='user=follower.follow_by')
+              hr
               include template/_userlistblock.jade

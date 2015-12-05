@@ -1,0 +1,22 @@
+html(lang='en' ng-app='#{appName}')
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    title!= title
+
+  body
+    h1
+      | Admin
+    
+    div
+      | #{message}
+    
+    hr
+    div
+      ul
+        li
+          a(href='/admin/delete/all') delete all
+        li
+          a(href='/admin/add/users') add users only
+        li
+          a(href='/admin/add/all') add all content

@@ -10,4 +10,5 @@ module.exports = function (app, passport) {
   app.use('/login', require('./login')(passport))
   app.use('/api/image', require('./image'))
   app.use('/api', require('./api'))
+  app.use('/admin', require('./admin'))
 }
