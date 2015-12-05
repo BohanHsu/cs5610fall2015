@@ -42,7 +42,7 @@ div.row
           hr
           div.row
             div.col-xs-2
-              img.visitor-new-user-img(src="#{newTweet.user_id.local.imageUrl || '/img/default-avatar.jpeg'}")
+              img.visitor-new-user-img(src="#{newTweet.user_id.local.imageUrl || '/img/default-avatar.png'}")
             div.col-xs-2
               | #{newTweet.user_id.local.username}
             div.col-xs-8
@@ -60,16 +60,12 @@ div.row
           hr
           div.row
             div.col-xs-2
-              img.visitor-new-user-img(src="#{newRecipe.user_id.local.imageUrl || '/img/default-avatar.jpeg'}")
+              img.visitor-new-user-img(src="#{newRecipe.user_id.local.imageUrl || '/img/default-avatar.png'}")
             div.col-xs-2
               | #{newRecipe.user_id.local.username}
             div.col-xs-8
               | #{newRecipe.recipe_id.recipeName}
         div.col-xs-1
-
-    //-ul
-    //-  each newRecipe in firstnelements(10, newRecipes)
-    //-    li #{newRecipe.recipe_id.recipeName}
 
     h2
       strong
