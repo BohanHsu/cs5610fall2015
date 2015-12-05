@@ -116,16 +116,16 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
     div.row(ng-if='detailUser.user_type == "enterprise"')
       div.col-xs-offset-1.col-xs-10
         ul.nav.nav-tabs
-          li.active
-            a(data-toggle='pill' show-tab='' href='#mappanel') Map
+          li(ng-class='{"active": detailUser._id != user._id}')
+            a(data-toggle='pill' show-tab='' href='#mappanel' ng-click='clickMapTab()') Map
           li
             a(data-toggle='pill' show-tab='' href='#openhourspanel') Open Hours
-          li
+          li(ng-class='{"active": detailUser._id == user._id}')
             a(data-toggle='pill' show-tab='' href='#commentspanel') Comments
 
 
         div.tab-content
-          div#mappanel.tab-pane.fade.in.active
+          div#mappanel.tab-pane.fade(ng-class='{"in active": detailUser._id != user._id}')
             script.
               initializeMap1()
             div#map
@@ -133,7 +133,7 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
             ul
               li(ng-repeat='oh in detailUser.enterprise.openHours')
                 | {{oh}}
-          div#commentspanel.tab-pane.fade
+          div#commentspanel.tab-pane.fade(ng-class='{"in active": detailUser._id == user._id}')
             div.row.margin-vertical-4
               div.col-xs-2
                 img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}' ng-if='detailUser._id != user._id')

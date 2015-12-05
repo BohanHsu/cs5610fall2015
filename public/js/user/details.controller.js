@@ -25,6 +25,16 @@
     $scope.user = $rootScope.user
     clearErr()
 
+    var setted = false
+    $scope.clickMapTab = function() {
+      if (!setted && $scope.detailUser._id == $scope.user._id) {
+        setted = true
+        setTimeout(function() {
+          initializeMap1()
+        }, 1000)
+      }
+    }
+
     function loadDetailUser() {
       UserService.userDetails($routeParams['id'], function(response) {
         $scope.detailUser = response.user
