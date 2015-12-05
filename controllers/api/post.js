@@ -18,7 +18,7 @@ app.post('/all', function(req, res) {
       })
       following_ids.push(req.session.user._id)
 
-      var skip = (parseInt(req.body.page) - 1) * 20
+      var skip = (parseInt(req.body.page) - 1) * parseInt(req.body.amount)
       Post.find({
         user_id: {$in: following_ids}
       })

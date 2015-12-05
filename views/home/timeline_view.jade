@@ -49,8 +49,12 @@ div.row(ng-controller='TimelineController').heigh80vh
                   strong Recipe: &nbsp;
                   a.normalText(href='#/post/{{pt._id}}') {{pt.recipe_id.recipeName}}
 
+            div.row.margin-vertical-8
+              div.col-xs-4.text-center
+              div.col-xs-4.text-center
                 a(ng-click='viewRecipe($index)' data-toggle='modal' data-target='#viewRecipeModal')
                   | View Details
+              div.col-xs-4.text-center
 
       div.pagination-footer
         nav.text-center

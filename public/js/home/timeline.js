@@ -5,7 +5,6 @@ function scrollToTop() {
   function scrollUp() {
     if ($('#scrollPanel').scrollTop() - step > 0) {
       setTimeout(function() {
-        console.log($('#scrollPanel').scrollTop())
         $('#scrollPanel').scrollTop($('#scrollPanel').scrollTop() - step)
         scrollUp()
       }, 2)

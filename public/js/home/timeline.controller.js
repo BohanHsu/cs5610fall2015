@@ -37,15 +37,13 @@
     }})
 
     .controller('TimelineController', function($scope, $rootScope, PostService, CommentService) {
-      var postInPage = 20
+      var postInPage = 10
       $scope.user = $rootScope.user
       $scope.post = ''
       $scope.timelineViewMoreHide = true
       $scope.currentPage = 1
 
       $rootScope.$on('rootScope:emit', function (event, data) {
-        console.log(data); // 'Emit!'
-        console.log(event)
         $scope.timelineViewMoreHide = false
       })
 
@@ -78,7 +76,6 @@
       $scope.changePage = function(pageindex) {
         if ($scope.currentPage != pageindex) {
           $scope.currentPage = pageindex
-          console.log(pageindex)
         }
       }
 
@@ -109,12 +106,26 @@
         }
       }
 
+      function lastestPost() {
+        PostService.loadPost($rootScope.user, 1, 1, function(response) {
+          console.log(response)
+          $scope.lastestPostId = response.posts[0]._id
+          console.log($scope.lastestPostId)
+        })
+      }
+
+      //lastestPost()
+
+      $scope.$watch('currentPage', function(newValue, oldValue) {
+        console.log(newValue)
+        console.log(oldValue)
+      })
+
       $scope.loadPost = function() {
         var user = $rootScope.user
         if (user) {
           PostService.loadPost(user, $scope.currentPage, postInPage, function(response) {
-            console.log(response)
-
+            console.log(response.posts)
             if (response.success) {
               tweet_dict = {}
               response.tweets.forEach(function(element) {
@@ -185,7 +196,6 @@
       function loadReplyOfPostAccoringToIndex(index, callback) {
         $scope.replys[$scope.posts[index]._id] = []
         CommentService.getCommentForType('post', $scope.posts[index]._id, function(response) {
-          console.log(response)
           $scope.replys[$scope.posts[index]._id] = response['comments']
           if (callback)
             callback()
@@ -208,9 +218,7 @@
         var objectId = $scope.posts[index]._id
         var content = $scope.replyContents[$scope.posts[index]._id]['content']
         var commentId = $scope.replyContents[$scope.posts[index]._id]['commentId']
-        console.log('ojId', objectId, 'content', content, 'commentId', commentId)
         CommentService.addNewCommentForType(type, objectId, content, commentId, function(response) {
-          console.log(response)
           // clean up
           $scope.replyContents[$scope.posts[index]._id]['content'] = ''
           $scope.replyContents[$scope.posts[index]._id]['commentId'] = null
@@ -222,7 +230,6 @@
       $scope.selectReplyComment = function(postIndex, commentIndex) {
         $scope.replyContents[$scope.posts[postIndex]._id]['commentId'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]._id
         $scope.replyContents[$scope.posts[postIndex]._id]['commentObj'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]
-        console.log($scope.replyContents[$scope.posts[postIndex]._id]['commentId'])
       }
     })
 })()
