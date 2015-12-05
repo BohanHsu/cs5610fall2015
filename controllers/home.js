@@ -8,7 +8,7 @@ app.locals.pretty = true
 app.use(cookieParser())
 
 app.get('/', authenticate, function (req, res) {
-  res.render('./home/home', {title: 'Hello world', message: 'NEU CS5610 Bohan Xu', user: req.session.user})
+  res.render('./home/home', {title: 'TasteOf', message: 'NEU CS5610 Bohan Xu', user: req.session.user})
 })
 
 app.get('/home/visitor.view', function(req, res) {
