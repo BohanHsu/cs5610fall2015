@@ -3,8 +3,10 @@ div.row.margin-vertical-4
     img#post-template-img(ng-src='{{avatarUrlHelper(pt.user_id.local.imageUrl)}}')
   div.col-xs-8.col-lg-9
     div.row
-      span.username.margin-vertical-4
+      span.username.margin-vertical-4(ng-if='pt.user_id.user_type == "individual"')
         a.normalText(href='#/user/{{pt.user_id._id}}') {{pt.user_id.local.username}} &nbsp;({{pt.user_id.local.firstname + " " + pt.user_id.local.lastname}})
+      span.username.margin-vertical-4(ng-if='pt.user_id.user_type == "enterprise"')
+        a.normalText(href='#/user/{{pt.user_id._id}}') {{pt.user_id.local.username}} &nbsp;({{pt.user_id.enterprise.businessname}})
     div.row
       p
         a.normalText(href='#/post/{{pt._id}}') {{pt.tweet_id.content}}
