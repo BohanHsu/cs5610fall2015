@@ -42,7 +42,6 @@ app.post('/mynotification', authenticate, function(req, res) {
       res.json({success: false, err: err})
     }
 
-    console.log(notifications)
     res.json({success: true, notifications: notifications})
   })
 
