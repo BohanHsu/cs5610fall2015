@@ -169,7 +169,7 @@ function generateUsers(req, res, callback) {
         })
       } else {
         if (callback) {
-          callback()
+          callback(userIds)
         }
       }
     }
@@ -203,12 +203,66 @@ app.get('/add/users', authenticate, function(req, res) {
   })
 })
 
-//function generatePosts(userIds) {
-//}
-//
-//app.get('/add/all', authenticate, function(req, res) {
-//  generateUsers(req, res, function() {
-//  })
-//})
+function generatePosts(userIds, callback) {
+  var posts = []
+  // ['type', post, tweet]
+  // xbh, neymar, test1, test2, mdl, sbw
+
+  var post = null
+  var tweet = null
+
+  var tweetdict = {
+    0: [
+      'Hot chocolate contains so much calories!',
+      'Starbucks have a new winter menu!',
+      "Not your average joe's is a pretty good place"
+    ],
+    1: [
+      'I love apple!',
+      'Welcome to Brazil!',
+      'Yummy',
+      'Apple cider is non-alcoholic beverage'
+    ],
+    4: [
+      'We have a new menu: BigMac!!!',
+      "i'm lovin' it",
+      'You deserve a break today'
+    ],
+    5: [
+      'Play hard, Eat Fresh!',
+      'We have a deal for early birds :)',
+      'The way a sandwich should be.',
+      'The place where fresh is the taste.'
+    ]
+  }
+
+  while (Object.keys(tweetdict).length > 0) {
+    for (var i = 0; i < 6; i++) {
+      if (i in tweetdict) {
+        if (tweetdict[i].length > 0) {
+          var content = tweetdict[i][0]
+          var userId = userIds[i]
+
+          post = new Post()
+          post.user_id = userId
+          tweet = new Tweet()
+          tweet.content = content
+          posts.push(['tweet', post, tweet])
+        } 
+        if (tweetdict[i].length == 0) {
+          delete tweetdict[i]
+        }
+      }
+    }
+  }
+
+
+
+}
+
+app.get('/add/all', authenticate, function(req, res) {
+  generateUsers(req, res, function() {
+  })
+})
 
 module.exports = app
