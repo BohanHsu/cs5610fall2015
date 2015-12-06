@@ -247,7 +247,11 @@ function generatePosts(userIds, callback) {
           post.user_id = userId
           tweet = new Tweet()
           tweet.content = content
+          post.tweet_id = tweet._id
+          post.post_type = 'tweet'
           posts.push(['tweet', post, tweet])
+
+          tweetdict[i].splice(0, 1)
         } 
         if (tweetdict[i].length == 0) {
           delete tweetdict[i]
@@ -256,12 +260,190 @@ function generatePosts(userIds, callback) {
     }
   }
 
+  var recipe = null
 
+  post = new Post()
+  post.user_id = userIds[0]
+  post.post_type = 'recipe'
 
+  recipe = new Recipe()
+  recipe.post_id = post._id
+  post.recipe_id = recipe._id
+
+  recipe.recipeName = "Apple Crisp"
+  recipe.ingredients = []
+  recipe.ingredients.push(['cooking apples, sliced', '4 medium tart'])
+  recipe.ingredients.push(['packed brown sugar', '3/4 cup'])
+  recipe.ingredients.push(['Gold Medal all-purpose flour', '1/2 cup'])
+  recipe.ingredients.push(['quick-cooking or old-fashioned oats', '1/2 cup'])
+  recipe.ingredients.push(['butter or margarine, softened', '1/3 cup'])
+  recipe.ingredients.push(['ground cinnamon', '3/4 teaspoon'])
+  recipe.ingredients.push(['ground nutmeg', '3/4 teaspoon'])
+ 
+
+  recipe.steps = []
+  recipe.steps.push(['Heat oven to 375ºF. Grease bottom and sides of 8-inch square pan with shortening.', ''])
+  recipe.steps.push(['Spread apples in pan. In medium bowl, stir remaining ingredients except cream until well mixed; sprinkle over apples.', ''])
+  recipe.steps.push(['Bake about 30 minutes or until topping is golden brown and apples are tender when pierced with a fork. Serve warm with cream.', '/uploads/post/fafe01dc-e0d6-e39f-7db6-b05bc46155db_applecrisp.jpg'])
+ 
+  posts.push(['recipe', post, recipe])
+
+  post = new Post()
+  post.user_id = userIds[1]
+  post.post_type = 'recipe'
+
+  recipe = new Recipe()
+  recipe.post_id = post._id
+  post.recipe_id = recipe._id
+
+  recipe.recipeName = "banana bread"
+  recipe.ingredients = []
+  recipe.ingredients.push(['granulated sugar', '1 cup'])
+  recipe.ingredients.push(['unsalted butter, room temperature', '8 tablespoons'])
+  recipe.ingredients.push(['large eggs', '2'])
+  recipe.ingredients.push(['ripe bananas', '3'])
+  recipe.ingredients.push(['milk', '1 tablespoon'])
+  recipe.ingredients.push(['ground cinnamon', '1 teaspoon'])
+  recipe.ingredients.push(['all-purpose flour', '2 cups'])
+  recipe.ingredients.push(['baking powder', '1 teaspoon'])
+  recipe.ingredients.push(['baking soda', '1 teaspoon'])
+  recipe.ingredients.push(['salt', '1 teaspoon'])
+
+  recipe.steps = []
+  recipe.steps.push(['Preheat the oven to 325 degrees F. Butter a 9 x 5 x 3 inch loaf pan.', ''])
+  recipe.steps.push(['Cream the sugar and butter in a large mixing bowl until light and fluffy. Add the eggs one at a time, beating well after each addition.', ''])
+  recipe.steps.push(['In a small bowl, mash the bananas with a fork. Mix in the milk and cinnamon. In another bowl, mix together the flour, baking powder, baking soda and salt.', ''])
+  recipe.steps.push(['Add the banana mixture to the creamed mixture and stir until combined. Add dry ingredients, mixing just until flour disappears.', ''])
+  recipe.steps.push(['Pour batter into prepared pan and bake 1 hour to 1 hour 10 minutes, until a toothpick inserted in the center comes out clean. Set aside to cool on a rack for 15 minutes. Remove bread from pan, invert onto rack and cool completely before slicing.', '/uploads/post/3bbdcc54-087d-8c94-c09c-be53a2a0dd91_banana-bread.jpeg'])
+  
+  posts.push(['recipe', post, recipe])
+
+  var postIds = []
+
+  post = new Post()
+  post.user_id = userIds[2]
+  tweet = new Tweet()
+  tweet.content = 'test content1'
+  post.tweet_id = tweet._id
+  post.post_type = 'tweet'
+  posts.push(['tweet', post, tweet])
+  postIds.push(post._id)
+
+  post = new Post()
+  post.user_id = userIds[3]
+  tweet = new Tweet()
+  tweet.content = 'test content2'
+  post.tweet_id = tweet._id
+  post.post_type = 'tweet'
+  posts.push(['tweet', post, tweet])
+  postIds.push(post._id)
+
+  console.log(postIds)
+
+  var comment = null
+  var notification = null
+
+  var commentDicts = [
+    {
+      'user_id': userIds[0],
+      'comment_type': 'post',
+      'content': 'hello tester',
+      'user_to': userIds[2],
+      'post_id': postIds[0]
+    },
+    {
+      'user_id': userIds[1],
+      'comment_type': 'post',
+      'content': 'hola, tester',
+      'user_to': userIds[2],
+      'post_id': postIds[0]
+    },
+    {
+      'user_id': userIds[0],
+      'comment_type': 'post',
+      'content': 'hello northeastern',
+      'user_to': userIds[3],
+      'post_id': postIds[1]
+    },
+    {
+      'user_id': userIds[1],
+      'comment_type': 'post',
+      'content': 'hello northeastern university',
+      'user_to': userIds[3],
+      'post_id': postIds[1]
+    },
+    {
+      'user_id': userIds[0],
+      'comment_type': 'user',
+      'content': 'Welcome to tastof website',
+      'user_to': userIds[3],
+    }
+  ]
+
+  function saveCommentAndNotificationOneByOne(callback) {
+    if (commentDicts.length > 0) {
+      var commentDict = commentDicts[0]
+
+      comment = new Comment()
+      comment.user_id = commentDict['user_id']
+      comment.comment_type = commentDict['comment_type']
+      comment.content = commentDict['content']
+
+      notification = new Notification()
+      notification.user_from = commentDict['user_id']
+      notification.user_to = commentDict['user_to']
+      notification.comment_from = comment._id
+
+      if (commentDict['comment_type'] == 'post') {
+        comment.post_id = commentDict['post_id']
+        notification.post_id = commentDict['post_id']
+      }
+      if (commentDict['comment_type'] == 'user') {
+        comment.commentonuser_id = commentDict['user_to']
+        //comment.user_id = commentDict['user_id']
+      }
+
+      comment.save(function(err) {
+        notification.save(function(err) {
+          commentDicts.splice(0, 1)
+
+          saveCommentAndNotificationOneByOne(callback)
+        })
+      })
+    } else {
+      if (callback)
+        callback()
+    }
+  }
+
+  savePostOneByOne(callback)
+
+  function savePostOneByOne(callback) {
+    if (posts.length > 0) {
+      console.log('posts.length', posts.length)
+      posts[0][1].save(function(err) {
+        posts[0][2].save(function(err) {
+
+          posts.splice(0, 1)
+
+          savePostOneByOne(callback)
+        })
+      })
+    } else {
+      //if (callback)
+      //  callback()
+      saveCommentAndNotificationOneByOne(callback)
+    }
+  }
 }
 
 app.get('/add/all', authenticate, function(req, res) {
-  generateUsers(req, res, function() {
+  generateUsers(req, res, function(userIds) {
+    console.log('userIds')
+    generatePosts(userIds, function() {
+      console.log('finished')
+      res.render('./admin/admin', {title: 'Admin', message: 'all user/post added', user: req.session.user})
+    })
   })
 })
 
