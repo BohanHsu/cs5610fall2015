@@ -1,6 +1,5 @@
 div.row
-  div.col-xs-2
-  div.col-xs-10
+  div.col-xs-12
     h1
       | TasteOf is your delicious social network!
     hr
@@ -15,8 +14,12 @@ div.row
       a(href='/login/signup') create new account
       | , you can explore the network of delicious!
 
+div.row
+  div.col-xs-12
     h2 What's happening here:
 
+div.row
+  div.col-xs-6
     hr
     h4
       | #{newUsers.length} new user joined in past #{pastDays} Days:
@@ -32,6 +35,7 @@ div.row
               | #{newUser.local.username}
         div.col-xs-1
 
+  div.col-xs-6
     hr
     h4
       | #{newTweets.length} new tweets posted in past #{pastDays} Days:
@@ -49,11 +53,13 @@ div.row
               | #{newTweet.tweet_id.content}
         div.col-xs-1
 
+div.row
+  div.col-xs-12
     hr
     h4
       | #{newRecipes.length} new recipes posted in past #{pastDays} Days:
+    hr
     each newRecipe in firstnelements(10, newRecipes)
-      hr
       div.row
         div.col-xs-1
         div.col-xs-10
