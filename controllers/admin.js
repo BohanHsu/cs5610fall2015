@@ -247,6 +247,7 @@ function generatePosts(userIds, callback) {
           post.user_id = userId
           tweet = new Tweet()
           tweet.content = content
+          tweet.post_id = post._id
           post.tweet_id = tweet._id
           post.post_type = 'tweet'
           posts.push(['tweet', post, tweet])
@@ -324,6 +325,7 @@ function generatePosts(userIds, callback) {
   post.user_id = userIds[2]
   tweet = new Tweet()
   tweet.content = 'test content1'
+  tweet.post_id = post._id
   post.tweet_id = tweet._id
   post.post_type = 'tweet'
   posts.push(['tweet', post, tweet])
@@ -333,6 +335,7 @@ function generatePosts(userIds, callback) {
   post.user_id = userIds[3]
   tweet = new Tweet()
   tweet.content = 'test content2'
+  tweet.post_id = post._id
   post.tweet_id = tweet._id
   post.post_type = 'tweet'
   posts.push(['tweet', post, tweet])
