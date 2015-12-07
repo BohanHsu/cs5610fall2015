@@ -87,3 +87,7 @@ input[disabled]{
   -o-background-size: cover;
   background-size: cover;
 }
+
+#guidemodal-content {
+  width: 90%;
+}

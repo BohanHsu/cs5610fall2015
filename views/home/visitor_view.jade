@@ -14,6 +14,16 @@ div.row
       a(href='/login/signup') create new account
       | , you can explore the network of delicious!
 
+div.row.alert.alert-warning
+  p
+    span
+      | For Professor and Grader: &nbsp;
+    span
+      a(data-toggle='modal' data-target='#guidemodal') here
+    span
+      | &nbsp;is a quick guide of how to view this website.
+
+
 div.row
   div.col-xs-12
     h2 What's happening here:
@@ -81,3 +91,53 @@ div.row
         | This site is still under development, if you visiting this site hosted on openshift, I can't guarantee that I won't delete your account for development purpose.
         | After I decided not to delete any account, I'll remove this line.
   div.col-xs-2
+
+div.container#guidemodal.modal.fade(role='dialog')
+  div.modal-dialog
+    div.modal-content#guidemodal-content
+      div.modal-header
+        | Quick Guide
+        button.close(type="button" data-dismiss="modal")
+      div.modal-body
+        div.row
+          div.col-xs-1
+          div.col-xs-10
+            h4
+              | Easy Login
+            p
+              | TasteOf is a social website for sharing food and restaurant. To visit this website user need 
+              | to create their own account and login.
+            p
+              | You can 
+              span
+                a(href='/login/signup') create new account
+              |  from here, or you can login using the following account I've created to visit this site.
+            p
+              span
+                | Please allow pop-up page after click user login link !!!
+            ul
+              li 
+                | Individual user:
+                a(onclick='loginastest1()')  test user 1
+              li 
+                | Enterprise user:
+                a(onclick='loginastest2()')  test user 2
+            h4
+              | After login
+            p
+              | After login, you will find both test user 1 and test user 2 have followed some other users.
+              | In you home page there will be all the activities of you followed users.
+            p
+              | At the upper right, you could find there are some unreaded notifications, click those notifications will
+              | lead you to the detail page about those notifications.
+
+            h4
+              | Who is in?
+            p 
+              | There are total 6 users I've registered, include 2 test users. Beside that, I have my own account with user id 'xbh',
+              | and I registered a fake account for Brazilian soccer star.
+            p
+              | Also, I've registered 2 enterprise account that are 'McDonald's' and 'Subway', you could find their business information
+              | from their user page.
+          div.col-xs-1
+      div.modal-footer
