@@ -132,7 +132,7 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
           div#openhourspanel.tab-pane.fade
             ul
               li(ng-repeat='oh in detailUser.enterprise.openHours')
-                | {{oh}}
+                | {{oh[0]}}: {{oh[1]}} -- {{oh[2]}}
           div#commentspanel.tab-pane.fade(ng-class='{"in active": detailUser._id == user._id}')
             div.row.margin-vertical-4
               div.col-xs-2
