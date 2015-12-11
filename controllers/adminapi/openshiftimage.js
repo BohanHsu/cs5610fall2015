@@ -5,7 +5,7 @@ var fs = require('fs')
 var path = require('path')
 var Image = require('../../models/image')
 
-function getAllPaths(callback) {
+function getAllPaths(res, callback) {
   var postPath = path.join(__dirname, '../../public/uploads/post/')
   var avatarPath = path.join(__dirname, '../../public/uploads/avatar/')
   fs.readdir(postPath, function(err, postData) {
@@ -34,10 +34,10 @@ function getAllPaths(callback) {
   })
 }
 
-function saveAllImage(paths, callback) {
+function saveAllImage(res, paths, callback) {
   function next() {
     paths.splice(0, 1)
-    saveAllImage(paths, callback)
+    saveAllImage(res, paths, callback)
   }
 
   if (paths.length > 0) {
@@ -74,9 +74,9 @@ function saveAllImage(paths, callback) {
 
 app.get('/saveallimage', authenticate, function(req, res) {
   //Image.find({}).remove(function() {
-  getAllPaths(function(allPaths) {
+  getAllPaths(res, function(allPaths) {
     var length = allPaths.length
-    saveAllImage(allPaths, function() {
+    saveAllImage(res, allPaths, function() {
       res.render('./admin/admin', {
         title: 'Admin', 
         message: length + ' image saved', 
@@ -88,7 +88,7 @@ app.get('/saveallimage', authenticate, function(req, res) {
   //})
 })
 
-function loadAllImage(callback) {
+function loadAllImage(res, callback) {
   Image.find({}).exec(function(err, images) {
     var length = images.length
     console.log(images)
@@ -121,7 +121,7 @@ function loadAllImage(callback) {
 }
 
 app.get('/loadallimage', authenticate, function(req, res) {
-  loadAllImage(function(length) {
+  loadAllImage(res, function(length) {
 
     res.render('./admin/admin', {
       title: 'Admin', 
