@@ -2,21 +2,41 @@ html(lang='en' ng-app='#{appName}')
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    link(href='/vendor/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet')
     title!= title
 
   body
     h1
-      | Admin
+      a(href='/admin') Admin
     
     div
       | #{message}
     
     hr
-    div
-      ul
-        li
-          a(href='/admin/delete/all') delete all
-        li
-          a(href='/admin/add/users') add users only
-        li
-          a(href='/admin/add/all') add all content
+    div.container
+      div.row
+        div.col-sm-6
+          h3.alert-danger
+            | Delete Record
+          ul
+            li
+              a(href='/admin/delete/all') delete all
+            li
+              a(href='/admin/add/users') add users only
+            li
+              a(href='/admin/add/all') add all content
+        div.col-sm-6
+          h3.alert-danger
+            | Openshift Image
+          ul
+            li
+              a(href='/adminapi/openshiftimage/saveallimage') save image
+            li
+              a(href='/adminapi/openshiftimage/loadallimage') load image
+
+          ul
+            if images
+              each i in images
+                li #{i}
+
+    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
