@@ -3,16 +3,6 @@ div.row
     h1
       | TasteOf is your delicious social network!
     hr
-    h2 
-      | Please 
-      a(data-toggle='modal' data-target='#loginModal') login
-
-    p 
-      | By 
-      a(data-toggle='modal' data-target='#loginModal') login 
-      | or 
-      a(href='/login/signup') create new account
-      | , you can explore the network of delicious!
 
 div.row.alert.alert-warning
   p
@@ -23,6 +13,18 @@ div.row.alert.alert-warning
     span
       | &nbsp;is a quick guide of how to view this website.
 
+div.row
+  div.col-xs-12
+    h2 
+      | Please 
+      a(data-toggle='modal' data-target='#loginModal') login
+
+    p 
+      | By 
+      a(data-toggle='modal' data-target='#loginModal') login 
+      | or 
+      a(href='/login/signup') create new account
+      | , you can explore the network of delicious!
 
 div.row
   div.col-xs-12
@@ -98,6 +100,7 @@ div.container#guidemodal.modal.fade(role='dialog')
       div.modal-header
         | Quick Guide
         button.close(type="button" data-dismiss="modal")
+          | &times;
       div.modal-body
         div.row
           div.col-xs-1
@@ -105,15 +108,15 @@ div.container#guidemodal.modal.fade(role='dialog')
             h4
               | Easy Login
             p
-              | TasteOf is a social website for sharing food and restaurant. To visit this website user need 
+              | TasteOf is a social website for sharing food and recipe. To visit this website user need 
               | to create their own account and login.
             p
               | You can 
               span
                 a(href='/login/signup') create new account
-              |  from here, or you can login using the following account I've created to visit this site.
+              |  from here, or you can login using the following account I've created for professor and grader.
             p
-              span
+              span(style='color:red')
                 | Please allow pop-up page after click user login link !!!
             ul
               li 
@@ -128,16 +131,51 @@ div.container#guidemodal.modal.fade(role='dialog')
               | After login, you will find both test user 1 and test user 2 have followed some other users.
               | In you home page there will be all the activities of you followed users.
             p
-              | At the upper right, you could find there are some unreaded notifications, click those notifications will
+              | At the upper right, you could find there are some unread notifications, click those notifications will
               | lead you to the detail page about those notifications.
 
             h4
-              | Who is in?
+              | What can I do in TasteOf
             p 
-              | There are total 6 users I've registered, include 2 test users. Beside that, I have my own account with user id 'xbh',
-              | and I registered a fake account for Brazilian soccer star.
+              | In TasteOf, you can follow other individual user and enterprise user, individual could post posts and recipes, which will be show on 
+              |  it's followers' homepage immediately. Enterprise user have all the functions as individual user plus enterprise user could add there business information
+              |  such as address and open hours onto their user page.
+              | User could comment on other user's posts and recipes. User could alse reply other's comment. When Other user commented on your post or replied
+              |  your comment, you will receive a notification.
+            h5
+              | Homepage
             p
-              | Also, I've registered 2 enterprise account that are 'McDonald's' and 'Subway', you could find their business information
-              | from their user page.
+              | You can write post and recipe at your homepage.
+            p
+              | You can find all the activities about those users you followed on your homepage. You can quickly reply to other users' post and qucikly view
+              |  recipes on you homepage.
+            p
+              | Homepage will automatically check if there are any new posts and recipes posted after you open homepage, if there is any you will find a view more 
+              |  button on homepage that you can click and load the latest update.
+            h5
+              | Detail Pages
+            p
+              | There are serval kind of detail pages in TasteOf, which are user detail page, post detail page and recipe detail page. 
+            p
+              | For user detail page, if you opened you own user detail page, you can review and edit all your personal information. And you can review your post history and
+              |  Manage your posts. Beside, that you can find all your follower and the list of user you are following at your user detail page.
+            p
+              | For post and recipe detail page, you can view all the detail about the post. Beside that, all comment of this post from other users will be 
+              |  shown on post and recipe detail page.
+            h5
+              | Search
+            p
+              | In TasteOf, you can search user, posts and recipes.
+            p
+              | After login in, you can find the search function locate right top of the header bar. You can search at every page after login. After input some keyword 
+              | and click the search button, all result will be show at the search result page.
+            p
+              | You can search user by user's username, first name, last name, email and enterprise user's business name.
+            p
+              | You can search post by post content and search recipe by recipe name.
+            h4
+              | Other useful information
+            p
+              | In the footer of this page, you can find some useful link about this website and CS5610.
           div.col-xs-1
       div.modal-footer
