@@ -71,5 +71,14 @@
           }
         })
       }
+
+      $scope.keyEventHandler = function(caller, event) {
+        if (caller == 'search.header' && event.keyCode == 13) {
+          $scope.searchFromHeader()
+        }
+        if (caller == 'search.page') {
+          $scope.searchFromSearchPage()
+        }
+      }
     })
 })()
