@@ -186,6 +186,11 @@
       var businessname = $scope.detailUser.enterprise.businessname
       var address = $scope.detailUser.enterprise.address
 
+      if ($scope.originalImageUrl != '' && $scope.croppedImageUrl == '') {
+        logErr('Please crop your avatar!.')
+        return
+      }
+
       if (isEmpty($scope.croppedImageUrl) && !isEmpty($scope.originalImageUrl)) {
         logErr('Please cut your uploaded image.')
         return
