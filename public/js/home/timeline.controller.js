@@ -1,4 +1,7 @@
 (function() {
+
+  var sendPostFunction = null
+
   angular
   .module('TasteOfApp')
   .directive('adjustTextarea', function() {    
@@ -31,7 +34,12 @@
         })
 
         element.on('keyup', function(event) {
-          adjustingTextArea(scope, element, attrs, event)
+          if (event.keyCode == 8) {
+            adjustingTextArea(scope, element, attrs, event)
+          }
+          if (event.keyCode == 13) {
+            sendPostFunction()
+          }
         })
       }
     }})
@@ -107,6 +115,8 @@
           })
         }
       }
+
+      sendPostFunction = $scope.sendPost
 
 
       var latestPostTimeout = null
@@ -250,6 +260,16 @@
       $scope.selectReplyComment = function(postIndex, commentIndex) {
         $scope.replyContents[$scope.posts[postIndex]._id]['commentId'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]._id
         $scope.replyContents[$scope.posts[postIndex]._id]['commentObj'] = $scope.replys[$scope.posts[postIndex]._id][commentIndex]
+      }
+
+
+      $scope.keyEventHandler = function(caller, event) {
+        console.log(caller)
+        if (caller == 'timeline.post') {
+          if (event.keyCode == 13) {
+            $scope.sendPost()
+          }
+        }
       }
     })
 })()
