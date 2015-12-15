@@ -67,7 +67,7 @@
 
     $scope.avatarUrlHelper = function(url) {
       if (url == '') {
-        return 'img/default.jpeg'
+        return 'img/default-avatar.png'
       }
       return url
     }
