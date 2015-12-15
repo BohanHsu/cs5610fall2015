@@ -13,7 +13,7 @@ html(lang='en' ng-app='#{appName}')
       | #{message}
       ul
         li
-          a(href='/admin/image') Admin Image
+          a(href='/adminapi/image/all') Admin Image
     
     hr
     div.container
@@ -29,6 +29,8 @@ html(lang='en' ng-app='#{appName}')
                   if u
                     | #{u._id}
                   else
-                    a() Delete
+                    button.btn(onclick='deleteImage("#{url}")') Delete
 
+    script(src='/vendor/jquery/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/admin/admin.js')
