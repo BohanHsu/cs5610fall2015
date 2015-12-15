@@ -69,17 +69,17 @@ div.navbar.navbar-default.navbar-fixed-top
                     div.form-group
                       label.control-label(for='inputUsername') Username:
                       div
-                        input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username')
+                        input#inputUsername.form-control(type='text' placeholder='Username' ng-model='username' ng-keyup='keyEventHandler("login.username", $event)')
                   form.form-horizontal
                     div.form-group
-                      label.control-label(for='inputUsername') Password:
+                      label.control-label(for='inputPassword') Password:
                       div
-                        input#inputUsername.form-control(type='password' placeholder='Password' ng-model='password')
+                        input#inputPassword.form-control(type='password' placeholder='Password' ng-model='password' ng-keyup='keyEventHandler("login.password", $event)')
                   form.form-horizontal
                     div.form-group
                       label.control-label(for='inputRememberMe') Remember Me:
                       div
-                        input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe')
+                        input#inputRememberMe.form-control(type='checkbox' ng-model='rememberMe' ng-keyup='keyEventHandler("login.rememberme", $event)')
                   div.alert.alert-danger(ng-if='err != null')
                     {{err}}
                 div.col-xs-8

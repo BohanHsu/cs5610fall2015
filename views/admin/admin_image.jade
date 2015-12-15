@@ -1,0 +1,36 @@
+html(lang='en' ng-app='#{appName}')
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    link(href='/vendor/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet')
+    title!= title
+
+  body
+    h1
+      a(href='/admin') Admin
+    
+    div
+      | #{message}
+      ul
+        li
+          a(href='/adminapi/image/all') Admin Image
+    
+    hr
+    div.container
+      div.row
+        div.col-sm-12
+          table.table.table-striped
+            each u, url in paths
+              tr
+                td #{url}
+                td
+                  img(src="#{url}" style='width:80px; height:80px;')
+                td
+                  if u
+                    | #{u._id}
+                  else
+                    button.btn(onclick='deleteImage("#{url}")') Delete
+
+    script(src='/vendor/jquery/jquery.min.js')
+    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/admin/admin.js')

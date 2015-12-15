@@ -73,6 +73,11 @@
           return
         }
 
+        if ($scope.originalImageUrl != '' && $scope.croppedImageUrl == '') {
+          logErr('Please crop your avatar!.')
+          return
+        }
+
         SignupService.userSignUp({
           username: $scope.username,
           password: $scope.password,

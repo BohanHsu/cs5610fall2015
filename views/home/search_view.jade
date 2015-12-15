@@ -6,7 +6,7 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
 
     div.row
       div.col-xs-10
-        input.form-control(ng-model='searchText')
+        input.form-control(ng-model='searchText' ng-keyup='keyEventHandler("search.page", $event)')
       div.col-xs-2
         button.btn.btn-default(ng-click='searchFromSearchPage()')
           | Search

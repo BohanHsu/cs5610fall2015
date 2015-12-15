@@ -31,5 +31,13 @@
       $scope.isLoggedIn = function() {
         return $rootScope.user != null
       }
+
+      $scope.keyEventHandler = function(caller, event) {
+        if (caller == 'login.rememberme' || caller == 'login.username' || caller == 'login.password') {
+          if (event.keyCode == 13) {
+            $scope.login()
+          }
+        }
+      }
     })
 })()
