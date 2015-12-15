@@ -136,7 +136,8 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
           div#commentspanel.tab-pane.fade(ng-class='{"in active": detailUser._id == user._id}')
             div.row.margin-vertical-4
               div.col-xs-2
-                img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}' ng-if='detailUser._id != user._id')
+                a(href='#/user/{{user._id}}')
+                  img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}' ng-if='detailUser._id != user._id')
               div.col-xs-10
                 div.row(ng-if='detailUser._id != user._id')
                   div.col-xs-8.col-sm-10
@@ -156,7 +157,8 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
                 div(ng-repeat='comment in comments' ng-class="{'heighlightComment': (comment._id == highlightCommentId)}")
                   div.row.margin-vertical-4
                     div.col-xs-2
-                      img#post-reply-img(ng-src='{{avatarUrlHelper(comment.user_id.local.imageUrl)}}')
+                      a(href='#/user/{{comment.user_id._id}}')
+                        img#post-reply-img(ng-src='{{avatarUrlHelper(comment.user_id.local.imageUrl)}}')
                     div.col-xs-10
                       div.row
                         p(ng-if='comment.comment_id != null') 
@@ -186,7 +188,8 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
               hr
               div.row.margin-vertical-4(ng-if='post.post_type == "tweet"')
                 div.col-xs-3
-                  img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+                  a(href='#/user/{{detailUser._id}}')
+                    img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
                 div(ng-class='{"col-xs-9": detailUser._id != user._id, "col-xs-7": detailUser._id == user._id}')
                   div.row
                     span.username.margin-vertical-4
@@ -199,7 +202,8 @@ div.row.heigh80vh(ng-controller='DetailsController' ng-init='')
 
               div.row.margin-vertical-4(ng-if='post.post_type == "recipe"')
                 div.col-xs-3
-                  img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
+                  a(href='#/user/{{detailUser._id}}')
+                    img#post-template-img(ng-src='{{detailUser.local.imageUrl || "img/default-avatar.png"}}')
                 div(ng-class='{"col-xs-9": detailUser._id != user._id, "col-xs-7": detailUser._id == user._id}')
                   div.row
                     span.username.margin-vertical-4

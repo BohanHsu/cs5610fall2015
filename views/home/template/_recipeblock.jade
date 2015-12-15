@@ -17,7 +17,8 @@ div.row(ng-if='recipeIndex != null')
   div.col-xs-10.col-xs-offset-1
     div.row.margin-vertical-4
       div.col-xs-2
-        img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
+        a(href='#/user/{{user._id}}' data-dismiss="modal")
+          img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
       div.col-xs-10
         div.row
           div.col-xs-8.col-sm-10
@@ -37,7 +38,8 @@ div.row(ng-if='recipeIndex != null')
         div(ng-repeat='reply in replys[posts[recipeIndex]._id]' ng-class="{'heighlightComment': (reply._id == highlightCommentId)}")
           div.row.margin-vertical-4
             div.col-xs-2
-              img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
+              a(href='#/user/{{reply.user_id._id}}' data-dismiss="modal")
+                img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
             div.col-xs-10
               div.row
                 p(ng-if='reply.comment_id != null') 

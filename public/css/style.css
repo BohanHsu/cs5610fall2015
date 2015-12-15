@@ -41,8 +41,8 @@ html, body { height: 100%; }
 }
 
 #avatarPreviewDiv {
-  height: 100px;
-  width: 100px;
+  height: 275px;
+  width: 275px;
 }
 
 .header-form-control {
