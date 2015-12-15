@@ -33,7 +33,8 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
         div.row(ng-repeat='tweet in searchResult.tweets')
           hr
           div.col-xs-3
-            img.searchUserImg(ng-src='{{tweet.post_id.user_id.local.imageUrl}}')
+            a(href='#/user/{{tweet.post_id.user_id._id}}')
+              img.searchUserImg(ng-src='{{tweet.post_id.user_id.local.imageUrl}}')
           div.col-xs-9
             a.normalText(href='#/post/{{tweet.post_id._id}}') {{tweet.content}}
 
@@ -44,6 +45,7 @@ div.row.heigh80vh(ng-controller='SearchController' ng-init='')
         div.row(ng-repeat='recipe in searchResult.recipes')
           hr
           div.col-xs-3
-            img.searchUserImg(ng-src='{{recipe.post_id.user_id.local.imageUrl}}')
+            a(href='#/user/{{recipe.post_id.user_id._id}}')
+              img.searchUserImg(ng-src='{{recipe.post_id.user_id.local.imageUrl}}')
           div.col-xs-9
             a.normalText(href='#/post/{{recipe.post_id._id}}') {{recipe.recipeName}}

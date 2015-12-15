@@ -1,6 +1,7 @@
 div.row.margin-vertical-4
   div.col-xs-2.col-xs-offset-1.col-lg-1.col-lg-offset-1
-    img#post-template-img(ng-src='{{avatarUrlHelper(pt.user_id.local.imageUrl)}}')
+    a(href='#/user/{{pt.user_id._id}}')
+      img#post-template-img(ng-src='{{avatarUrlHelper(pt.user_id.local.imageUrl)}}')
   div.col-xs-8.col-lg-9
     div.row
       span.username.margin-vertical-4(ng-if='pt.user_id.user_type == "individual"')
@@ -15,7 +16,8 @@ div#reply.row.margin-vertical-4.ng-hide(ng-hide='replyHide($index)')
   div.col-xs-8.col-sm-9
     div.row.margin-vertical-4
       div.col-xs-2
-        img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
+        a(href='#/user/{{user._id}}')
+          img#post-reply-img(ng-src='{{avatarUrlHelper(user.local.imageUrl)}}')
       div.col-xs-10
         div.row
           div.col-xs-8.col-sm-10
@@ -35,7 +37,8 @@ div#reply.row.margin-vertical-4.ng-hide(ng-hide='replyHide($index)')
         div(ng-repeat='reply in replys[posts[$index]._id]' ng-class="{'heighlightComment': (reply._id == highlightCommentId)}")
           div.row.margin-vertical-4
             div.col-xs-2
-              img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
+              a(href='#/user/{{reply.user_id._id}}')
+                img#post-reply-img(ng-src='{{avatarUrlHelper(reply.user_id.local.imageUrl)}}')
             div.col-xs-10
               div.row
                 p(ng-if='reply.comment_id != null') 
